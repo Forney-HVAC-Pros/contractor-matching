@@ -1182,13 +1182,19 @@ function showScreen(id) {
   });
   const target = document.getElementById(id);
   target.classList.remove('hidden');
-  setTimeout(() => target.classList.add('animate-in'), 10);
+  setTimeout(() => { target.classList.add('animate-in'); sendHeight(); }, 10);
+  setTimeout(sendHeight, 350);
 
   const showProgress = id === 'question-screen' || id === 'results-screen';
   document.getElementById('progress-wrap').style.display = showProgress ? 'block' : 'none';
 }
 
 function scrollUp() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+function sendHeight() {
+  const h = document.documentElement.scrollHeight;
+  window.parent.postMessage({ iframeHeight: h }, '*');
+}
 
 function track(event, params = {}) {
   if (typeof gtag !== 'undefined') gtag('event', event, params);
@@ -1197,6 +1203,7 @@ function track(event, params = {}) {
 // -- Init --
 renderQuestion(0);
 track('tool_started');
+window.addEventListener('load', sendHeight);
 </script>
 
 <!-- Fallback content for crawlers and LLMs that don't execute JavaScript -->
@@ -1217,3 +1224,4 @@ track('tool_started');
 </noscript>
 </body>
 </html>
+
