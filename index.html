@@ -316,21 +316,26 @@
     .step-text strong { display: block; font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 2px; }
     .step-text span { font-size: 12px; color: var(--mid); line-height: 1.4; }
 
-    /* Sidebar contractor list */
-    .sc-list { display: flex; flex-direction: column; gap: 14px; }
-    .sc-item { display: flex; flex-direction: column; gap: 3px; }
-    .sc-name { font-size: 13px; font-weight: 600; color: var(--dark); }
-    .sc-meta { font-size: 12px; color: var(--mid); }
-    .sc-stars { color: #F59E0B; }
-    .sc-item + .sc-item { padding-top: 14px; border-top: 1px solid var(--border); }
-
-    /* Sidebar trust badges */
-    .sidebar-trust { display: flex; flex-direction: column; gap: 8px; }
-    .sidebar-trust-item {
-      font-size: 12px; color: var(--mid);
-      display: flex; align-items: center; gap: 7px;
+    /* Expanded trust items */
+    .trust-items { display: flex; flex-direction: column; gap: 14px; }
+    .trust-item-lg {
+      display: flex; align-items: flex-start; gap: 12px;
     }
-    .sidebar-trust-item::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+    .trust-item-lg + .trust-item-lg { padding-top: 14px; border-top: 1px solid var(--border); }
+    .trust-icon {
+      width: 38px; height: 38px; flex-shrink: 0;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 11px; letter-spacing: -0.02em;
+      font-family: 'Inter', sans-serif;
+    }
+    .trust-icon.bbb { background: #CC0000; color: white; font-size: 10px; letter-spacing: 0.04em; }
+    .trust-icon.google { background: white; border: 1.5px solid var(--border); }
+    .trust-icon.tdlr { background: #002868; color: white; font-size: 18px; }
+    .trust-icon.nextdoor { background: #00B140; color: white; }
+    .trust-icon.free { background: var(--green); color: white; font-size: 13px; }
+    .trust-detail strong { display: block; font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 2px; }
+    .trust-detail span { font-size: 12px; color: var(--mid); line-height: 1.4; }
 
     /* ── Utility ── */
     .hidden { display: none !important; }
@@ -507,40 +512,62 @@
         </div>
       </div>
 
-      <!-- Our Contractor Network -->
+      <!-- Trust signals -->
       <div class="sidebar-card">
-        <div class="sidebar-heading">Our Vetted Network</div>
-        <div class="sc-list">
-          <div class="sc-item">
-            <div class="sc-name">J&R Plumbing, Heating &amp; Air</div>
-            <div class="sc-meta"><span class="sc-stars">★★★★★</span> 5.0 · Est. 1965</div>
-            <div class="sc-meta">Chamber Award 2025 · Emergency service</div>
-          </div>
-          <div class="sc-item">
-            <div class="sc-name">Williams Services AC &amp; Heating</div>
-            <div class="sc-meta"><span class="sc-stars">★★★★★</span> 4.9 · Est. 1997</div>
-            <div class="sc-meta">10-yr warranty · Flat-rate pricing</div>
-          </div>
-          <div class="sc-item">
-            <div class="sc-name">Bolton Heating &amp; Air</div>
-            <div class="sc-meta"><span class="sc-stars">★★★★★</span> 4.9 · Est. 2017</div>
-            <div class="sc-meta">BBB A+ · 0% financing · 270+ reviews</div>
-          </div>
-          <div class="sc-item">
-            <div class="sc-name">Infinity Texas Air</div>
-            <div class="sc-meta"><span class="sc-stars">★★★★★</span> 4.8 · Est. 2016</div>
-            <div class="sc-meta">7am–7pm 7 days · 1,500+ reviews</div>
-          </div>
-        </div>
-      </div>
+        <div class="sidebar-heading">Why Homeowners Trust Us</div>
+        <div class="trust-items">
 
-      <!-- Trust -->
-      <div class="sidebar-card">
-        <div class="sidebar-trust">
-          <div class="sidebar-trust-item">All contractors TDLR-licensed &amp; verified</div>
-          <div class="sidebar-trust-item">Free matching — no cost to homeowners</div>
-          <div class="sidebar-trust-item">No obligation to hire</div>
-          <div class="sidebar-trust-item">Serving Forney &amp; Kaufman County</div>
+          <div class="trust-item-lg">
+            <div class="trust-icon bbb">BBB</div>
+            <div class="trust-detail">
+              <strong>BBB Accredited</strong>
+              <span>A+ rated contractors in our network</span>
+            </div>
+          </div>
+
+          <div class="trust-item-lg">
+            <div class="trust-icon google">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19.6 10.23c0-.68-.06-1.36-.17-2H10v3.79h5.39a4.6 4.6 0 0 1-2 3.02v2.5h3.24c1.9-1.75 3-4.33 3-7.31z" fill="#4285F4"/>
+                <path d="M10 20c2.7 0 4.96-.9 6.62-2.46l-3.24-2.5c-.9.6-2.04.96-3.38.96-2.6 0-4.8-1.75-5.59-4.11H1.07v2.58A10 10 0 0 0 10 20z" fill="#34A853"/>
+                <path d="M4.41 11.89A6 6 0 0 1 4.1 10c0-.65.11-1.29.31-1.89V5.53H1.07A10 10 0 0 0 0 10c0 1.61.39 3.14 1.07 4.47l3.34-2.58z" fill="#FBBC05"/>
+                <path d="M10 3.96c1.47 0 2.79.5 3.83 1.5l2.86-2.86C14.95.99 12.7 0 10 0A10 10 0 0 0 1.07 5.53l3.34 2.58C5.2 5.71 7.4 3.96 10 3.96z" fill="#EA4335"/>
+              </svg>
+            </div>
+            <div class="trust-detail">
+              <strong>Google Verified Reviews</strong>
+              <span>4.8–5.0 stars across all contractors</span>
+            </div>
+          </div>
+
+          <div class="trust-item-lg">
+            <div class="trust-icon tdlr">★</div>
+            <div class="trust-detail">
+              <strong>TDLR Licensed</strong>
+              <span>All contractors Texas state-verified &amp; active</span>
+            </div>
+          </div>
+
+          <div class="trust-item-lg">
+            <div class="trust-icon nextdoor">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 2L2 8.5V18h5.5v-5h5v5H18V8.5L10 2z" fill="white"/>
+              </svg>
+            </div>
+            <div class="trust-detail">
+              <strong>Nextdoor Neighborhood Favorite</strong>
+              <span>Community-recognized in Forney, TX</span>
+            </div>
+          </div>
+
+          <div class="trust-item-lg">
+            <div class="trust-icon free">$0</div>
+            <div class="trust-detail">
+              <strong>Free to Homeowners</strong>
+              <span>No cost, no obligation — ever</span>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -550,17 +577,11 @@
 </div><!-- /container -->
 
 <script>
-// ============================================================
-// CONFIG
-// ============================================================
 const CONFIG = {
   formspreeEndpoint: 'https://formspree.io/f/xnjwddqd',
   ga4Id: 'G-9LSH07TDFN'
 };
 
-// ============================================================
-// CONTRACTOR DATA
-// ============================================================
 const CONTRACTORS = {
   jandr: {
     id: 'jandr',
@@ -628,9 +649,6 @@ const CONTRACTORS = {
   }
 };
 
-// ============================================================
-// QUESTIONS (8 total)
-// ============================================================
 const QUESTIONS = [
   {
     id: 'service',
@@ -727,21 +745,14 @@ const QUESTIONS = [
   }
 ];
 
-// ============================================================
-// STATE
-// ============================================================
 let currentStep = 0;
 let answers = {};
 let selectedContractor = null;
 
-// ============================================================
-// MATCHING LOGIC
-// ============================================================
 function getMatches() {
   if (answers.service === 'emergency' || answers.urgency === 'today') {
     return [CONTRACTORS.jandr, CONTRACTORS.infinity];
   }
-
   let scores = { jandr: 0, williams: 0, bolton: 0, infinity: 0 };
   QUESTIONS.forEach(q => {
     const val = answers[q.id];
@@ -750,11 +761,7 @@ function getMatches() {
     if (!opt) return;
     Object.entries(opt.scores).forEach(([id, pts]) => { scores[id] += pts; });
   });
-
-  const sorted = Object.entries(scores)
-    .sort((a, b) => b[1] - a[1])
-    .map(([id]) => CONTRACTORS[id]);
-
+  const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]).map(([id]) => CONTRACTORS[id]);
   const vals = Object.values(scores).sort((a, b) => b - a);
   return vals[0] - vals[1] <= 4 ? [sorted[0], sorted[1]] : [sorted[0]];
 }
@@ -793,10 +800,8 @@ function getMatchReason(contractorId) {
       default: '1,500+ reviews and 7-day availability make them a reliable choice for your needs'
     }
   };
-
   const r = reasons[contractorId];
   if (!r) return '';
-
   if (contractorId === 'jandr') {
     if (answers.service === 'emergency' || answers.urgency === 'today') return r.emergency;
     if (answers.concern === 'second_opinion') return r.second_opinion;
@@ -827,17 +832,12 @@ function getMatchReason(contractorId) {
   return r.default;
 }
 
-// ============================================================
-// UI — QUESTIONS
-// ============================================================
 function renderQuestion(index) {
   const q = QUESTIONS[index];
   document.getElementById('question-title').textContent = q.question;
   document.getElementById('question-subtitle').textContent = q.subtitle;
-
   const container = document.getElementById('options-container');
   container.innerHTML = '';
-
   q.options.forEach(opt => {
     const btn = document.createElement('button');
     btn.className = 'option' + (answers[q.id] === opt.value ? ' selected' : '');
@@ -852,7 +852,6 @@ function renderQuestion(index) {
     `;
     container.appendChild(btn);
   });
-
   const nextBtn = document.getElementById('next-btn');
   const backBtn = document.getElementById('back-btn');
   nextBtn.disabled = !answers[q.id];
@@ -875,55 +874,28 @@ function updateProgress(index) {
 }
 
 function nextStep() {
-  if (currentStep < QUESTIONS.length - 1) {
-    currentStep++;
-    renderQuestion(currentStep);
-    scrollUp();
-  } else {
-    showResults();
-  }
+  if (currentStep < QUESTIONS.length - 1) { currentStep++; renderQuestion(currentStep); scrollUp(); }
+  else { showResults(); }
 }
 
 function prevStep() {
-  if (currentStep > 0) {
-    currentStep--;
-    renderQuestion(currentStep);
-    scrollUp();
-  }
+  if (currentStep > 0) { currentStep--; renderQuestion(currentStep); scrollUp(); }
 }
 
-// ============================================================
-// UI — RESULTS
-// ============================================================
 function showResults() {
   const matches = getMatches();
   const isEmergency = answers.service === 'emergency' || answers.urgency === 'today';
-
   showScreen('results-screen');
   document.getElementById('progress-fill').style.width = '100%';
   document.getElementById('progress-label').textContent = 'Match found!';
-
-  document.getElementById('results-title').textContent = isEmergency
-    ? '⚡ Emergency Recommendations'
-    : matches.length > 1 ? 'Your Top Matches' : 'Your Best Match';
-
-  document.getElementById('results-subtitle').textContent = isEmergency
-    ? 'Call directly for the fastest response during an emergency'
-    : 'Based on your answers, here\'s who we recommend for your situation';
-
+  document.getElementById('results-title').textContent = isEmergency ? '⚡ Emergency Recommendations' : matches.length > 1 ? 'Your Top Matches' : 'Your Best Match';
+  document.getElementById('results-subtitle').textContent = isEmergency ? 'Call directly for the fastest response during an emergency' : 'Based on your answers, here\'s who we recommend for your situation';
   const resultsEl = document.getElementById('contractor-results');
   resultsEl.innerHTML = '';
-
   matches.forEach((c, i) => {
-    if (i === 1) {
-      const lbl = document.createElement('p');
-      lbl.className = 'second-match-label';
-      lbl.textContent = '— Also a great fit —';
-      resultsEl.appendChild(lbl);
-    }
+    if (i === 1) { const lbl = document.createElement('p'); lbl.className = 'second-match-label'; lbl.textContent = '— Also a great fit —'; resultsEl.appendChild(lbl); }
     resultsEl.appendChild(buildContractorCard(c, i === 0));
   });
-
   selectedContractor = matches[0];
   track('results_viewed', { primary_match: matches[0].id, second_match: matches[1]?.id || 'none' });
   scrollUp();
@@ -932,11 +904,7 @@ function showResults() {
 function buildContractorCard(c, isPrimary) {
   const card = document.createElement('div');
   card.className = `contractor-card ${isPrimary ? 'primary' : 'secondary'} animate-in`;
-
-  const callBtn = c.phone
-    ? `<a href="${c.phoneHref}" class="btn btn-call" onclick="track('call_clicked',{contractor:'${c.id}'})">📞 Call Now</a>`
-    : '';
-
+  const callBtn = c.phone ? `<a href="${c.phoneHref}" class="btn btn-call" onclick="track('call_clicked',{contractor:'${c.id}'})">📞 Call Now</a>` : '';
   card.innerHTML = `
     <div class="contractor-card-header">
       <div class="contractor-name">${c.name}</div>
@@ -952,17 +920,12 @@ function buildContractorCard(c, isPrimary) {
     <ul class="strengths">${c.strengths.map(s => `<li>${s}</li>`).join('')}</ul>
     <div class="contractor-actions">
       ${callBtn}
-      <button class="btn btn-quote" onclick="showForm('${c.id}')">
-        ${c.phone ? 'Request Free Quote' : '📋 Request Free Quote'}
-      </button>
+      <button class="btn btn-quote" onclick="showForm('${c.id}')">${c.phone ? 'Request Free Quote' : '📋 Request Free Quote'}</button>
     </div>
   `;
   return card;
 }
 
-// ============================================================
-// UI — LEAD FORM
-// ============================================================
 function showForm(contractorId) {
   const c = CONTRACTORS[contractorId];
   selectedContractor = c;
@@ -988,25 +951,15 @@ function getLabel(questionId) {
   return opt ? opt.label : answers[questionId] || '—';
 }
 
-// ============================================================
-// FORM SUBMISSION
-// ============================================================
 document.getElementById('lead-form').addEventListener('submit', async function(e) {
   e.preventDefault();
   const btn = document.getElementById('submit-btn');
   btn.textContent = 'Sending...';
   btn.disabled = true;
-
   try {
-    const res = await fetch(CONFIG.formspreeEndpoint, {
-      method: 'POST',
-      body: new FormData(this),
-      headers: { 'Accept': 'application/json' }
-    });
-    if (res.ok) {
-      track('lead_submitted', { contractor: selectedContractor.id, service: answers.service, urgency: answers.urgency });
-      showSuccess();
-    } else { throw new Error('failed'); }
+    const res = await fetch(CONFIG.formspreeEndpoint, { method: 'POST', body: new FormData(this), headers: { 'Accept': 'application/json' } });
+    if (res.ok) { track('lead_submitted', { contractor: selectedContractor.id, service: answers.service, urgency: answers.urgency }); showSuccess(); }
+    else { throw new Error('failed'); }
   } catch {
     btn.textContent = 'Send My Request →';
     btn.disabled = false;
@@ -1014,9 +967,6 @@ document.getElementById('lead-form').addEventListener('submit', async function(e
   }
 });
 
-// ============================================================
-// SUCCESS
-// ============================================================
 function showSuccess() {
   document.getElementById('success-contractor-name').textContent = selectedContractor.name;
   document.getElementById('success-cname').textContent = selectedContractor.name;
@@ -1031,9 +981,6 @@ function showSuccess() {
   scrollUp();
 }
 
-// ============================================================
-// UTILITIES
-// ============================================================
 function showScreen(id) {
   ['question-screen','results-screen','form-screen','success-screen'].forEach(sid => {
     const el = document.getElementById(sid);
@@ -1043,18 +990,13 @@ function showScreen(id) {
   const target = document.getElementById(id);
   target.classList.remove('hidden');
   setTimeout(() => target.classList.add('animate-in'), 10);
-
   const showProgress = id === 'question-screen' || id === 'results-screen';
   document.getElementById('progress-wrap').style.display = showProgress ? 'block' : 'none';
 }
 
 function scrollUp() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+function track(event, params = {}) { if (typeof gtag !== 'undefined') gtag('event', event, params); }
 
-function track(event, params = {}) {
-  if (typeof gtag !== 'undefined') gtag('event', event, params);
-}
-
-// ── Init ──
 renderQuestion(0);
 track('tool_started');
 </script>
