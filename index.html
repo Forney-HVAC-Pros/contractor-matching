@@ -387,6 +387,7 @@
     }
 
     /* ‚îÄ‚îÄ Utility ‚îÄ‚îÄ */
+    #next-btn { display: none; }
     .hidden { display: none !important; }
 
     @keyframes fadeIn {
@@ -996,6 +997,7 @@ function selectOption(questionId, value, btnEl) {
   btnEl.classList.add('selected');
   document.getElementById('next-btn').disabled = false;
   track('question_answered', { question: questionId, answer: value });
+  setTimeout(nextStep, 420);
 }
 
 function updateProgress(index) {
