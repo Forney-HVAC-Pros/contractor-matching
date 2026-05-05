@@ -89,30 +89,7 @@
 
     .container { width: 100%; max-width: 1200px; }
 
-    /* -- Header (full-width dark green band) -- */
-    .header {
-      background: var(--green);
-      padding: 28px 48px 22px;
-      text-align: center;
-    }
-    .header .logo {
-      font-family: 'Inter', sans-serif;
-      font-size: 11px; font-weight: 700;
-      color: rgba(255,255,255,0.55);
-      text-transform: uppercase; letter-spacing: 0.12em;
-      margin-bottom: 12px;
-    }
-    .header h1 {
-      font-family: 'Lora', Georgia, serif;
-      font-size: 30px; font-weight: 600;
-      color: var(--white);
-      line-height: 1.3; margin-bottom: 10px;
-    }
-    .header p {
-      font-size: 15px; color: rgba(255,255,255,0.65);
-    }
-
-    /* -- Progress (full-width, still in green band) -- */
+    /* -- Progress -- */
     .progress-wrap {
       background: var(--green);
       padding: 0 48px 18px;
@@ -445,13 +422,10 @@
       }
       .sidebar { display: none; }
       .mobile-summary { display: block; }
-      .header { padding: 28px 24px 24px; }
       .progress-wrap { padding: 0 24px 18px; }
-      .header h1 { font-size: 24px; }
     }
 
     @media (max-width: 480px) {
-      .header { padding: 22px 18px 20px; }
       .progress-wrap { padding: 0 18px 16px; }
       .content { padding: 18px 16px 0; }
       .card { padding: 22px 18px; }
@@ -464,14 +438,7 @@
 <body>
 <div class="container">
 
-  <!-- Dark green header band - full width -->
-  <div class="header">
-    <div class="logo">Forney HVAC Pros</div>
-    <h1>Find Your Perfect HVAC Contractor</h1>
-    <p>Answer 8 questions - matched to the right local pro in 90 seconds</p>
-  </div>
-
-  <!-- Progress bar - full width, stays in green band -->
+  <!-- Progress bar -->
   <div class="progress-wrap" id="progress-wrap">
     <div class="progress-bar">
       <div class="progress-fill" id="progress-fill" style="width:0%"></div>
