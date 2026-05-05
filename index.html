@@ -91,13 +91,14 @@
 
     /* -- Progress -- */
     .progress-wrap {
-      background: var(--green);
-      padding: 0 48px 18px;
+      background: var(--white);
+      padding: 12px 32px 10px;
+      border-bottom: 1px solid var(--border);
     }
     .progress-bar {
-      background: rgba(255,255,255,0.2);
+      background: var(--border);
       border-radius: 99px; height: 4px;
-      margin-bottom: 6px; overflow: hidden;
+      margin-bottom: 5px; overflow: hidden;
     }
     .progress-fill {
       background: var(--blue);
@@ -105,7 +106,7 @@
       transition: width 0.4s ease;
     }
     .progress-label {
-      font-size: 11px; color: rgba(255,255,255,0.5);
+      font-size: 11px; color: var(--light);
       text-align: right;
     }
 
@@ -422,11 +423,11 @@
       }
       .sidebar { display: none; }
       .mobile-summary { display: block; }
-      .progress-wrap { padding: 0 24px 18px; }
+      .progress-wrap { padding: 12px 24px 10px; }
     }
 
     @media (max-width: 480px) {
-      .progress-wrap { padding: 0 18px 16px; }
+      .progress-wrap { padding: 12px 18px 10px; }
       .content { padding: 18px 16px 0; }
       .card { padding: 22px 18px; }
       .header h1 { font-size: 21px; }
