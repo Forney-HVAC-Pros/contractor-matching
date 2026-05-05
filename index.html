@@ -48,7 +48,7 @@
 
     .container { width: 100%; max-width: 1200px; }
 
-    /* ‚îÄ‚îÄ Header (full-width dark green band) ‚îÄ‚îÄ */
+    /* -- Header (full-width dark green band) -- */
     .header {
       background: var(--green);
       padding: 28px 48px 22px;
@@ -71,7 +71,7 @@
       font-size: 15px; color: rgba(255,255,255,0.65);
     }
 
-    /* ‚îÄ‚îÄ Progress (full-width, still in green band) ‚îÄ‚îÄ */
+    /* -- Progress (full-width, still in green band) -- */
     .progress-wrap {
       background: var(--green);
       padding: 0 48px 18px;
@@ -91,7 +91,7 @@
       text-align: right;
     }
 
-    /* ‚îÄ‚îÄ Two-column content layout ‚îÄ‚îÄ */
+    /* -- Two-column content layout -- */
     .content {
       padding: 24px 32px 0;
       display: grid;
@@ -100,10 +100,10 @@
       align-items: start;
     }
 
-    /* ‚îÄ‚îÄ Main column ‚îÄ‚îÄ */
+    /* -- Main column -- */
     .main-col { min-width: 0; }
 
-    /* ‚îÄ‚îÄ Card ‚îÄ‚îÄ */
+    /* -- Card -- */
     .card {
       background: var(--white);
       border-radius: 4px;
@@ -111,7 +111,7 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 20px rgba(0,0,0,0.06);
     }
 
-    /* ‚îÄ‚îÄ Question ‚îÄ‚îÄ */
+    /* -- Question -- */
     .question-title {
       font-family: 'Lora', Georgia, serif;
       font-size: 20px; font-weight: 600;
@@ -119,7 +119,7 @@
     }
     .question-subtitle { font-size: 13px; color: var(--mid); margin-bottom: 14px; }
 
-    /* ‚îÄ‚îÄ Options ‚îÄ‚îÄ */
+    /* -- Options -- */
     .options { display: flex; flex-direction: column; gap: 6px; }
 
     .option {
@@ -150,7 +150,7 @@
       background: white; border-radius: 50%;
     }
 
-    /* ‚îÄ‚îÄ Buttons ‚îÄ‚îÄ */
+    /* -- Buttons -- */
     .btn {
       display: inline-flex; align-items: center; justify-content: center;
       gap: 8px; padding: 13px 22px; border-radius: 4px;
@@ -178,7 +178,7 @@
 
     .nav { display: flex; flex-direction: column; align-items: center; }
 
-    /* ‚îÄ‚îÄ Results header ‚îÄ‚îÄ */
+    /* -- Results header -- */
     .results-header { text-align: center; margin-bottom: 20px; }
     .match-badge {
       display: inline-block; background: #DCFCE7; color: #15803D;
@@ -192,7 +192,7 @@
     }
     .results-header p { font-size: 13px; color: var(--mid); }
 
-    /* ‚îÄ‚îÄ Contractor Card ‚îÄ‚îÄ */
+    /* -- Contractor Card -- */
     .contractor-card {
       background: var(--white); border-radius: 4px; padding: 24px 22px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 20px rgba(0,0,0,0.06);
@@ -227,7 +227,7 @@
 
     .strengths { list-style: none; margin-bottom: 16px; display: flex; flex-direction: column; gap: 5px; }
     .strengths li { font-size: 13px; color: var(--mid); display: flex; align-items: center; gap: 7px; }
-    .strengths li::before { content: '‚úì'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+    .strengths li::before { content: '\2713'; color: var(--green); font-weight: 700; flex-shrink: 0; }
 
     .contractor-actions { display: flex; gap: 8px; }
 
@@ -236,7 +236,7 @@
       text-align: center; margin-bottom: 10px; margin-top: 2px;
     }
 
-    /* ‚îÄ‚îÄ Trust Bar (results screen) ‚îÄ‚îÄ */
+    /* -- Trust Bar (results screen) -- */
     .trust-bar {
       display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;
       margin-top: 14px; padding: 14px 0 0;
@@ -244,7 +244,7 @@
     }
     .trust-item { font-size: 11px; color: var(--light); display: flex; align-items: center; gap: 4px; }
 
-    /* ‚îÄ‚îÄ Lead Form ‚îÄ‚îÄ */
+    /* -- Lead Form -- */
     .form-header { margin-bottom: 20px; }
     .form-header h3 {
       font-family: 'Lora', Georgia, serif;
@@ -265,7 +265,7 @@
     .form-group textarea { height: 80px; resize: vertical; }
     .form-note { font-size: 11px; color: var(--light); margin-top: 12px; text-align: center; }
 
-    /* ‚îÄ‚îÄ Success ‚îÄ‚îÄ */
+    /* -- Success -- */
     .success-screen { text-align: center; padding: 12px 0; }
     .success-icon { margin-bottom: 14px; display: flex; align-items: center; justify-content: center; }
     .success-screen h2 {
@@ -282,7 +282,7 @@
     .success-contractor-name { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
     .success-contractor-phone { font-size: 17px; font-weight: 700; color: var(--orange); text-decoration: none; }
 
-    /* ‚îÄ‚îÄ Sidebar ‚îÄ‚îÄ */
+    /* -- Sidebar -- */
     .sidebar { display: flex; flex-direction: column; gap: 20px; position: sticky; top: 24px; }
 
     .sidebar-card {
@@ -337,7 +337,7 @@
     .trust-detail strong { display: block; font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 2px; }
     .trust-detail span { font-size: 12px; color: var(--mid); line-height: 1.4; }
 
-    /* ‚îÄ‚îÄ Mobile Summary Strip ‚îÄ‚îÄ */
+    /* -- Mobile Summary Strip -- */
     .mobile-summary {
       display: none;
       background: var(--white);
@@ -386,7 +386,7 @@
       text-align: center; line-height: 1.2;
     }
 
-    /* ‚îÄ‚îÄ Utility ‚îÄ‚îÄ */
+    /* -- Utility -- */
     #next-btn { display: none; }
     .hidden { display: none !important; }
 
@@ -396,7 +396,7 @@
     }
     .animate-in { animation: fadeIn 0.3s ease forwards; }
 
-    /* ‚îÄ‚îÄ Responsive ‚îÄ‚îÄ */
+    /* -- Responsive -- */
     @media (max-width: 900px) {
       .content {
         grid-template-columns: 1fr;
@@ -438,13 +438,13 @@
     <div class="progress-label" id="progress-label">Question 1 of 8</div>
   </div>
 
-  <!-- Mobile info strip - compact version of sidebar cards, visible only ‚â§900px -->
+  <!-- Mobile info strip - compact version of sidebar cards, visible only &le;900px -->
   <div class="mobile-summary">
     <div class="mobile-how">
       <div class="mobile-step"><div class="mobile-step-num">1</div><span>Answer 8 questions</span></div>
-      <span class="mobile-arrow">‚Ä∫</span>
+      <span class="mobile-arrow">&rsaquo;</span>
       <div class="mobile-step"><div class="mobile-step-num">2</div><span>Get your match</span></div>
-      <span class="mobile-arrow">‚Ä∫</span>
+      <span class="mobile-arrow">&rsaquo;</span>
       <div class="mobile-step"><div class="mobile-step-num">3</div><span>Connect for free</span></div>
     </div>
     <div class="mobile-trust-row">
@@ -461,10 +461,10 @@
             <path d="M10 3.96c1.47 0 2.79.5 3.83 1.5l2.86-2.86C14.95.99 12.7 0 10 0A10 10 0 0 0 1.07 5.53l3.34 2.58C5.2 5.71 7.4 3.96 10 3.96z" fill="#EA4335"/>
           </svg>
         </div>
-        <span class="mobile-trust-label">4.8-5.0‚òÖ</span>
+        <span class="mobile-trust-label">4.8-5.0&#9733;</span>
       </div>
       <div class="mobile-trust-item">
-        <div class="trust-icon tdlr">‚òÖ</div>
+        <div class="trust-icon tdlr">&#9733;</div>
         <span class="mobile-trust-label">TDLR</span>
       </div>
       <div class="mobile-trust-item">
@@ -494,23 +494,23 @@
         <div class="question-subtitle" id="question-subtitle"></div>
         <div class="options" id="options-container"></div>
         <div class="nav">
-          <button class="btn btn-primary" id="next-btn" disabled onclick="nextStep()">Continue ‚Üí</button>
-          <button class="btn-back hidden" id="back-btn" onclick="prevStep()">‚Üê Back</button>
+          <button class="btn btn-primary" id="next-btn" disabled onclick="nextStep()">Continue &rarr;</button>
+          <button class="btn-back hidden" id="back-btn" onclick="prevStep()">&larr; Back</button>
         </div>
       </div>
 
       <!-- Results Screen -->
       <div class="hidden" id="results-screen">
         <div class="results-header animate-in">
-          <div class="match-badge">‚úì Match Found</div>
+          <div class="match-badge">&#10003; Match Found</div>
           <h2 id="results-title"></h2>
           <p id="results-subtitle"></p>
         </div>
         <div id="contractor-results"></div>
         <div class="trust-bar">
-          <span class="trust-item">‚úì All contractors TDLR-licensed</span>
-          <span class="trust-item">‚úì Free matching service</span>
-          <span class="trust-item">‚úì No obligation</span>
+          <span class="trust-item">&#10003; All contractors TDLR-licensed</span>
+          <span class="trust-item">&#10003; Free matching service</span>
+          <span class="trust-item">&#10003; No obligation</span>
         </div>
       </div>
 
@@ -550,10 +550,10 @@
             <textarea id="field-message" name="Message" placeholder="System age, specific issue, other details..."></textarea>
           </div>
 
-          <button type="submit" class="btn btn-primary" id="submit-btn">Send My Request ‚Üí</button>
+          <button type="submit" class="btn btn-primary" id="submit-btn">Send My Request &rarr;</button>
           <p class="form-note">Your info is shared only with the matched contractor. No spam, ever.</p>
         </form>
-        <button class="btn-back" onclick="showResults()">‚Üê Back to results</button>
+        <button class="btn-back" onclick="showResults()">&larr; Back to results</button>
       </div>
 
       <!-- Success Screen -->
@@ -638,12 +638,12 @@
             </div>
             <div class="trust-detail">
               <strong>4.8-5.0 Stars on Google</strong>
-              <span>Each contractor verified independently - minimum 4.7‚òÖ to qualify</span>
+              <span>Each contractor verified independently - minimum 4.7&#9733; to qualify</span>
             </div>
           </div>
 
           <div class="trust-item-lg">
-            <div class="trust-icon tdlr">‚òÖ</div>
+            <div class="trust-icon tdlr">&#9733;</div>
             <div class="trust-detail">
               <strong>Active TDLR License Required</strong>
               <span>We verify each contractor's Texas state license before referring them</span>
@@ -767,11 +767,11 @@ const QUESTIONS = [
     question: 'What do you need help with?',
     subtitle: 'Pick the option that best describes your situation',
     options: [
-      { value: 'emergency',    icon: 'üö®', label: 'Emergency',                 sublabel: 'No AC or heat right now',           scores: { jandr:4, infinity:3, williams:1, bolton:0 } },
-      { value: 'ac_repair',    icon: '‚ùÑÔ∏è', label: 'AC Repair',                 sublabel: 'AC not cooling properly',           scores: { jandr:2, infinity:2, williams:2, bolton:1 } },
-      { value: 'heat_repair',  icon: 'üî•', label: 'Heating / Furnace Repair',  sublabel: 'Furnace or heater problem',         scores: { jandr:2, infinity:2, williams:2, bolton:1 } },
-      { value: 'installation', icon: 'üè†', label: 'New System Installation',   sublabel: 'Replace or install a full system',  scores: { bolton:4, williams:2, jandr:1, infinity:1 } },
-      { value: 'maintenance',  icon: 'üîß', label: 'Maintenance / Tune-Up',     sublabel: 'Seasonal service or checkup',       scores: { williams:3, jandr:2, infinity:1, bolton:1 } }
+      { value: 'emergency',    icon: '', label: 'Emergency',                 sublabel: 'No AC or heat right now',           scores: { jandr:4, infinity:3, williams:1, bolton:0 } },
+      { value: 'ac_repair',    icon: '', label: 'AC Repair',                 sublabel: 'AC not cooling properly',           scores: { jandr:2, infinity:2, williams:2, bolton:1 } },
+      { value: 'heat_repair',  icon: '', label: 'Heating / Furnace Repair',  sublabel: 'Furnace or heater problem',         scores: { jandr:2, infinity:2, williams:2, bolton:1 } },
+      { value: 'installation', icon: '', label: 'New System Installation',   sublabel: 'Replace or install a full system',  scores: { bolton:4, williams:2, jandr:1, infinity:1 } },
+      { value: 'maintenance',  icon: '', label: 'Maintenance / Tune-Up',     sublabel: 'Seasonal service or checkup',       scores: { williams:3, jandr:2, infinity:1, bolton:1 } }
     ]
   },
   {
@@ -779,10 +779,10 @@ const QUESTIONS = [
     question: 'How soon do you need service?',
     subtitle: 'Helps us match you with contractors who have availability',
     options: [
-      { value: 'today',    icon: '‚ö°', label: 'Today',           sublabel: 'I need someone right away',         scores: { jandr:3, infinity:3, williams:1, bolton:0 } },
-      { value: 'days',     icon: 'üìÖ', label: 'Within 2 days',   sublabel: 'Urgent, but not a full emergency',  scores: { infinity:2, jandr:2, williams:1, bolton:1 } },
-      { value: 'week',     icon: 'üóìÔ∏è', label: 'This week',       sublabel: 'Soon, but I have some flexibility', scores: { williams:2, infinity:1, jandr:1, bolton:1 } },
-      { value: 'planning', icon: 'üí≠', label: 'Planning ahead',  sublabel: 'Getting quotes for future work',    scores: { bolton:3, williams:2, jandr:1, infinity:0 } }
+      { value: 'today',    icon: '', label: 'Today',           sublabel: 'I need someone right away',         scores: { jandr:3, infinity:3, williams:1, bolton:0 } },
+      { value: 'days',     icon: '', label: 'Within 2 days',   sublabel: 'Urgent, but not a full emergency',  scores: { infinity:2, jandr:2, williams:1, bolton:1 } },
+      { value: 'week',     icon: '', label: 'This week',       sublabel: 'Soon, but I have some flexibility', scores: { williams:2, infinity:1, jandr:1, bolton:1 } },
+      { value: 'planning', icon: '', label: 'Planning ahead',  sublabel: 'Getting quotes for future work',    scores: { bolton:3, williams:2, jandr:1, infinity:0 } }
     ]
   },
   {
@@ -790,11 +790,11 @@ const QUESTIONS = [
     question: 'How old is your current HVAC system?',
     subtitle: 'Helps us recommend repair vs. replacement options',
     options: [
-      { value: 'new',     icon: 'üÜï', label: 'Under 5 years',   sublabel: 'Relatively new system',              scores: { williams:2, jandr:1, infinity:1, bolton:0 } },
-      { value: 'mid',     icon: 'üìÜ', label: '5-10 years',      sublabel: 'Approaching mid-life',               scores: { williams:1, jandr:1, infinity:1, bolton:1 } },
-      { value: 'older',   icon: '‚è≥', label: '10-15 years',     sublabel: 'Getting older - repair or replace?', scores: { bolton:2, williams:2, jandr:1, infinity:1 } },
-      { value: 'old',     icon: 'üî¥', label: '15+ years',       sublabel: 'Likely needs replacement',           scores: { bolton:4, williams:1, jandr:1, infinity:1 } },
-      { value: 'unknown', icon: '‚ùì', label: "I'm not sure",    sublabel: 'Need a pro to assess it',            scores: { jandr:1, williams:1, infinity:1, bolton:1 } }
+      { value: 'new',     icon: '', label: 'Under 5 years',   sublabel: 'Relatively new system',              scores: { williams:2, jandr:1, infinity:1, bolton:0 } },
+      { value: 'mid',     icon: '', label: '5-10 years',      sublabel: 'Approaching mid-life',               scores: { williams:1, jandr:1, infinity:1, bolton:1 } },
+      { value: 'older',   icon: '', label: '10-15 years',     sublabel: 'Getting older - repair or replace?', scores: { bolton:2, williams:2, jandr:1, infinity:1 } },
+      { value: 'old',     icon: '', label: '15+ years',       sublabel: 'Likely needs replacement',           scores: { bolton:4, williams:1, jandr:1, infinity:1 } },
+      { value: 'unknown', icon: '', label: "I'm not sure",    sublabel: 'Need a pro to assess it',            scores: { jandr:1, williams:1, infinity:1, bolton:1 } }
     ]
   },
   {
@@ -802,10 +802,10 @@ const QUESTIONS = [
     question: 'Has this issue happened before?',
     subtitle: 'Helps us find the right fit for your situation',
     options: [
-      { value: 'new_issue',    icon: 'üÜï', label: 'Brand new issue',                sublabel: 'First time this has come up',         scores: { infinity:1, jandr:1, williams:1, bolton:1 } },
-      { value: 'recurring',    icon: 'üîÅ', label: 'This keeps happening',           sublabel: 'Recurring or ongoing problem',        scores: { williams:3, jandr:2, bolton:1, infinity:0 } },
-      { value: 'bad_exp',      icon: 'üò§', label: 'Had a bad experience elsewhere', sublabel: 'Looking for a more trustworthy option', scores: { jandr:3, williams:3, bolton:1, infinity:0 } },
-      { value: 'warranty',     icon: 'üõ°Ô∏è', label: 'May still be under warranty',   sublabel: 'System or work is under warranty',    scores: { williams:4, jandr:1, bolton:1, infinity:0 } }
+      { value: 'new_issue',    icon: '', label: 'Brand new issue',                sublabel: 'First time this has come up',         scores: { infinity:1, jandr:1, williams:1, bolton:1 } },
+      { value: 'recurring',    icon: '', label: 'This keeps happening',           sublabel: 'Recurring or ongoing problem',        scores: { williams:3, jandr:2, bolton:1, infinity:0 } },
+      { value: 'bad_exp',      icon: '', label: 'Had a bad experience elsewhere', sublabel: 'Looking for a more trustworthy option', scores: { jandr:3, williams:3, bolton:1, infinity:0 } },
+      { value: 'warranty',     icon: '', label: 'May still be under warranty',   sublabel: 'System or work is under warranty',    scores: { williams:4, jandr:1, bolton:1, infinity:0 } }
     ]
   },
   {
@@ -813,11 +813,11 @@ const QUESTIONS = [
     question: 'What matters most to you?',
     subtitle: 'Choose your top priority for this job',
     options: [
-      { value: 'speed',     icon: '‚ö°', label: 'Fastest Response',           sublabel: 'I need someone available ASAP',      scores: { infinity:4, jandr:2, williams:1, bolton:0 } },
-      { value: 'warranty',  icon: 'üõ°Ô∏è', label: 'Best Warranty',             sublabel: 'Long-term coverage and guarantees',  scores: { williams:4, bolton:2, jandr:1, infinity:0 } },
-      { value: 'financing', icon: 'üí≥', label: 'Financing Options',         sublabel: '0% financing if I need it',          scores: { bolton:4, williams:1, jandr:0, infinity:0 } },
-      { value: 'local',     icon: 'üèòÔ∏è', label: 'Established Local Company', sublabel: 'Deep roots in the Forney area',      scores: { jandr:4, williams:2, bolton:1, infinity:0 } },
-      { value: 'reviews',   icon: '‚≠ê', label: 'Most Proven Track Record',  sublabel: 'Highest volume of verified reviews', scores: { infinity:3, bolton:2, williams:1, jandr:1 } }
+      { value: 'speed',     icon: '', label: 'Fastest Response',           sublabel: 'I need someone available ASAP',      scores: { infinity:4, jandr:2, williams:1, bolton:0 } },
+      { value: 'warranty',  icon: '', label: 'Best Warranty',             sublabel: 'Long-term coverage and guarantees',  scores: { williams:4, bolton:2, jandr:1, infinity:0 } },
+      { value: 'financing', icon: '', label: 'Financing Options',         sublabel: '0% financing if I need it',          scores: { bolton:4, williams:1, jandr:0, infinity:0 } },
+      { value: 'local',     icon: '', label: 'Established Local Company', sublabel: 'Deep roots in the Forney area',      scores: { jandr:4, williams:2, bolton:1, infinity:0 } },
+      { value: 'reviews',   icon: '', label: 'Most Proven Track Record',  sublabel: 'Highest volume of verified reviews', scores: { infinity:3, bolton:2, williams:1, jandr:1 } }
     ]
   },
   {
@@ -825,11 +825,11 @@ const QUESTIONS = [
     question: "What's your approximate budget?",
     subtitle: 'A rough idea helps us find the right fit',
     options: [
-      { value: 'small',   icon: 'üíµ', label: 'Under $500',      sublabel: 'Service call or minor repair',       scores: { jandr:2, williams:2, infinity:1, bolton:0 } },
-      { value: 'medium',  icon: 'üíµ', label: '$500 - $2,000',   sublabel: 'Major repair or part replacement',   scores: { williams:2, jandr:1, infinity:1, bolton:1 } },
-      { value: 'large',   icon: 'üíµ', label: '$2,000 - $5,000', sublabel: 'Partial replacement or large job',   scores: { bolton:2, williams:2, jandr:1, infinity:1 } },
-      { value: 'xlarge',  icon: 'üíµ', label: '$5,000+',         sublabel: 'Full system replacement',            scores: { bolton:4, williams:1, jandr:1, infinity:1 } },
-      { value: 'unknown', icon: '‚ùì', label: "Not sure yet",    sublabel: 'I need a quote first',               scores: { williams:1, jandr:1, infinity:1, bolton:1 } }
+      { value: 'small',   icon: '', label: 'Under $500',      sublabel: 'Service call or minor repair',       scores: { jandr:2, williams:2, infinity:1, bolton:0 } },
+      { value: 'medium',  icon: '', label: '$500 - $2,000',   sublabel: 'Major repair or part replacement',   scores: { williams:2, jandr:1, infinity:1, bolton:1 } },
+      { value: 'large',   icon: '', label: '$2,000 - $5,000', sublabel: 'Partial replacement or large job',   scores: { bolton:2, williams:2, jandr:1, infinity:1 } },
+      { value: 'xlarge',  icon: '', label: '$5,000+',         sublabel: 'Full system replacement',            scores: { bolton:4, williams:1, jandr:1, infinity:1 } },
+      { value: 'unknown', icon: '', label: "Not sure yet",    sublabel: 'I need a quote first',               scores: { williams:1, jandr:1, infinity:1, bolton:1 } }
     ]
   },
   {
@@ -837,10 +837,10 @@ const QUESTIONS = [
     question: 'What type of property?',
     subtitle: 'Some contractors specialize in specific property types',
     options: [
-      { value: 'home',             icon: 'üè†', label: 'Single-Family Home',   sublabel: 'Existing residential property',      scores: { jandr:1, williams:1, infinity:1, bolton:1 } },
-      { value: 'new_construction', icon: 'üèóÔ∏è', label: 'New Construction',     sublabel: 'New build or major renovation',       scores: { bolton:4, infinity:1, williams:1, jandr:1 } },
-      { value: 'condo',            icon: 'üè¢', label: 'Condo or Townhome',    sublabel: 'Shared-wall or multi-unit property',  scores: { infinity:2, williams:2, jandr:1, bolton:0 } },
-      { value: 'commercial',       icon: 'üè¨', label: 'Commercial or Rental', sublabel: 'Business or investment property',     scores: { bolton:3, infinity:2, jandr:1, williams:1 } }
+      { value: 'home',             icon: '', label: 'Single-Family Home',   sublabel: 'Existing residential property',      scores: { jandr:1, williams:1, infinity:1, bolton:1 } },
+      { value: 'new_construction', icon: '', label: 'New Construction',     sublabel: 'New build or major renovation',       scores: { bolton:4, infinity:1, williams:1, jandr:1 } },
+      { value: 'condo',            icon: '', label: 'Condo or Townhome',    sublabel: 'Shared-wall or multi-unit property',  scores: { infinity:2, williams:2, jandr:1, bolton:0 } },
+      { value: 'commercial',       icon: '', label: 'Commercial or Rental', sublabel: 'Business or investment property',     scores: { bolton:3, infinity:2, jandr:1, williams:1 } }
     ]
   },
   {
@@ -848,11 +848,11 @@ const QUESTIONS = [
     question: 'Any special concerns?',
     subtitle: 'Select the one that applies most - or choose "None"',
     options: [
-      { value: 'air_quality',    icon: 'üí®', label: 'Indoor Air Quality',    sublabel: 'Dust, allergies, humidity, filtration',  scores: { infinity:2, williams:2, bolton:1, jandr:1 } },
-      { value: 'efficiency',     icon: '‚ö°', label: 'Energy Efficiency',     sublabel: 'Lower bills, upgrade to high-SEER unit', scores: { bolton:3, williams:2, infinity:1, jandr:0 } },
-      { value: 'duct_work',      icon: 'üåÄ', label: 'Duct Work / Airflow',   sublabel: 'Uneven temps, duct issues',              scores: { bolton:2, infinity:2, williams:1, jandr:1 } },
-      { value: 'second_opinion', icon: 'üîç', label: 'Second Opinion',        sublabel: 'Want to verify a quote or diagnosis',    scores: { jandr:3, williams:3, infinity:0, bolton:0 } },
-      { value: 'none',           icon: 'üëç', label: 'No special concerns',   sublabel: 'Just need the job done right',           scores: { jandr:1, williams:1, infinity:1, bolton:1 } }
+      { value: 'air_quality',    icon: '', label: 'Indoor Air Quality',    sublabel: 'Dust, allergies, humidity, filtration',  scores: { infinity:2, williams:2, bolton:1, jandr:1 } },
+      { value: 'efficiency',     icon: '', label: 'Energy Efficiency',     sublabel: 'Lower bills, upgrade to high-SEER unit', scores: { bolton:3, williams:2, infinity:1, jandr:0 } },
+      { value: 'duct_work',      icon: '', label: 'Duct Work / Airflow',   sublabel: 'Uneven temps, duct issues',              scores: { bolton:2, infinity:2, williams:1, jandr:1 } },
+      { value: 'second_opinion', icon: '', label: 'Second Opinion',        sublabel: 'Want to verify a quote or diagnosis',    scores: { jandr:3, williams:3, infinity:0, bolton:0 } },
+      { value: 'none',           icon: '', label: 'No special concerns',   sublabel: 'Just need the job done right',           scores: { jandr:1, williams:1, infinity:1, bolton:1 } }
     ]
   }
 ];
@@ -986,7 +986,7 @@ function renderQuestion(index) {
   const nextBtn = document.getElementById('next-btn');
   const backBtn = document.getElementById('back-btn');
   nextBtn.disabled = !answers[q.id];
-  nextBtn.textContent = index === QUESTIONS.length - 1 ? 'Find My Match ‚Üí' : 'Continue ‚Üí';
+  nextBtn.textContent = index === QUESTIONS.length - 1 ? 'Find My Match &rarr;' : 'Continue &rarr;';
   backBtn.classList.toggle('hidden', index === 0);
   updateProgress(index);
 }
@@ -1074,10 +1074,10 @@ function buildContractorCard(c, isPrimary) {
       <span class="contractor-badge ${isPrimary ? 'badge-primary' : 'badge-secondary'}">${c.badge}</span>
     </div>
     <div class="contractor-rating">
-      <span class="stars">‚òÖ‚òÖ‚òÖ‚òÖ‚òÖ</span>
+      <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
       <span class="rating-value">${c.rating.toFixed(1)}</span>
       <span class="rating-count">(${c.reviewCount} reviews)</span>
-      <span class="since-tag">¬∑ Est. ${c.since}</span>
+      <span class="since-tag">&#183; Est. ${c.since}</span>
     </div>
     <div class="match-reason"><strong>Why we matched you:</strong> ${getMatchReason(c.id)}</div>
     <ul class="strengths">${c.strengths.map(s => `<li>${s}</li>`).join('')}</ul>
@@ -1098,7 +1098,7 @@ function showForm(contractorId) {
   const c = CONTRACTORS[contractorId];
   selectedContractor = c;
   document.getElementById('form-contractor-name').textContent = c.name;
-  document.getElementById('form-subject').value = `New HVAC Lead ‚Üí ${c.name}`;
+  document.getElementById('form-subject').value = `New HVAC Lead &rarr; ${c.name}`;
   document.getElementById('hidden-contractor').value = c.name;
   document.getElementById('hidden-service').value = getLabel('service');
   document.getElementById('hidden-urgency').value = getLabel('urgency');
@@ -1139,7 +1139,7 @@ document.getElementById('lead-form').addEventListener('submit', async function(e
       showSuccess();
     } else { throw new Error('failed'); }
   } catch {
-    btn.textContent = 'Send My Request ‚Üí';
+    btn.textContent = 'Send My Request &rarr;';
     btn.disabled = false;
     alert('Something went wrong. Please call us directly at (469) 898-3774.');
   }
@@ -1185,7 +1185,7 @@ function track(event, params = {}) {
   if (typeof gtag !== 'undefined') gtag('event', event, params);
 }
 
-// ‚îÄ‚îÄ Init ‚îÄ‚îÄ
+// -- Init --
 renderQuestion(0);
 track('tool_started');
 </script>
