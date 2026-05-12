@@ -1,3 +1,8 @@
+Here's the complete file:
+
+---
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -447,7 +452,7 @@
     <div class="progress-label" id="progress-label">Question 1 of 8</div>
   </div>
 
-  <!-- Mobile info strip - compact version of sidebar cards, visible only &le;900px -->
+  <!-- Mobile info strip - compact version of sidebar cards, visible only ≤900px -->
   <div class="mobile-summary">
     <div class="mobile-how">
       <div class="mobile-step"><div class="mobile-step-num">1</div><span>Answer 8 questions</span></div>
@@ -1073,8 +1078,11 @@ function buildContractorCard(c, isPrimary) {
   const card = document.createElement('div');
   card.className = `contractor-card ${isPrimary ? 'primary' : 'secondary'} animate-in`;
 
+  const isDesktop = window.innerWidth > 900 && !('ontouchstart' in window) && navigator.maxTouchPoints === 0;
   const callBtn = c.phone
-    ? `<a href="${c.phoneHref}" class="btn btn-call" target="_blank" rel="noopener" onclick="track('call_clicked',{contractor:'${c.id}'})">Call Now</a>`
+    ? isDesktop
+      ? `<button class="btn btn-call" onclick="revealPhone(this,'${c.phoneHref}','${c.phone}','${c.id}')">See Phone Number</button>`
+      : `<a href="${c.phoneHref}" class="btn btn-call" target="_blank" rel="noopener" onclick="track('call_clicked',{contractor:'${c.id}'})">Call Now</a>`
     : '';
 
   card.innerHTML = `
@@ -1098,6 +1106,14 @@ function buildContractorCard(c, isPrimary) {
     </div>
   `;
   return card;
+}
+
+// ============================================================
+// UI - REVEAL PHONE (desktop)
+// ============================================================
+function revealPhone(btn, href, phone, contractorId) {
+  track('call_clicked', {contractor: contractorId});
+  btn.outerHTML = `<a href="${href}" class="btn btn-call" target="_blank" rel="noopener">${phone}</a>`;
 }
 
 // ============================================================
@@ -1224,4 +1240,4 @@ window.addEventListener('load', sendHeight);
 </noscript>
 </body>
 </html>
-
+```
