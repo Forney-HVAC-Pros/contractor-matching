@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -234,7 +233,10 @@
     .badge-secondary { background: var(--cream); color: var(--mid); }
 
     .contractor-rating { display: flex; align-items: center; gap: 5px; margin-bottom: 10px; flex-wrap: wrap; }
-    .stars { color: #F59E0B; font-size: 13px; }
+    .stars { font-size: 13px; display: inline-flex; gap: 1px; }
+    .star { color: #E5E7EB; position: relative; display: inline-block; }
+    .star-full { color: #F59E0B; }
+    .star-partial::after { content: '\2605'; position: absolute; left: 0; top: 0; color: #F59E0B; width: var(--pct); overflow: hidden; white-space: nowrap; }
     .rating-value { font-size: 13px; font-weight: 700; color: var(--dark); }
     .rating-count { font-size: 12px; color: var(--light); }
     .since-tag { font-size: 12px; color: var(--border); }
@@ -448,7 +450,7 @@
     <div class="progress-label" id="progress-label">Question 1 of 8</div>
   </div>
 
-  <!-- Mobile info strip - compact version of sidebar cards, visible only ≤900px -->
+  <!-- Mobile info strip - compact version of sidebar cards, visible only &le;900px -->
   <div class="mobile-summary">
     <div class="mobile-how">
       <div class="mobile-step"><div class="mobile-step-num">1</div><span>Answer 8 questions</span></div>
@@ -1078,7 +1080,7 @@ function buildContractorCard(c, isPrimary) {
   const callBtn = c.phone
     ? isDesktop
       ? `<button class="btn btn-call" onclick="revealPhone(this,'${c.phoneHref}','${c.phone}','${c.id}')">See Phone Number</button>`
-      : `<a href="${c.phoneHref}" class="btn btn-call" target="_blank" rel="noopener" onclick="track('call_clicked',{contractor:'${c.id}'})">Call Now</a>`
+      : `<a href="${c.phoneHref}" class="btn btn-call" target="_blank" rel="noopener" onclick="trackCallLead('${c.id}')">Call Now</a>`
     : '';
 
   card.innerHTML = `
@@ -1087,7 +1089,7 @@ function buildContractorCard(c, isPrimary) {
       <span class="contractor-badge ${isPrimary ? 'badge-primary' : 'badge-secondary'}">${c.badge}</span>
     </div>
     <div class="contractor-rating">
-      <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      ${renderStars(c.rating)}
       <span class="rating-value">${c.rating.toFixed(1)}</span>
       <span class="rating-count">(${c.reviewCount} reviews)</span>
       <span class="since-tag">&#183; Est. ${c.since}</span>
@@ -1108,8 +1110,24 @@ function buildContractorCard(c, isPrimary) {
 // UI - REVEAL PHONE (desktop)
 // ============================================================
 function revealPhone(btn, href, phone, contractorId) {
-  track('call_clicked', {contractor: contractorId});
+  trackCallLead(contractorId);
   btn.outerHTML = `<a href="${href}" class="btn btn-call" target="_blank" rel="noopener">${phone}</a>`;
+}
+
+function trackCallLead(contractorId) {
+  track('call_clicked', { contractor: contractorId });
+  track('lead_submitted', { method: 'call', contractor: contractorId });
+}
+
+function renderStars(rating) {
+  const full = Math.floor(rating);
+  const partial = Math.round((rating - full) * 100);
+  const empty = 5 - Math.ceil(rating);
+  let html = '';
+  for (let i = 0; i < full; i++) html += '<span class="star star-full">&#9733;</span>';
+  if (partial > 0) html += `<span class="star star-partial" style="--pct:${partial}%">&#9733;</span>`;
+  for (let i = 0; i < empty; i++) html += '<span class="star star-empty">&#9734;</span>';
+  return `<span class="stars">${html}</span>`;
 }
 
 // ============================================================
@@ -1156,7 +1174,7 @@ document.getElementById('lead-form').addEventListener('submit', async function(e
       headers: { 'Accept': 'application/json' }
     });
     if (res.ok) {
-      track('lead_submitted', { contractor: selectedContractor.id, service: answers.service, urgency: answers.urgency });
+      track('lead_submitted', { method: 'form', contractor: selectedContractor.id, service: answers.service, urgency: answers.urgency });
       showSuccess();
     } else { throw new Error('failed'); }
   } catch {
@@ -1231,9 +1249,8 @@ window.addEventListener('load', sendHeight);
       <li><strong>Infinity Texas Air</strong> - 4.8 stars (1,500+ reviews) - (972) 465-9788 - Available 7am-7pm, 7 days a week. Nextdoor Neighborhood Favorite 2021 and 2023.</li>
     </ul>
     <p>All contractors are TDLR-licensed, minimum 4.7-star Google rating, and locally based in Forney/Kaufman County.</p>
-    <p><strong>Contact Forney HVAC Pros:</strong> (469) 898-3774 | info@forneyhvacpros.com | <a href="https://forneyhvacpros.com">forneyhvacpros.com</a></p>
+    <p><strong>Contact Forney HVAC Pros:</strong> (469) 898-3774 | contact@forneyhvacpros.com | <a href="https://forneyhvacpros.com">forneyhvacpros.com</a></p>
   </div>
 </noscript>
 </body>
 </html>
-```
