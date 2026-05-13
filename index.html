@@ -805,6 +805,74 @@ const CONTRACTORS = {
       'Membership maintenance plans with priority scheduling',
       'Full commercial HVAC capability'
     ]
+  },
+  accurate: {
+    id: 'accurate',
+    name: 'Accurate Home Services',
+    website: 'https://accurateairtx.com',
+    phone: '(469) 966-4147',
+    phoneHref: 'tel:4699664147',
+    rating: 4.9,
+    reviewCount: '454',
+    since: '1992',
+    badge: "Kaufman County's Most Trusted",
+    strengths: [
+      'Kaufman Herald Readers\' Choice Award — 29 consecutive years',
+      'NATE-certified technicians available 24/7',
+      'Full quad-trade: HVAC, electrical, plumbing & IAQ',
+      'ACCA member & Energy Star partner'
+    ]
+  },
+  coolcasa: {
+    id: 'coolcasa',
+    name: 'Cool Casa Heating & Air Conditioning',
+    website: 'https://coolcasaair.com',
+    phone: '(469) 974-7321',
+    phoneHref: 'tel:4699747321',
+    rating: 5.0,
+    reviewCount: '639',
+    since: '2018',
+    badge: 'Perfect-Rated — 639 Reviews',
+    strengths: [
+      'Perfect 5.0&#9733; rating across 639 Google reviews',
+      'Built entirely on word-of-mouth referrals',
+      'Cool Club membership maintenance plan',
+      'New construction HVAC specialist'
+    ]
+  },
+  copeland: {
+    id: 'copeland',
+    name: 'Copeland Home Services',
+    website: 'https://copelandairtexas.com',
+    phone: '(469) 720-4440',
+    phoneHref: 'tel:4697204440',
+    rating: 4.9,
+    reviewCount: '500+',
+    since: '2022',
+    badge: 'Carrier Factory Authorized',
+    strengths: [
+      'Forney\'s only Carrier Factory Authorized Dealer',
+      '24/7 emergency & same-day availability',
+      'Zero-down flexible financing options',
+      'Full HVAC, electrical, plumbing & pool services'
+    ]
+  },
+  mhc: {
+    id: 'mhc',
+    name: 'MHC Air Services',
+    website: 'https://metrohc.com',
+    phone: '(972) 279-3400',
+    phoneHref: 'tel:9722793400',
+    rating: 4.7,
+    reviewCount: '79',
+    since: '1976',
+    badge: '50 Years — Multi-Brand Certified',
+    strengths: [
+      '3rd-generation family business serving Rockwall since 1976',
+      'NATE-certified across Trane, Carrier & York brands',
+      'Commercial-grade load calculations for new construction',
+      'Rigorous tech vetting: background check, aptitude test & OSHA certified'
+    ]
   }
 };
 
@@ -817,11 +885,11 @@ const QUESTIONS = [
     question: 'What do you need help with?',
     subtitle: 'Pick the option that best describes your situation',
     options: [
-      { value: 'emergency',    icon: '', label: 'Emergency',                 sublabel: 'No AC or heat right now',           scores: { jandr:4, infinity:3, williams:1, bolton:0, absolute:3, schnorrbusch:0 } },
-      { value: 'ac_repair',    icon: '', label: 'AC Repair',                 sublabel: 'AC not cooling properly',           scores: { jandr:2, infinity:2, williams:2, bolton:1, absolute:2, schnorrbusch:2 } },
-      { value: 'heat_repair',  icon: '', label: 'Heating / Furnace Repair',  sublabel: 'Furnace or heater problem',         scores: { jandr:2, infinity:2, williams:2, bolton:1, absolute:2, schnorrbusch:2 } },
-      { value: 'installation', icon: '', label: 'New System Installation',   sublabel: 'Replace or install a full system',  scores: { bolton:4, williams:2, jandr:1, infinity:1, absolute:2, schnorrbusch:2 } },
-      { value: 'maintenance',  icon: '', label: 'Maintenance / Tune-Up',     sublabel: 'Seasonal service or checkup',       scores: { williams:3, jandr:2, infinity:1, bolton:1, absolute:3, schnorrbusch:3 } }
+      { value: 'emergency',    icon: '', label: 'Emergency',                 sublabel: 'No AC or heat right now',           scores: { jandr:4, infinity:3, williams:1, bolton:0, absolute:3, schnorrbusch:0, accurate:3, coolcasa:1, copeland:3, mhc:2 } },
+      { value: 'ac_repair',    icon: '', label: 'AC Repair',                 sublabel: 'AC not cooling properly',           scores: { jandr:2, infinity:2, williams:2, bolton:1, absolute:2, schnorrbusch:2, accurate:2, coolcasa:2, copeland:2, mhc:2 } },
+      { value: 'heat_repair',  icon: '', label: 'Heating / Furnace Repair',  sublabel: 'Furnace or heater problem',         scores: { jandr:2, infinity:2, williams:2, bolton:1, absolute:2, schnorrbusch:2, accurate:2, coolcasa:2, copeland:2, mhc:2 } },
+      { value: 'installation', icon: '', label: 'New System Installation',   sublabel: 'Replace or install a full system',  scores: { bolton:4, williams:2, jandr:1, infinity:1, absolute:2, schnorrbusch:2, accurate:2, coolcasa:2, copeland:3, mhc:3 } },
+      { value: 'maintenance',  icon: '', label: 'Maintenance / Tune-Up',     sublabel: 'Seasonal service or checkup',       scores: { williams:3, jandr:2, infinity:1, bolton:1, absolute:3, schnorrbusch:3, accurate:3, coolcasa:3, copeland:2, mhc:2 } }
     ]
   },
   {
@@ -829,10 +897,10 @@ const QUESTIONS = [
     question: 'How soon do you need service?',
     subtitle: 'Helps us match you with contractors who have availability',
     options: [
-      { value: 'today',    icon: '', label: 'Today',           sublabel: 'I need someone right away',         scores: { jandr:3, infinity:3, williams:1, bolton:0, absolute:3, schnorrbusch:0 } },
-      { value: 'days',     icon: '', label: 'Within 2 days',   sublabel: 'Urgent, but not a full emergency',  scores: { infinity:2, jandr:2, williams:1, bolton:1, absolute:2, schnorrbusch:1 } },
-      { value: 'week',     icon: '', label: 'This week',       sublabel: 'Soon, but I have some flexibility', scores: { williams:2, infinity:1, jandr:1, bolton:1, absolute:1, schnorrbusch:2 } },
-      { value: 'planning', icon: '', label: 'Planning ahead',  sublabel: 'Getting quotes for future work',    scores: { bolton:3, williams:2, jandr:1, infinity:0, absolute:1, schnorrbusch:2 } }
+      { value: 'today',    icon: '', label: 'Today',           sublabel: 'I need someone right away',         scores: { jandr:3, infinity:3, williams:1, bolton:0, absolute:3, schnorrbusch:0, accurate:3, coolcasa:0, copeland:3, mhc:2 } },
+      { value: 'days',     icon: '', label: 'Within 2 days',   sublabel: 'Urgent, but not a full emergency',  scores: { infinity:2, jandr:2, williams:1, bolton:1, absolute:2, schnorrbusch:1, accurate:2, coolcasa:2, copeland:2, mhc:2 } },
+      { value: 'week',     icon: '', label: 'This week',       sublabel: 'Soon, but I have some flexibility', scores: { williams:2, infinity:1, jandr:1, bolton:1, absolute:1, schnorrbusch:2, accurate:1, coolcasa:2, copeland:1, mhc:2 } },
+      { value: 'planning', icon: '', label: 'Planning ahead',  sublabel: 'Getting quotes for future work',    scores: { bolton:3, williams:2, jandr:1, infinity:0, absolute:1, schnorrbusch:2, accurate:1, coolcasa:2, copeland:2, mhc:3 } }
     ]
   },
   {
@@ -840,11 +908,11 @@ const QUESTIONS = [
     question: 'How old is your current HVAC system?',
     subtitle: 'Helps us recommend repair vs. replacement options',
     options: [
-      { value: 'new',     icon: '', label: 'Under 5 years',   sublabel: 'Relatively new system',              scores: { williams:2, jandr:1, infinity:1, bolton:0, absolute:1, schnorrbusch:1 } },
-      { value: 'mid',     icon: '', label: '5-10 years',      sublabel: 'Approaching mid-life',               scores: { williams:1, jandr:1, infinity:1, bolton:1, absolute:1, schnorrbusch:1 } },
-      { value: 'older',   icon: '', label: '10-15 years',     sublabel: 'Getting older - repair or replace?', scores: { bolton:2, williams:2, jandr:1, infinity:1, absolute:1, schnorrbusch:2 } },
-      { value: 'old',     icon: '', label: '15+ years',       sublabel: 'Likely needs replacement',           scores: { bolton:4, williams:1, jandr:1, infinity:1, absolute:2, schnorrbusch:1 } },
-      { value: 'unknown', icon: '', label: "I'm not sure",    sublabel: 'Need a pro to assess it',            scores: { jandr:1, williams:1, infinity:1, bolton:1, absolute:1, schnorrbusch:1 } }
+      { value: 'new',     icon: '', label: 'Under 5 years',   sublabel: 'Relatively new system',              scores: { williams:2, jandr:1, infinity:1, bolton:0, absolute:1, schnorrbusch:1, accurate:1, coolcasa:1, copeland:1, mhc:2 } },
+      { value: 'mid',     icon: '', label: '5-10 years',      sublabel: 'Approaching mid-life',               scores: { williams:1, jandr:1, infinity:1, bolton:1, absolute:1, schnorrbusch:1, accurate:1, coolcasa:1, copeland:1, mhc:1 } },
+      { value: 'older',   icon: '', label: '10-15 years',     sublabel: 'Getting older - repair or replace?', scores: { bolton:2, williams:2, jandr:1, infinity:1, absolute:1, schnorrbusch:2, accurate:2, coolcasa:1, copeland:2, mhc:2 } },
+      { value: 'old',     icon: '', label: '15+ years',       sublabel: 'Likely needs replacement',           scores: { bolton:4, williams:1, jandr:1, infinity:1, absolute:2, schnorrbusch:1, accurate:2, coolcasa:1, copeland:3, mhc:2 } },
+      { value: 'unknown', icon: '', label: "I'm not sure",    sublabel: 'Need a pro to assess it',            scores: { jandr:1, williams:1, infinity:1, bolton:1, absolute:1, schnorrbusch:1, accurate:2, coolcasa:1, copeland:1, mhc:2 } }
     ]
   },
   {
@@ -852,10 +920,10 @@ const QUESTIONS = [
     question: 'Has this issue happened before?',
     subtitle: 'Helps us find the right fit for your situation',
     options: [
-      { value: 'new_issue',    icon: '', label: 'Brand new issue',                sublabel: 'First time this has come up',         scores: { infinity:1, jandr:1, williams:1, bolton:1, absolute:1, schnorrbusch:1 } },
-      { value: 'recurring',    icon: '', label: 'This keeps happening',           sublabel: 'Recurring or ongoing problem',        scores: { williams:3, jandr:2, bolton:1, infinity:0, absolute:2, schnorrbusch:2 } },
-      { value: 'bad_exp',      icon: '', label: 'Had a bad experience elsewhere', sublabel: 'Looking for a more trustworthy option', scores: { jandr:3, williams:3, bolton:1, infinity:0, schnorrbusch:2, absolute:1 } },
-      { value: 'warranty',     icon: '', label: 'May still be under warranty',   sublabel: 'System or work is under warranty',    scores: { williams:4, jandr:1, bolton:1, infinity:0, schnorrbusch:1, absolute:0 } }
+      { value: 'new_issue',    icon: '', label: 'Brand new issue',                sublabel: 'First time this has come up',         scores: { infinity:1, jandr:1, williams:1, bolton:1, absolute:1, schnorrbusch:1, accurate:1, coolcasa:1, copeland:1, mhc:1 } },
+      { value: 'recurring',    icon: '', label: 'This keeps happening',           sublabel: 'Recurring or ongoing problem',        scores: { williams:3, jandr:2, bolton:1, infinity:0, absolute:2, schnorrbusch:2, accurate:3, coolcasa:2, copeland:1, mhc:2 } },
+      { value: 'bad_exp',      icon: '', label: 'Had a bad experience elsewhere', sublabel: 'Looking for a more trustworthy option', scores: { jandr:3, williams:3, bolton:1, infinity:0, schnorrbusch:2, absolute:1, accurate:3, coolcasa:2, copeland:1, mhc:2 } },
+      { value: 'warranty',     icon: '', label: 'May still be under warranty',   sublabel: 'System or work is under warranty',    scores: { williams:4, jandr:1, bolton:1, infinity:0, schnorrbusch:1, absolute:0, accurate:1, coolcasa:1, copeland:2, mhc:1 } }
     ]
   },
   {
@@ -863,11 +931,11 @@ const QUESTIONS = [
     question: 'What matters most to you?',
     subtitle: 'Choose your top priority for this job',
     options: [
-      { value: 'speed',     icon: '', label: 'Fastest Response',           sublabel: 'I need someone available ASAP',      scores: { infinity:4, jandr:2, williams:1, bolton:0, absolute:3, schnorrbusch:0 } },
-      { value: 'warranty',  icon: '', label: 'Best Warranty',             sublabel: 'Long-term coverage and guarantees',  scores: { williams:4, bolton:2, jandr:1, infinity:0, schnorrbusch:2, absolute:1 } },
-      { value: 'financing', icon: '', label: 'Financing Options',         sublabel: '0% financing if I need it',          scores: { bolton:4, williams:1, jandr:0, infinity:0, schnorrbusch:1, absolute:1 } },
-      { value: 'local',     icon: '', label: 'Established Local Company', sublabel: 'Deep roots in the Forney area',      scores: { jandr:4, williams:2, bolton:1, infinity:0, schnorrbusch:3, absolute:2 } },
-      { value: 'reviews',   icon: '', label: 'Most Proven Track Record',  sublabel: 'Highest volume of verified reviews', scores: { infinity:3, bolton:2, williams:1, jandr:1, absolute:4, schnorrbusch:1 } }
+      { value: 'speed',     icon: '', label: 'Fastest Response',           sublabel: 'I need someone available ASAP',      scores: { infinity:4, jandr:2, williams:1, bolton:0, absolute:3, schnorrbusch:0, accurate:2, coolcasa:0, copeland:3, mhc:1 } },
+      { value: 'warranty',  icon: '', label: 'Best Warranty',             sublabel: 'Long-term coverage and guarantees',  scores: { williams:4, bolton:2, jandr:1, infinity:0, schnorrbusch:2, absolute:1, accurate:2, coolcasa:1, copeland:3, mhc:2 } },
+      { value: 'financing', icon: '', label: 'Financing Options',         sublabel: '0% financing if I need it',          scores: { bolton:4, williams:1, jandr:0, infinity:0, schnorrbusch:1, absolute:1, accurate:1, coolcasa:1, copeland:4, mhc:1 } },
+      { value: 'local',     icon: '', label: 'Established Local Company', sublabel: 'Deep roots in the Forney area',      scores: { jandr:4, williams:2, bolton:1, infinity:0, schnorrbusch:3, absolute:2, accurate:4, coolcasa:2, copeland:3, mhc:3 } },
+      { value: 'reviews',   icon: '', label: 'Most Proven Track Record',  sublabel: 'Highest volume of verified reviews', scores: { infinity:3, bolton:2, williams:1, jandr:1, absolute:4, schnorrbusch:1, accurate:3, coolcasa:4, copeland:2, mhc:1 } }
     ]
   },
   {
@@ -875,11 +943,11 @@ const QUESTIONS = [
     question: "What's your approximate budget?",
     subtitle: 'A rough idea helps us find the right fit',
     options: [
-      { value: 'small',   icon: '', label: 'Under $500',      sublabel: 'Service call or minor repair',       scores: { jandr:2, williams:2, infinity:1, bolton:0, absolute:1, schnorrbusch:1 } },
-      { value: 'medium',  icon: '', label: '$500 - $2,000',   sublabel: 'Major repair or part replacement',   scores: { williams:2, jandr:1, infinity:1, bolton:1, absolute:1, schnorrbusch:2 } },
-      { value: 'large',   icon: '', label: '$2,000 - $5,000', sublabel: 'Partial replacement or large job',   scores: { bolton:2, williams:2, jandr:1, infinity:1, absolute:2, schnorrbusch:2 } },
-      { value: 'xlarge',  icon: '', label: '$5,000+',         sublabel: 'Full system replacement',            scores: { bolton:4, williams:1, jandr:1, infinity:1, absolute:2, schnorrbusch:1 } },
-      { value: 'unknown', icon: '', label: "Not sure yet",    sublabel: 'I need a quote first',               scores: { williams:1, jandr:1, infinity:1, bolton:1, absolute:1, schnorrbusch:1 } }
+      { value: 'small',   icon: '', label: 'Under $500',      sublabel: 'Service call or minor repair',       scores: { jandr:2, williams:2, infinity:1, bolton:0, absolute:1, schnorrbusch:1, accurate:2, coolcasa:2, copeland:1, mhc:1 } },
+      { value: 'medium',  icon: '', label: '$500 - $2,000',   sublabel: 'Major repair or part replacement',   scores: { williams:2, jandr:1, infinity:1, bolton:1, absolute:1, schnorrbusch:2, accurate:2, coolcasa:2, copeland:2, mhc:2 } },
+      { value: 'large',   icon: '', label: '$2,000 - $5,000', sublabel: 'Partial replacement or large job',   scores: { bolton:2, williams:2, jandr:1, infinity:1, absolute:2, schnorrbusch:2, accurate:2, coolcasa:2, copeland:2, mhc:3 } },
+      { value: 'xlarge',  icon: '', label: '$5,000+',         sublabel: 'Full system replacement',            scores: { bolton:4, williams:1, jandr:1, infinity:1, absolute:2, schnorrbusch:1, accurate:2, coolcasa:1, copeland:3, mhc:3 } },
+      { value: 'unknown', icon: '', label: "Not sure yet",    sublabel: 'I need a quote first',               scores: { williams:1, jandr:1, infinity:1, bolton:1, absolute:1, schnorrbusch:1, accurate:2, coolcasa:1, copeland:2, mhc:1 } }
     ]
   },
   {
@@ -887,10 +955,10 @@ const QUESTIONS = [
     question: 'What type of property?',
     subtitle: 'Some contractors specialize in specific property types',
     options: [
-      { value: 'home',             icon: '', label: 'Single-Family Home',   sublabel: 'Existing residential property',      scores: { jandr:1, williams:1, infinity:1, bolton:1, absolute:1, schnorrbusch:1 } },
-      { value: 'new_construction', icon: '', label: 'New Construction',     sublabel: 'New build or major renovation',       scores: { bolton:4, infinity:1, williams:1, jandr:1, absolute:2, schnorrbusch:2 } },
-      { value: 'condo',            icon: '', label: 'Condo or Townhome',    sublabel: 'Shared-wall or multi-unit property',  scores: { infinity:2, williams:2, jandr:1, bolton:0, absolute:1, schnorrbusch:1 } },
-      { value: 'commercial',       icon: '', label: 'Commercial or Rental', sublabel: 'Business or investment property',     scores: { bolton:3, infinity:2, jandr:1, williams:1, absolute:4, schnorrbusch:2 } }
+      { value: 'home',             icon: '', label: 'Single-Family Home',   sublabel: 'Existing residential property',      scores: { jandr:1, williams:1, infinity:1, bolton:1, absolute:1, schnorrbusch:1, accurate:1, coolcasa:1, copeland:1, mhc:1 } },
+      { value: 'new_construction', icon: '', label: 'New Construction',     sublabel: 'New build or major renovation',       scores: { bolton:4, infinity:1, williams:1, jandr:1, absolute:2, schnorrbusch:2, accurate:2, coolcasa:3, copeland:2, mhc:4 } },
+      { value: 'condo',            icon: '', label: 'Condo or Townhome',    sublabel: 'Shared-wall or multi-unit property',  scores: { infinity:2, williams:2, jandr:1, bolton:0, absolute:1, schnorrbusch:1, accurate:1, coolcasa:2, copeland:2, mhc:1 } },
+      { value: 'commercial',       icon: '', label: 'Commercial or Rental', sublabel: 'Business or investment property',     scores: { bolton:3, infinity:2, jandr:1, williams:1, absolute:4, schnorrbusch:2, accurate:3, coolcasa:1, copeland:3, mhc:4 } }
     ]
   },
   {
@@ -898,11 +966,11 @@ const QUESTIONS = [
     question: 'Any special concerns?',
     subtitle: 'Select the one that applies most - or choose "None"',
     options: [
-      { value: 'air_quality',    icon: '', label: 'Indoor Air Quality',    sublabel: 'Dust, allergies, humidity, filtration',  scores: { infinity:2, williams:2, bolton:1, jandr:1, absolute:2, schnorrbusch:1 } },
-      { value: 'efficiency',     icon: '', label: 'Energy Efficiency',     sublabel: 'Lower bills, upgrade to high-SEER unit', scores: { bolton:3, williams:2, infinity:1, jandr:0, absolute:2, schnorrbusch:1 } },
-      { value: 'duct_work',      icon: '', label: 'Duct Work / Airflow',   sublabel: 'Uneven temps, duct issues',              scores: { bolton:2, infinity:2, williams:1, jandr:1, absolute:1, schnorrbusch:3 } },
-      { value: 'second_opinion', icon: '', label: 'Second Opinion',        sublabel: 'Want to verify a quote or diagnosis',    scores: { jandr:3, williams:3, infinity:0, bolton:0, schnorrbusch:2, absolute:1 } },
-      { value: 'none',           icon: '', label: 'No special concerns',   sublabel: 'Just need the job done right',           scores: { jandr:1, williams:1, infinity:1, bolton:1, absolute:1, schnorrbusch:1 } }
+      { value: 'air_quality',    icon: '', label: 'Indoor Air Quality',    sublabel: 'Dust, allergies, humidity, filtration',  scores: { infinity:2, williams:2, bolton:1, jandr:1, absolute:2, schnorrbusch:1, accurate:3, coolcasa:2, copeland:2, mhc:1 } },
+      { value: 'efficiency',     icon: '', label: 'Energy Efficiency',     sublabel: 'Lower bills, upgrade to high-SEER unit', scores: { bolton:3, williams:2, infinity:1, jandr:0, absolute:2, schnorrbusch:1, accurate:2, coolcasa:2, copeland:2, mhc:3 } },
+      { value: 'duct_work',      icon: '', label: 'Duct Work / Airflow',   sublabel: 'Uneven temps, duct issues',              scores: { bolton:2, infinity:2, williams:1, jandr:1, absolute:1, schnorrbusch:3, accurate:3, coolcasa:1, copeland:2, mhc:3 } },
+      { value: 'second_opinion', icon: '', label: 'Second Opinion',        sublabel: 'Want to verify a quote or diagnosis',    scores: { jandr:3, williams:3, infinity:0, bolton:0, schnorrbusch:2, absolute:1, accurate:3, coolcasa:2, copeland:1, mhc:2 } },
+      { value: 'none',           icon: '', label: 'No special concerns',   sublabel: 'Just need the job done right',           scores: { jandr:1, williams:1, infinity:1, bolton:1, absolute:1, schnorrbusch:1, accurate:1, coolcasa:1, copeland:1, mhc:1 } }
     ]
   }
 ];
@@ -922,7 +990,7 @@ function getMatches() {
     return [CONTRACTORS.jandr, CONTRACTORS.infinity];
   }
 
-  let scores = { jandr: 0, williams: 0, bolton: 0, infinity: 0, schnorrbusch: 0, absolute: 0 };
+  let scores = { jandr: 0, williams: 0, bolton: 0, infinity: 0, schnorrbusch: 0, absolute: 0, accurate: 0, coolcasa: 0, copeland: 0, mhc: 0 };
   QUESTIONS.forEach(q => {
     const val = answers[q.id];
     if (!val) return;
@@ -986,6 +1054,33 @@ function getMatchReason(contractorId) {
       commercial: 'Full commercial HVAC capability including rooftop units and industrial facilities, plus 17 years serving Kaufman County',
       maintenance: 'Membership-based maintenance program with priority scheduling, semi-annual tune-ups, and discounted repair rates',
       default: 'Kaufman County\'s most-reviewed HVAC company - 4.9&#9733; across 608 Google reviews with confirmed 24/7 emergency availability'
+    },
+    accurate: {
+      emergency: 'Confirmed 24/7 emergency service from Kaufman County\'s most decorated HVAC company - 29 straight years winning Best HVAC',
+      maintenance: 'NATE-certified with 33 years of service - the go-to for homeowners who want a proven maintenance relationship in Kaufman County',
+      bad_exp: '29 consecutive Readers\' Choice awards and NATE-certified diagnostics - the trusted alternative when a previous contractor let you down',
+      second_opinion: 'Known for solving problems previous contractors missed - NATE-certified diagnostics backed by 33 years of Kaufman County experience',
+      recurring: 'Kaufman County\'s most decorated HVAC company is built for long-term relationships - 29 straight Readers\' Choice wins back it up',
+      default: 'Kaufman County\'s most trusted HVAC company - 29 straight Readers\' Choice awards, NATE-certified, and available 24/7'
+    },
+    coolcasa: {
+      reviews: 'A perfect 5.0-star rating across 639 Google reviews built entirely on word-of-mouth - the most consistently reviewed HVAC contractor in the area',
+      maintenance: 'The Cool Club membership keeps your system in top shape year-round with priority scheduling from a perfect-rated service team',
+      new_construction: 'Dedicated new construction HVAC with custom systems and competitive pricing - 5.0 stars from 639 verified customers',
+      default: 'A perfect 5.0-star rating from 639 Google reviews - Cool Casa\'s word-of-mouth reputation makes them one of the most trusted HVAC contractors in the Rockwall/Royse City area'
+    },
+    copeland: {
+      installation: 'Forney\'s only Carrier Factory Authorized Dealer - the right choice for a full system replacement with flexible financing and same-day availability',
+      financing: 'The most flexible financing in the network - zero down, deferred payment, no annual fees - backed by Carrier Factory Authorization',
+      bad_exp: 'Carrier Factory Authorized with Nextdoor Neighborhood Faves recognition - a trusted local alternative after a bad contractor experience',
+      emergency: 'Same-day emergency availability from Forney\'s only Carrier Factory Authorized Dealer with 24/7 coverage',
+      default: 'Forney\'s only Carrier Factory Authorized Dealer with 24/7 availability, flexible financing, and full HVAC, electrical, and plumbing services'
+    },
+    mhc: {
+      new_construction: '50 years of HVAC engineering applied to new construction - multi-brand certified across Trane, Carrier, and York with commercial-grade load calculations',
+      commercial: 'Full commercial HVAC from a 3rd-generation Rockwall firm with 50 years of experience - certified across Trane, Carrier, and York',
+      efficiency: 'Commercial-grade load calculations and multi-brand certification make MHC the right choice when system sizing and efficiency matter most',
+      default: 'A Rockwall institution since 1976 - NATE-certified across Trane, Carrier, and York with 3rd-generation expertise in residential and commercial HVAC'
     }
   };
 
@@ -1031,6 +1126,29 @@ function getMatchReason(contractorId) {
     if (answers.priority === 'reviews') return r.reviews;
     if (answers.property === 'commercial') return r.commercial;
     if (answers.service === 'maintenance') return r.maintenance;
+  }
+  if (contractorId === 'accurate') {
+    if (answers.service === 'emergency' || answers.urgency === 'today') return r.emergency;
+    if (answers.service === 'maintenance') return r.maintenance;
+    if (answers.history === 'bad_exp') return r.bad_exp;
+    if (answers.history === 'recurring') return r.recurring;
+    if (answers.concern === 'second_opinion') return r.second_opinion;
+  }
+  if (contractorId === 'coolcasa') {
+    if (answers.priority === 'reviews') return r.reviews;
+    if (answers.service === 'maintenance') return r.maintenance;
+    if (answers.property === 'new_construction') return r.new_construction;
+  }
+  if (contractorId === 'copeland') {
+    if (answers.service === 'installation' || answers.age === 'old') return r.installation;
+    if (answers.priority === 'financing') return r.financing;
+    if (answers.history === 'bad_exp') return r.bad_exp;
+    if (answers.service === 'emergency' || answers.urgency === 'today') return r.emergency;
+  }
+  if (contractorId === 'mhc') {
+    if (answers.property === 'new_construction') return r.new_construction;
+    if (answers.property === 'commercial') return r.commercial;
+    if (answers.concern === 'efficiency') return r.efficiency;
   }
   return r.default;
 }
@@ -1314,7 +1432,11 @@ window.addEventListener('load', sendHeight);
       <li><strong>Bolton Heating &amp; Air</strong> - 4.9 stars (270+ reviews) - (214) 909-7615 - BBB A+ rated. 0% financing on new systems. Specializes in full system installations and new construction.</li>
       <li><strong>Infinity Texas Air</strong> - 4.8 stars (1,500+ reviews) - (972) 465-9788 - Available 7am-7pm, 7 days a week. Nextdoor Neighborhood Favorite 2021 and 2023.</li>
       <li><strong>Schnorrbusch Heating &amp; Air Conditioning</strong> - 4.7 stars (185 reviews) - (469) 314-8001 - NATE-certified. Owner-operated in Terrell, TX. Ductless/mini-split specialist. Formal maintenance plans.</li>
-      <li><strong>Absolute Air Air Conditioning &amp; Heating</strong> - 4.9 stars (608 reviews) - (972) 932-5373 - 24/7 emergency service confirmed. Kaufman County&#39;s most-reviewed HVAC company. Membership maintenance plans. Full commercial capability.</li>
+      <li><strong>Absolute Air Air Conditioning &amp; Heating</strong> - 4.9 stars (608 reviews) - (972) 932-5373 - 24/7 emergency service. Kaufman County&#39;s most-reviewed HVAC company. Membership maintenance plans. Full commercial capability.</li>
+      <li><strong>Accurate Home Services</strong> - 4.9 stars (454 reviews) - (469) 966-4147 - NATE-certified. 24/7 emergency service. Kaufman Herald Readers&#39; Choice Best HVAC 29 consecutive years. Full quad-trade: HVAC, electrical, plumbing &amp; IAQ.</li>
+      <li><strong>Cool Casa Heating &amp; Air Conditioning</strong> - 5.0 stars (639 reviews) - (469) 974-7321 - Perfect-rated, word-of-mouth only. Cool Club maintenance membership. New construction specialist. Royse City/Rockwall area.</li>
+      <li><strong>Copeland Home Services</strong> - 4.9 stars (500+ reviews) - (469) 720-4440 - Forney&#39;s only Carrier Factory Authorized Dealer. 24/7 emergency. Zero-down financing. Full HVAC, electrical, plumbing &amp; pool services.</li>
+      <li><strong>MHC Air Services</strong> - 4.7 stars (79 reviews) - (972) 279-3400 - 3rd-generation family business since 1976. NATE-certified across Trane, Carrier &amp; York. Commercial-grade new construction. Rockwall area.</li>
     </ul>
     <p>All contractors are TDLR-licensed, minimum 4.7-star Google rating, and locally based in Forney/Kaufman County.</p>
     <p><strong>Contact Forney HVAC Pros:</strong> (469) 898-3774 | contact@forneyhvacpros.com | <a href="https://forneyhvacpros.com">forneyhvacpros.com</a></p>
