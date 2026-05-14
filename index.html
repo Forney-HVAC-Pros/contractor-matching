@@ -453,7 +453,7 @@
   <!-- Mobile info strip - compact version of sidebar cards, visible only &le;900px -->
   <div class="mobile-summary">
     <div class="mobile-how">
-      <div class="mobile-step"><div class="mobile-step-num">1</div><span>Answer 8 questions</span></div>
+      <div class="mobile-step"><div class="mobile-step-num">1</div><span>Answer a few questions</span></div>
       <span class="mobile-arrow">&rsaquo;</span>
       <div class="mobile-step"><div class="mobile-step-num">2</div><span>Get your match</span></div>
       <span class="mobile-arrow">&rsaquo;</span>
@@ -544,6 +544,7 @@
           <input type="hidden" name="Budget" id="hidden-budget">
           <input type="hidden" name="Property Type" id="hidden-property">
           <input type="hidden" name="Special Concern" id="hidden-concern">
+          <input type="hidden" name="Location" id="hidden-location">
 
           <div class="form-group">
             <label for="field-name">Your Name *</label>
@@ -603,15 +604,15 @@
           <div class="sidebar-step">
             <div class="step-num">1</div>
             <div class="step-text">
-              <strong>Answer 8 quick questions</strong>
-              <span>About your HVAC need, timeline, priorities, and property</span>
+              <strong>Answer a few quick questions</strong>
+              <span>About your location, HVAC need, timeline, priorities, and property</span>
             </div>
           </div>
           <div class="sidebar-step">
             <div class="step-num">2</div>
             <div class="step-text">
               <strong>Get your match</strong>
-              <span>We score all four contractors against your answers and recommend the best fit</span>
+              <span>We score all contractors against your answers and location to recommend the best fit</span>
             </div>
           </div>
           <div class="sidebar-step">
@@ -698,6 +699,35 @@
 const CONFIG = {
   formspreeEndpoint: 'https://formspree.io/f/xnjwddqd',
   ga4Id: 'G-9LSH07TDFN'
+};
+
+// ============================================================
+// LOCATION QUESTION (shown when no ?city= URL param)
+// ============================================================
+const LOCATION_QUESTION = {
+  id: 'location',
+  question: 'Where is the property located?',
+  subtitle: 'Helps us match you with contractors who definitely service your area',
+  options: [
+    { value: 'forney_talty',       label: 'Forney / Talty',       sublabel: 'Forney, Talty, or nearby' },
+    { value: 'mesquite_sunnyvale', label: 'Mesquite / Sunnyvale', sublabel: 'Mesquite, Sunnyvale, or nearby' },
+    { value: 'rockwall_heath',     label: 'Rockwall / Heath',     sublabel: 'Rockwall, Heath, or nearby' },
+    { value: 'terrell_kaufman',    label: 'Terrell / Kaufman',    sublabel: 'Terrell, Kaufman, or nearby' },
+    { value: 'crandall',           label: 'Crandall',             sublabel: 'Crandall or nearby' },
+    { value: 'other',              label: 'Somewhere else',       sublabel: 'Outside our primary service area' }
+  ]
+};
+
+// ============================================================
+// LOCATION SCORE ADJUSTMENTS
+// ============================================================
+const LOCATION_SCORES = {
+  forney_talty:       { jandr:3, copeland:3, williams:2, bolton:2, infinity:2, absolute:0, accurate:0, schnorrbusch:-1, coolcasa:-1, mhc:-1 },
+  mesquite_sunnyvale: { infinity:3, accurate:2, copeland:1, jandr:-1, williams:-1, bolton:0, absolute:0, schnorrbusch:-2, coolcasa:-1, mhc:-1 },
+  rockwall_heath:     { coolcasa:4, mhc:3, copeland:2, infinity:1, jandr:-2, williams:-2, bolton:-1, schnorrbusch:-2, absolute:-1, accurate:-1 },
+  terrell_kaufman:    { schnorrbusch:4, absolute:3, accurate:2, infinity:0, jandr:-1, williams:-1, bolton:-1, coolcasa:-2, mhc:-2, copeland:0 },
+  crandall:           { accurate:4, copeland:3, jandr:1, absolute:2, bolton:1, infinity:1, schnorrbusch:-1, coolcasa:-2, mhc:-2, williams:0 },
+  other:              {}
 };
 
 // ============================================================
@@ -979,6 +1009,8 @@ const QUESTIONS = [
 // STATE
 // ============================================================
 let currentStep = 0;
+let onLocationStep = false;
+let locationKnown = false;
 let answers = {};
 let selectedContractor = null;
 
@@ -998,6 +1030,10 @@ function getMatches() {
     if (!opt) return;
     Object.entries(opt.scores).forEach(([id, pts]) => { scores[id] += pts; });
   });
+
+  // Apply location adjustments
+  const locAdj = (answers.location && LOCATION_SCORES[answers.location]) || {};
+  Object.entries(locAdj).forEach(([id, pts]) => { if (scores[id] !== undefined) scores[id] += pts; });
 
   const sorted = Object.entries(scores)
     .sort((a, b) => b[1] - a[1])
@@ -1154,9 +1190,55 @@ function getMatchReason(contractorId) {
 }
 
 // ============================================================
+// UI - LOCATION STEP
+// ============================================================
+function renderLocationStep() {
+  onLocationStep = true;
+  document.getElementById('question-title').textContent = LOCATION_QUESTION.question;
+  document.getElementById('question-subtitle').textContent = LOCATION_QUESTION.subtitle;
+
+  const container = document.getElementById('options-container');
+  container.innerHTML = '';
+
+  LOCATION_QUESTION.options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'option' + (answers.location === opt.value ? ' selected' : '');
+    btn.onclick = () => selectLocation(opt.value, btn);
+    btn.innerHTML = `
+      <span class="option-icon"></span>
+      <span class="option-text">
+        <span class="option-label">${opt.label}</span>
+        <span class="option-sublabel">${opt.sublabel}</span>
+      </span>
+      <span class="option-check"></span>
+    `;
+    container.appendChild(btn);
+  });
+
+  document.getElementById('next-btn').disabled = !answers.location;
+  document.getElementById('back-btn').classList.add('hidden');
+  updateProgress(-1);
+}
+
+function selectLocation(value, btnEl) {
+  answers.location = value;
+  document.querySelectorAll('.option').forEach(b => b.classList.remove('selected'));
+  btnEl.classList.add('selected');
+  document.getElementById('next-btn').disabled = false;
+  track('question_answered', { question: 'location', answer: value });
+  setTimeout(() => {
+    onLocationStep = false;
+    currentStep = 0;
+    renderQuestion(0);
+    scrollUp();
+  }, 420);
+}
+
+// ============================================================
 // UI - QUESTIONS
 // ============================================================
 function renderQuestion(index) {
+  onLocationStep = false;
   const q = QUESTIONS[index];
   document.getElementById('question-title').textContent = q.question;
   document.getElementById('question-subtitle').textContent = q.subtitle;
@@ -1182,8 +1264,9 @@ function renderQuestion(index) {
   const nextBtn = document.getElementById('next-btn');
   const backBtn = document.getElementById('back-btn');
   nextBtn.disabled = !answers[q.id];
-  nextBtn.textContent = index === QUESTIONS.length - 1 ? 'Find My Match &rarr;' : 'Continue &rarr;';
-  backBtn.classList.toggle('hidden', index === 0);
+  nextBtn.innerHTML = index === QUESTIONS.length - 1 ? 'Find My Match &rarr;' : 'Continue &rarr;';
+  // Hide back on Q1 only when location came from URL param (nowhere to go back to)
+  backBtn.classList.toggle('hidden', locationKnown && index === 0);
   updateProgress(index);
 }
 
@@ -1192,13 +1275,17 @@ function selectOption(questionId, value, btnEl) {
   document.querySelectorAll('.option').forEach(b => b.classList.remove('selected'));
   btnEl.classList.add('selected');
   document.getElementById('next-btn').disabled = false;
-  track('question_answered', { question: questionId, answer: value });
+  track('question_answered', { question: questionId, answer: value, location: answers.location || 'unknown' });
   setTimeout(nextStep, 420);
 }
 
 function updateProgress(index) {
-  document.getElementById('progress-fill').style.width = (index / QUESTIONS.length * 100) + '%';
-  document.getElementById('progress-label').textContent = `Question ${index + 1} of ${QUESTIONS.length}`;
+  // index: -1 = location step, 0-7 = question steps
+  const total = locationKnown ? QUESTIONS.length : QUESTIONS.length + 1;
+  const current = locationKnown ? index + 1 : index + 2;
+  const pct = locationKnown ? (index / total * 100) : ((index + 1) / total * 100);
+  document.getElementById('progress-fill').style.width = Math.max(0, pct) + '%';
+  document.getElementById('progress-label').textContent = 'Question ' + Math.max(1, current) + ' of ' + total;
 }
 
 function nextStep() {
@@ -1215,6 +1302,9 @@ function prevStep() {
   if (currentStep > 0) {
     currentStep--;
     renderQuestion(currentStep);
+    scrollUp();
+  } else if (!locationKnown) {
+    renderLocationStep();
     scrollUp();
   }
 }
@@ -1252,7 +1342,7 @@ function showResults() {
   });
 
   selectedContractor = matches[0];
-  track('results_viewed', { primary_match: matches[0].id, second_match: matches[1]?.id || 'none' });
+  track('results_viewed', { primary_match: matches[0].id, second_match: matches[1]?.id || 'none', location: answers.location || 'unknown' });
   scrollUp();
 }
 
@@ -1331,8 +1421,9 @@ function showForm(contractorId) {
   document.getElementById('hidden-budget').value = getLabel('budget');
   document.getElementById('hidden-property').value = getLabel('property');
   document.getElementById('hidden-concern').value = getLabel('concern');
+  document.getElementById('hidden-location').value = answers.location || 'unknown';
   showScreen('form-screen');
-  track('quote_form_opened', { contractor: contractorId });
+  track('quote_form_opened', { contractor: contractorId, location: answers.location || 'unknown' });
   scrollUp();
 }
 
@@ -1358,7 +1449,7 @@ document.getElementById('lead-form').addEventListener('submit', async function(e
       headers: { 'Accept': 'application/json' }
     });
     if (res.ok) {
-      track('lead_submitted', { method: 'form', contractor: selectedContractor.id, service: answers.service, urgency: answers.urgency });
+      track('lead_submitted', { method: 'form', contractor: selectedContractor.id, service: answers.service, urgency: answers.urgency, location: answers.location || 'unknown' });
       showSuccess();
     } else { throw new Error('failed'); }
   } catch {
@@ -1415,9 +1506,27 @@ function track(event, params = {}) {
 }
 
 // -- Init --
-renderQuestion(0);
-track('tool_started');
-window.addEventListener('load', sendHeight);
+(function init() {
+  const params = new URLSearchParams(window.location.search);
+  const city = (params.get('city') || '').toLowerCase();
+  const cityMap = {
+    forney: 'forney_talty',       talty: 'forney_talty',
+    mesquite: 'mesquite_sunnyvale', sunnyvale: 'mesquite_sunnyvale',
+    rockwall: 'rockwall_heath',    heath: 'rockwall_heath',
+    terrell: 'terrell_kaufman',    kaufman: 'terrell_kaufman',
+    crandall: 'crandall'
+  };
+  if (cityMap[city]) {
+    answers.location = cityMap[city];
+    locationKnown = true;
+    renderQuestion(0);
+  } else {
+    locationKnown = false;
+    renderLocationStep();
+  }
+  track('tool_started', { city: answers.location || 'unknown' });
+  window.addEventListener('load', sendHeight);
+})();
 </script>
 
 <!-- Fallback content for crawlers and LLMs that don't execute JavaScript -->
