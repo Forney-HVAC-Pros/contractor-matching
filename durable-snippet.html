@@ -1,0 +1,1080 @@
+<!-- Forney HVAC Pros - Homepage Contractor Matcher -->
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  #fhp-mini * { box-sizing: border-box; margin: 0; padding: 0; }
+  #fhp-mini {
+    font-family: 'Inter', sans-serif;
+    color: #111827;
+    padding: 28px 5% 44px;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+  }
+
+  /* Frosted glass card containing the quiz */
+  #fhp-tool-card {
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.5);
+    padding: 24px 28px 28px;
+    box-shadow: 0 8px 48px rgba(0,0,0,0.35);
+    max-width: 820px;
+    width: 100%;
+    margin: 0 auto 24px;
+    min-height: 280px;
+    scroll-margin-top: 24px;
+  }
+
+  /* Progress bar */
+  #fhp-mini .fhp-bar-track {
+    height: 3px;
+    background: transparent;
+    border-radius: 2px;
+    margin: 0 0 20px;
+    overflow: hidden;
+  }
+  #fhp-mini .fhp-bar-fill {
+    height: 100%;
+    background: #172620;
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  /* Intro */
+  #fhp-mini .fhp-title {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 10px;
+    text-align: center;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+  #fhp-mini .fhp-sub {
+    font-size: 18px;
+    color: rgba(255,255,255,0.88);
+    margin-bottom: 10px;
+    line-height: 1.5;
+    text-align: center;
+  }
+  #fhp-mini .fhp-sub-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 28px 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 15px;
+    color: rgba(255,255,255,0.80);
+  }
+  #fhp-mini .fhp-sub-bullets li::before {
+    content: "\2713\0020";
+    color: #6EE7A0;
+    font-weight: 700;
+  }
+
+  /* Question row — stacked layout, title above options */
+  #fhp-mini .fhp-q-row {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  #fhp-mini .fhp-q-step {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #172620;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 4px;
+  }
+  #fhp-mini .fhp-q-title-wrap {
+    border-left: 4px solid #172620;
+    padding-left: 14px;
+  }
+  #fhp-mini .fhp-q-title {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: #111827;
+    line-height: 1.25;
+    margin-bottom: 0;
+  }
+
+  /* Options */
+  #fhp-mini .fhp-options {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px;
+  }
+
+  @media (max-width: 900px) {
+    #fhp-mini .fhp-options { grid-template-columns: repeat(2, 1fr) !important; width: 100% !important; }
+    #fhp-mini .fhp-option { width: 100% !important; }
+    #fhp-mini .fhp-q-title { font-size: 22px; }
+  }
+  #fhp-mini .fhp-option {
+    padding: 7px 10px;
+    border: 1.5px solid #DDD9D2;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #111827;
+    background: #F7F6F2;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+    text-align: left;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  #fhp-mini .fhp-option:hover    { border-color: #172620; background: #eef2ef; }
+  #fhp-mini .fhp-option.fhp-sel  { border-color: #172620; background: #eef2ef; }
+
+  #fhp-mini .fhp-opt-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #111827;
+    display: block;
+    line-height: 1.2;
+  }
+  #fhp-mini .fhp-opt-sub {
+    font-size: 11px;
+    font-weight: 400;
+    color: #6B7280;
+    display: block;
+    line-height: 1.3;
+  }
+
+  /* Back */
+  #fhp-mini .fhp-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    color: #9CA3AF;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 12px;
+    font-family: 'Inter', sans-serif;
+  }
+  #fhp-mini .fhp-back:hover { color: #4B5563; }
+
+  /* Results */
+  #fhp-mini .fhp-badge {
+    display: inline-block;
+    margin-top: 12px;
+    background: #DCFCE7;
+    color: #15803D;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  #fhp-mini .fhp-r-title {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 4px;
+  }
+  #fhp-mini .fhp-r-sub {
+    font-size: 16px;
+    color: #4B5563;
+    margin-bottom: 18px;
+  }
+
+  /* Contractor cards */
+  #fhp-mini .fhp-card {
+    background: #f0f9f1;
+    border: 1.5px solid #a8d5b0;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  #fhp-mini .fhp-card-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  #fhp-mini .fhp-card-check {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #172620;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  #fhp-mini .fhp-card-head-right { flex: 1; min-width: 0; }
+  #fhp-mini .fhp-card-status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+  }
+  #fhp-mini .fhp-status-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #172620;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  #fhp-mini .fhp-status-badge {
+    font-size: 12px;
+    font-weight: 700;
+    background: #172620;
+    color: #ffffff;
+    padding: 2px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  #fhp-mini .fhp-c-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 19px;
+    font-weight: 800;
+    color: #111827;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  #fhp-mini .fhp-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  #fhp-mini .fhp-chip {
+    border: 1px solid #D1D5DB;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    background: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  #fhp-mini .fhp-g-icon {
+    font-weight: 800;
+    font-size: 16px;
+    color: #4285F4;
+  }
+  #fhp-mini .fhp-c-reason {
+    font-size: 16px;
+    color: #4B5563;
+    line-height: 1.5;
+    margin-bottom: 14px;
+    padding: 8px 11px;
+    background: rgba(255,255,255,0.75);
+    border-left: 3px solid #172620;
+    border-radius: 0 4px 4px 0;
+  }
+  #fhp-mini .fhp-card-actions {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+  }
+  #fhp-mini .fhp-action-call { display: flex; flex-direction: column; }
+  #fhp-mini .fhp-action-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #172620;
+    margin-bottom: 4px;
+  }
+  #fhp-mini .fhp-btn-call {
+    padding: 9px 16px;
+    background: #994D0A;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: background 0.15s;
+    white-space: nowrap;
+  }
+  #fhp-mini .fhp-btn-call:hover { background: #7A3D07; }
+  #fhp-mini .fhp-btn-quote {
+    padding: 9px 16px;
+    background: #ffffff;
+    color: #1061FE;
+    border: 1.5px solid #1061FE;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+    white-space: nowrap;
+    align-self: flex-end;
+  }
+  #fhp-mini .fhp-btn-quote:hover { background: #EFF6FF; }
+
+  #fhp-mini .fhp-second-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6B7280;
+    text-align: center;
+    margin: 4px 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  #fhp-mini .fhp-second-label::before,
+  #fhp-mini .fhp-second-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #D1D5DB;
+  }
+  #fhp-mini .fhp-see-more {
+    display: block;
+    width: 100%;
+    margin-top: 4px;
+    padding: 12px;
+    background: #ffffff;
+    border: 2px solid #172620;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #172620;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+  }
+  #fhp-mini .fhp-see-more:hover {
+    background: #eef2ef;
+  }
+
+  /* Trust strip */
+  #fhp-mini .fhp-trust {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 40px;
+    padding: 6px 16px;
+  }
+  #fhp-mini .fhp-t-item {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.92);
+    padding: 2px 10px;
+    position: relative;
+  }
+  #fhp-mini .fhp-t-item + .fhp-t-item::before {
+    content: '\00B7';
+    position: absolute;
+    left: -1px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* Modal */
+  #fhp-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  #fhp-modal-overlay.fhp-hide { display: none !important; }
+  #fhp-modal-overlay .fhp-modal {
+    box-sizing: border-box;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 24px;
+    max-width: 460px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    font-family: 'Inter', sans-serif;
+  }
+  #fhp-modal-overlay .fhp-modal * { box-sizing: border-box; margin: 0; padding: 0; }
+  #fhp-modal-overlay .fhp-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 26px;
+    cursor: pointer;
+    color: #9CA3AF;
+    background: none;
+    border: none;
+    line-height: 1;
+    font-family: 'Inter', sans-serif;
+  }
+  #fhp-modal-overlay .fhp-modal-close:hover { color: #4B5563; }
+  #fhp-modal-overlay .fhp-modal-title {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 4px !important;
+    padding-right: 24px;
+  }
+  #fhp-modal-overlay .fhp-modal-sub {
+    font-size: 16px;
+    color: #4B5563;
+    margin-bottom: 18px !important;
+    line-height: 1.5;
+  }
+  #fhp-modal-overlay .fhp-form-field { margin-bottom: 12px !important; }
+  #fhp-modal-overlay .fhp-form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 4px !important;
+  }
+  #fhp-modal-overlay .fhp-form-input {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 6px;
+    font-size: 17px;
+    font-family: 'Inter', sans-serif;
+    color: #111827;
+    background: #ffffff;
+  }
+  #fhp-modal-overlay .fhp-form-input:focus { outline: none; border-color: #172620; }
+  #fhp-modal-overlay .fhp-form-submit {
+    width: 100%;
+    padding: 11px;
+    background: #172620;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    margin-top: 6px !important;
+    transition: background 0.15s;
+  }
+  #fhp-modal-overlay .fhp-form-submit:hover { background: #0f1a15; }
+  #fhp-modal-overlay .fhp-form-success {
+    text-align: center;
+    padding: 16px 0;
+  }
+
+  #fhp-mini .fhp-hide { display: none !important; }
+
+  @keyframes fhpFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  #fhp-mini .fhp-fade { animation: fhpFadeIn 0.25s ease forwards; }
+
+  @media (min-width: 901px) {
+    #fhp-mini { margin-top: -88px; }
+  }
+
+  @media (max-width: 520px) {
+    #fhp-mini .fhp-c-actions { flex-direction: column; }
+    #fhp-mini .fhp-t-item { font-size: 11px; padding: 2px 5px; }
+    #fhp-mini .fhp-trust { padding: 5px 12px; border-radius: 20px; }
+    #fhp-mini .fhp-title { font-size: 23px; }
+
+    /* Card mobile fixes */
+    #fhp-mini .fhp-status-badge { display: none; }
+    #fhp-mini .fhp-c-name { font-size: 16px; }
+    #fhp-mini .fhp-c-reason { font-size: 14px; }
+    #fhp-mini .fhp-chip { font-size: 13px; padding: 3px 9px; }
+    #fhp-mini .fhp-card-actions { flex-direction: column; gap: 8px; }
+    #fhp-mini .fhp-action-call { width: 100%; }
+    #fhp-mini .fhp-btn-call,
+    #fhp-mini .fhp-btn-quote { width: 100%; justify-content: center; }
+  }
+</style>
+
+<div id="fhp-mini">
+
+  <div class="fhp-title" style="text-align:center;margin-bottom:10px;">Get Matched With a Trusted Forney HVAC Contractor &mdash; Free</div>
+  <div class="fhp-sub">We're not a contractor. We're a free matching service. Answer a few questions and get an instant recommendation for the right vetted local pro.<br>No obligation, no marketing emails or texts.</div>
+
+  <div id="fhp-tool-card">
+    <div class="fhp-bar-track"><div class="fhp-bar-fill" id="fhp-fill" style="width:0%"></div></div>
+
+    <div id="fhp-qscreen">
+      <div class="fhp-q-row">
+        <div class="fhp-q-title-wrap">
+          <div class="fhp-q-step" id="fhp-qstep"></div>
+          <div class="fhp-q-title" id="fhp-qtitle"></div>
+        </div>
+        <div class="fhp-options" id="fhp-opts"></div>
+      </div>
+      <button class="fhp-back fhp-hide" id="fhp-back">&larr; Back</button>
+    </div>
+
+    <div id="fhp-rscreen" class="fhp-hide">
+      <div class="fhp-badge">&#10003; Match Found</div>
+      <div class="fhp-r-title" id="fhp-rtitle"></div>
+      <div class="fhp-r-sub" id="fhp-rsub"></div>
+      <div id="fhp-results"></div>
+    </div>
+  </div>
+
+  <div class="fhp-trust">
+    <span class="fhp-t-item">&#10003; TDLR Licensed</span>
+    <span class="fhp-t-item">4.8&ndash;5.0&#9733; Google</span>
+    <span class="fhp-t-item">BBB A+</span>
+    <span class="fhp-t-item">Nextdoor Favorites</span>
+    <span class="fhp-t-item">$0 Always Free</span>
+    <span class="fhp-t-item">No Obligation</span>
+    <span class="fhp-t-item"><a href="https://share.google/F7nO0JD1Rq79KeTcT" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">5.0&#9733; Forney HVAC Pros on Google</a></span>
+  </div>
+
+</div>
+
+<noscript>
+  <div style="max-width:820px;margin:0 auto;padding:24px;font-family:sans-serif;line-height:1.6;">
+    <h2>Find a Vetted HVAC Contractor in Forney, TX — Free Matching Service</h2>
+    <p>Forney HVAC Pros matches Forney-area homeowners with the right local HVAC contractor based on their specific situation. Answer 7 questions about your service need, timeline, and property — we recommend the best fit from our vetted network. Free, no obligation, no marketing calls.</p>
+    <p><strong>Service area:</strong> Forney, Talty, Mesquite, Sunnyvale, Rockwall, Heath, Terrell, Kaufman, Crandall — Kaufman County and surrounding areas.</p>
+    <p><strong>Services matched:</strong> AC repair, heating and furnace repair, new system installation, maintenance and tune-ups, emergency HVAC service.</p>
+    <h3>Our Vetted Contractor Network</h3>
+    <ul>
+      <li><strong>J&amp;R Plumbing, Heating and Air</strong> — 5.0&#9733; (25+ reviews) — (214) 391-1600 — Serving Forney since 1965. 2025 Chamber of Commerce Award. Minority, woman &amp; veteran-owned.</li>
+      <li><strong>Williams Services AC &amp; Heating</strong> — 4.9&#9733; (75 reviews) — (214) 676-5909 — Veteran-owned. 10-year parts &amp; labor warranty. Flat-rate pricing. Owner on every job.</li>
+      <li><strong>Bolton Heating &amp; Air</strong> — 4.9&#9733; (270+ reviews) — (214) 909-7615 — BBB A+ rated. 0% financing. Specializes in full system installations.</li>
+      <li><strong>Infinity Texas Air</strong> — 4.8&#9733; (1,500+ reviews) — (972) 465-9788 — Available 7am–7pm, 7 days a week. Nextdoor Neighborhood Favorite 2021 &amp; 2023.</li>
+      <li><strong>Schnorrbusch Heating &amp; Air</strong> — 4.7&#9733; (185 reviews) — (469) 314-8001 — NATE certified. Owner-operated in Terrell. Ductless specialist.</li>
+      <li><strong>Absolute Air AC &amp; Heating</strong> — 4.9&#9733; (608 reviews) — (972) 932-5373 — 24/7 emergency service. Kaufman County&#39;s most-reviewed HVAC company.</li>
+      <li><strong>Accurate Home Services</strong> — 4.9&#9733; (454 reviews) — (469) 966-4147 — NATE certified. 24/7 available. 29 consecutive Readers&#39; Choice awards. Quad-trade.</li>
+      <li><strong>Cool Casa Heating &amp; Air</strong> — 5.0&#9733; (639 reviews) — (469) 974-7321 — Perfect-rated, word-of-mouth only. Rockwall/Royse City area.</li>
+      <li><strong>Copeland Home Services</strong> — 4.9&#9733; (500+ reviews) — (469) 720-4440 — Forney&#39;s only Carrier Factory Authorized Dealer. 24/7. Zero-down financing.</li>
+      <li><strong>MHC Air Services</strong> — 4.7&#9733; (79 reviews) — (972) 279-3400 — 3rd-generation family business since 1976. NATE certified. Rockwall area.</li>
+    </ul>
+    <p>All contractors hold active TDLR licenses, maintain a minimum 4.7-star Google rating, and are locally based in Forney and Kaufman County. Matching is always free to homeowners.</p>
+  </div>
+</noscript>
+
+<div id="fhp-modal-overlay" class="fhp-hide" onclick="if(event.target===this)fhpCloseModal()">
+  <div class="fhp-modal">
+    <button class="fhp-modal-close" onclick="fhpCloseModal()">&times;</button>
+    <div class="fhp-modal-title">Get Your Free Quote</div>
+    <div class="fhp-modal-sub">We'll send your info to your matched contractor. They'll reach out to schedule your free quote.</div>
+    <form id="fhp-quote-form" action="https://formspree.io/f/xnjwddqd" method="POST">
+      <div class="fhp-form-field">
+        <label class="fhp-form-label">Your Name *</label>
+        <input class="fhp-form-input" type="text" name="name" required placeholder="First and last name">
+      </div>
+      <div class="fhp-form-field">
+        <label class="fhp-form-label">Phone Number *</label>
+        <input class="fhp-form-input" type="tel" name="phone" required placeholder="(555) 000-0000">
+      </div>
+      <div class="fhp-form-field">
+        <label class="fhp-form-label">Email</label>
+        <input class="fhp-form-input" type="email" name="email" placeholder="Optional">
+      </div>
+      <input type="hidden" name="service" id="fhp-form-service">
+      <input type="hidden" name="urgency" id="fhp-form-urgency">
+      <input type="hidden" name="location" id="fhp-form-location">
+      <input type="hidden" name="matched_contractor" id="fhp-form-contractor">
+      <button type="submit" class="fhp-form-submit">Request Free Quote &rarr;</button>
+    </form>
+  </div>
+</div>
+
+<script>
+(function() {
+
+  var LOCATION = {
+    id: 'location',
+    title: 'Where is the property?',
+    options: [
+      { value: 'forney_talty',       label: 'Forney / Talty',       sub: 'Forney, Talty, or nearby' },
+      { value: 'mesquite_sunnyvale', label: 'Mesquite / Sunnyvale', sub: 'Mesquite, Sunnyvale, or nearby' },
+      { value: 'rockwall_heath',     label: 'Rockwall / Heath',     sub: 'Rockwall, Heath, or nearby' },
+      { value: 'terrell_kaufman',    label: 'Terrell / Kaufman',    sub: 'Terrell, Kaufman, or nearby' },
+      { value: 'crandall',           label: 'Crandall',             sub: 'Crandall or nearby' },
+      { value: 'other',              label: 'Somewhere else',       sub: 'Outside our primary service area' }
+    ]
+  };
+
+  var LOC = {
+    forney_talty:       { jandr:3, copeland:3, williams:2, bolton:2, infinity:2, absolute:0, accurate:0, schnorrbusch:-1, coolcasa:-1, mhc:-1 },
+    mesquite_sunnyvale: { infinity:3, accurate:2, copeland:1, jandr:-1, williams:-1, bolton:0, absolute:0, schnorrbusch:-2, coolcasa:-1, mhc:-1 },
+    rockwall_heath:     { coolcasa:4, mhc:3, copeland:2, infinity:1, jandr:-2, williams:-2, bolton:-1, schnorrbusch:-2, absolute:-1, accurate:-1 },
+    terrell_kaufman:    { schnorrbusch:4, absolute:3, accurate:2, infinity:0, jandr:-1, williams:-1, bolton:-1, coolcasa:-2, mhc:-2, copeland:0 },
+    crandall:           { accurate:4, copeland:3, jandr:1, absolute:2, bolton:1, infinity:1, schnorrbusch:-1, coolcasa:-2, mhc:-2, williams:0 },
+    other:              {}
+  };
+
+  var QUESTIONS = [
+    {
+      id: 'service',
+      title: 'What do you need help with?',
+      options: [
+        { value: 'emergency',    label: 'Emergency',                sub: 'System down, need help today',          scores: { jandr:4, infinity:3, williams:1, bolton:0, absolute:3, schnorrbusch:0, accurate:3, coolcasa:1, copeland:3, mhc:2 } },
+        { value: 'ac_repair',    label: 'AC Repair',                sub: 'AC not cooling properly',          scores: { jandr:2, infinity:2, williams:2, bolton:1, absolute:2, schnorrbusch:2, accurate:2, coolcasa:2, copeland:2, mhc:2 } },
+        { value: 'heat_repair',  label: 'Heating / Furnace Repair', sub: 'Furnace or heater problem',        scores: { jandr:2, infinity:2, williams:2, bolton:1, absolute:2, schnorrbusch:2, accurate:2, coolcasa:2, copeland:2, mhc:2 } },
+        { value: 'installation', label: 'New System Installation',  sub: 'Replace or install a full system', scores: { bolton:4, williams:2, jandr:1, infinity:1, absolute:2, schnorrbusch:2, accurate:2, coolcasa:2, copeland:3, mhc:3 } },
+        { value: 'maintenance',  label: 'Maintenance / Tune-Up',    sub: 'Seasonal service or checkup',      scores: { williams:3, jandr:2, infinity:1, bolton:1, absolute:3, schnorrbusch:3, accurate:3, coolcasa:3, copeland:2, mhc:2 } }
+      ]
+    },
+    {
+      id: 'urgency',
+      title: 'How soon do you need service?',
+      options: [
+        { value: 'today',    label: 'Today',          sub: 'I need someone right away',         scores: { jandr:3, infinity:3, williams:1, bolton:0, absolute:3, schnorrbusch:0, accurate:3, coolcasa:0, copeland:3, mhc:2 } },
+        { value: 'days',     label: 'Within 2 days',  sub: 'Urgent, but not a full emergency',  scores: { infinity:2, jandr:2, williams:1, bolton:1, absolute:2, schnorrbusch:1, accurate:2, coolcasa:2, copeland:2, mhc:2 } },
+        { value: 'week',     label: 'This week',      sub: 'Soon, but I have some flexibility', scores: { williams:2, infinity:1, jandr:1, bolton:1, absolute:1, schnorrbusch:2, accurate:1, coolcasa:2, copeland:1, mhc:2 } },
+        { value: 'planning', label: 'Planning ahead', sub: 'Getting quotes for future work',    scores: { bolton:3, williams:2, jandr:1, infinity:0, absolute:1, schnorrbusch:2, accurate:1, coolcasa:2, copeland:2, mhc:3 } }
+      ]
+    },
+    {
+      id: 'age',
+      title: 'How old is your current HVAC system?',
+      options: [
+        { value: 'new',     label: 'Under 5 years', sub: 'Relatively new system',              scores: { williams:2, jandr:1, infinity:1, bolton:0, absolute:1, schnorrbusch:1, accurate:1, coolcasa:1, copeland:1, mhc:2 } },
+        { value: 'mid',     label: '5-10 years',    sub: 'Approaching mid-life',               scores: { williams:1, jandr:1, infinity:1, bolton:1, absolute:1, schnorrbusch:1, accurate:1, coolcasa:1, copeland:1, mhc:1 } },
+        { value: 'older',   label: '10-15 years',   sub: 'Getting older - repair or replace?', scores: { bolton:2, williams:2, jandr:1, infinity:1, absolute:1, schnorrbusch:2, accurate:2, coolcasa:1, copeland:2, mhc:2 } },
+        { value: 'old',     label: '15+ years',     sub: 'Likely needs replacement',           scores: { bolton:4, williams:1, jandr:1, infinity:1, absolute:2, schnorrbusch:1, accurate:2, coolcasa:1, copeland:3, mhc:2 } },
+        { value: 'unknown', label: "I'm not sure",  sub: 'Need a pro to assess it',            scores: { jandr:1, williams:1, infinity:1, bolton:1, absolute:1, schnorrbusch:1, accurate:2, coolcasa:1, copeland:1, mhc:2 } }
+      ]
+    },
+    {
+      id: 'history',
+      title: 'Has this issue happened before?',
+      options: [
+        { value: 'new_issue', label: 'Brand new issue',                sub: 'First time this has come up',           scores: { infinity:1, jandr:1, williams:1, bolton:1, absolute:1, schnorrbusch:1, accurate:1, coolcasa:1, copeland:1, mhc:1 } },
+        { value: 'recurring', label: 'This keeps happening',           sub: 'Recurring or ongoing problem',          scores: { williams:3, jandr:2, bolton:1, infinity:0, absolute:2, schnorrbusch:2, accurate:3, coolcasa:2, copeland:1, mhc:2 } },
+        { value: 'bad_exp',   label: 'Had a bad experience elsewhere', sub: 'Looking for a more trustworthy option', scores: { jandr:3, williams:3, bolton:1, infinity:0, schnorrbusch:2, absolute:1, accurate:3, coolcasa:2, copeland:1, mhc:2 } },
+        { value: 'warranty',  label: 'May still be under warranty',    sub: 'System or work is under warranty',      scores: { williams:4, jandr:1, bolton:1, infinity:0, schnorrbusch:1, absolute:0, accurate:1, coolcasa:1, copeland:2, mhc:1 } }
+      ]
+    },
+    {
+      id: 'priority',
+      title: 'What matters most to you?',
+      options: [
+        { value: 'speed',     label: 'Fastest Response',          sub: 'I need someone available ASAP',      scores: { infinity:4, jandr:2, williams:1, bolton:0, absolute:3, schnorrbusch:0, accurate:2, coolcasa:0, copeland:3, mhc:1 } },
+        { value: 'warranty',  label: 'Best Warranty',             sub: 'Long-term coverage and guarantees',  scores: { williams:4, bolton:2, jandr:1, infinity:0, schnorrbusch:2, absolute:1, accurate:2, coolcasa:1, copeland:3, mhc:2 } },
+        { value: 'financing', label: 'Financing Options',         sub: '0% financing if I need it',          scores: { bolton:4, williams:1, jandr:0, infinity:0, schnorrbusch:1, absolute:1, accurate:1, coolcasa:1, copeland:4, mhc:1 } },
+        { value: 'local',     label: 'Established Local Company', sub: 'Deep roots in the Forney area',      scores: { jandr:4, williams:2, bolton:1, infinity:0, schnorrbusch:3, absolute:2, accurate:4, coolcasa:2, copeland:3, mhc:3 } },
+        { value: 'reviews',   label: 'Most Proven Track Record',  sub: 'Highest volume of verified reviews', scores: { infinity:3, bolton:2, williams:1, jandr:1, absolute:4, schnorrbusch:1, accurate:3, coolcasa:4, copeland:2, mhc:1 } }
+      ]
+    },
+    {
+      id: 'property',
+      title: 'What type of property?',
+      options: [
+        { value: 'home',             label: 'Single-Family Home',  sub: 'Existing residential property',   scores: { jandr:1, williams:1, infinity:1, bolton:1, absolute:1, schnorrbusch:1, accurate:1, coolcasa:1, copeland:1, mhc:1 } },
+        { value: 'new_construction', label: 'New Construction',    sub: 'New build or major renovation',   scores: { bolton:4, infinity:1, williams:1, jandr:1, absolute:2, schnorrbusch:2, accurate:2, coolcasa:3, copeland:2, mhc:4 } },
+        { value: 'condo',            label: 'Condo or Townhome',   sub: 'Shared-wall or multi-unit',       scores: { infinity:2, williams:2, jandr:1, bolton:0, absolute:1, schnorrbusch:1, accurate:1, coolcasa:2, copeland:2, mhc:1 } },
+        { value: 'commercial',       label: 'Commercial or Rental',sub: 'Business or investment property', scores: { bolton:3, infinity:2, jandr:1, williams:1, absolute:4, schnorrbusch:2, accurate:3, coolcasa:1, copeland:3, mhc:4 } }
+      ]
+    },
+    {
+      id: 'concern',
+      title: 'Any special concerns?',
+      options: [
+        { value: 'air_quality',    label: 'Indoor Air Quality',  sub: 'Dust, allergies, humidity, filtration',  scores: { infinity:2, williams:2, bolton:1, jandr:1, absolute:2, schnorrbusch:1, accurate:3, coolcasa:2, copeland:2, mhc:1 } },
+        { value: 'efficiency',     label: 'Energy Efficiency',   sub: 'Lower bills, upgrade to high-SEER unit', scores: { bolton:3, williams:2, infinity:1, jandr:0, absolute:2, schnorrbusch:1, accurate:2, coolcasa:2, copeland:2, mhc:3 } },
+        { value: 'duct_work',      label: 'Duct Work / Airflow', sub: 'Uneven temps, duct issues',              scores: { bolton:2, infinity:2, williams:1, jandr:1, absolute:1, schnorrbusch:3, accurate:3, coolcasa:1, copeland:2, mhc:3 } },
+        { value: 'second_opinion', label: 'Second Opinion',      sub: 'Want to verify a quote or diagnosis',    scores: { jandr:3, williams:3, infinity:0, bolton:0, schnorrbusch:2, absolute:1, accurate:3, coolcasa:2, copeland:1, mhc:2 } },
+        { value: 'none',           label: 'No special concerns', sub: 'Just need the job done right',           scores: { jandr:1, williams:1, infinity:1, bolton:1, absolute:1, schnorrbusch:1, accurate:1, coolcasa:1, copeland:1, mhc:1 } }
+      ]
+    }
+  ];
+
+  // Total steps: 1 location + 8 questions = 9
+  var TOTAL_STEPS = 8;
+
+  var C = {
+    jandr:       { id:'jandr',       name:'J&amp;R Plumbing, Heating and Air',    phone:'(214) 391-1600', tel:'tel:2143911600', rating:5.0, reviews:'25+',   chips:['Minority &amp; veteran-owned', '58+ yrs serving Forney', 'Chamber Award 2025'] },
+    williams:    { id:'williams',    name:'Williams Services AC &amp; Heating',   phone:'(214) 676-5909', tel:'tel:2146765909', rating:4.9, reviews:'75',     chips:['Veteran-owned', '10-yr parts &amp; labor warranty', 'Owner on every job'] },
+    bolton:      { id:'bolton',      name:'Bolton Heating &amp; Air',             phone:'(214) 909-7615', tel:'tel:2149097615', rating:4.9, reviews:'270+',   chips:['BBB A+ Accredited', '0% financing available'] },
+    infinity:    { id:'infinity',    name:'Infinity Texas Air',               phone:'(972) 465-9788', tel:'tel:9724659788', rating:4.8, reviews:'1,500+', chips:['7am-7pm, 7 days a week', 'Nextdoor Favorite'] },
+    schnorrbusch:{ id:'schnorrbusch',name:'Schnorrbusch Heating &amp; Air',       phone:'(469) 314-8001', tel:'tel:4693148001', rating:4.7, reviews:'185',    chips:['NATE Certified', 'Owner as lead technician', 'Ductless specialist'] },
+    absolute:    { id:'absolute',    name:'Absolute Air AC &amp; Heating',        phone:'(972) 932-5373', tel:'tel:9729325373', rating:4.9, reviews:'608',    chips:['24/7 emergency service', 'Kaufman County'] },
+    accurate:    { id:'accurate',    name:'Accurate Home Services',           phone:'(469) 966-4147', tel:'tel:4699664147', rating:4.9, reviews:'454',    chips:['NATE Certified', '24/7 available', 'Quad-trade'] },
+    coolcasa:    { id:'coolcasa',    name:'Cool Casa Heating &amp; Air',          phone:'(469) 974-7321', tel:'tel:4699747321', rating:5.0, reviews:'639',    chips:['Perfect 5.0&#9733; rating', 'Word-of-mouth only'] },
+    copeland:    { id:'copeland',    name:'Copeland Home Services',           phone:'(469) 720-4440', tel:'tel:4697204440', rating:4.9, reviews:'500+',   chips:['Carrier Factory Authorized', 'Zero-down financing', '24/7'] },
+    mhc:         { id:'mhc',        name:'MHC Air Services',                 phone:'(972) 279-3400', tel:'tel:9722793400', rating:4.7, reviews:'79',     chips:['3rd-generation family, est. 1976', 'Multi-brand certified'] }
+  };
+
+  function getMatches() {
+    var scores = { jandr:0, williams:0, bolton:0, infinity:0, schnorrbusch:0, absolute:0, accurate:0, coolcasa:0, copeland:0, mhc:0 };
+    QUESTIONS.forEach(function(q) {
+      var val = answers[q.id];
+      if (!val) return;
+      var opt = q.options.find(function(o) { return o.value === val; });
+      if (!opt || !opt.scores) return;
+      Object.keys(opt.scores).forEach(function(id) { scores[id] += opt.scores[id]; });
+    });
+    var loc = (answers.location && LOC[answers.location]) || {};
+    Object.keys(loc).forEach(function(id) { if (scores[id] !== undefined) scores[id] += loc[id]; });
+    var sorted = Object.keys(scores).sort(function(a,b) { return scores[b]-scores[a]; });
+    return sorted.slice(0, 4).map(function(id) { return C[id]; });
+  }
+
+  var LOC_NOTES = {
+    forney_talty: {
+      jandr:     'locally based in Forney since 1965 — serves your area directly',
+      copeland:  "Forney-based and your area's only Carrier Factory Authorized Dealer",
+      williams:  'serving the Forney area for over 25 years',
+      bolton:    'serves Forney and surrounding communities',
+      infinity:  'confirmed Forney-area coverage available 7 days a week'
+    },
+    mesquite_sunnyvale: {
+      infinity:  'strong availability and scheduling in Mesquite and Sunnyvale',
+      accurate:  'confirmed coverage in Mesquite and surrounding areas',
+      copeland:  'covers Mesquite and Sunnyvale from their Forney base',
+      absolute:  'confirmed coverage in the Mesquite/Sunnyvale corridor'
+    },
+    rockwall_heath: {
+      coolcasa:  'Royse City-based with primary coverage in Rockwall and Heath',
+      mhc:       'a Rockwall institution since 1976 — serving your area for 50 years',
+      copeland:  'confirmed coverage in Rockwall and Heath',
+      infinity:  'confirmed coverage in Rockwall and Heath'
+    },
+    terrell_kaufman: {
+      schnorrbusch: 'Terrell-based — the owner serves your area on every call',
+      absolute:     "Kaufman County's most-reviewed HVAC contractor, serving your area",
+      accurate:     'serving Kaufman County continuously for 33 years'
+    },
+    crandall: {
+      accurate:  'serving Crandall and Kaufman County for 33 years',
+      copeland:  'confirmed coverage in Crandall',
+      absolute:  'confirmed coverage in Crandall and Kaufman County',
+      jandr:     'confirmed Crandall area coverage'
+    }
+  };
+
+  function getReason(id) {
+    var a = answers;
+    var isEmergency = a.service === 'emergency' || a.urgency === 'today';
+
+    var map = {
+      jandr: function() {
+        if (isEmergency)                  return 'Top choice for emergencies - available same-day with 58+ years in Forney and a 5.0-star rating';
+        if (a.concern === 'second_opinion') return 'Trusted 5-star company since 1965 - a great choice when you want an honest second opinion';
+        if (a.history === 'recurring')    return 'With 58+ years in Forney, J&R is built for long-term relationships and recurring service';
+        if (a.history === 'bad_exp')      return 'Family-owned since 1965 with a 5-star reputation - the antidote to a bad contractor experience';
+        if (a.service === 'maintenance')  return 'Long-established local company ideal for homeowners who want an ongoing maintenance relationship';
+        if (a.priority === 'local')       return 'The most established HVAC company in Forney, continuously serving the community since 1965';
+        return 'Trusted local company with a 5.0-star rating and 58+ years serving Kaufman County';
+      },
+      williams: function() {
+        if (isEmergency)                  return 'Veteran-owned with owner on every job, flat-rate pricing and the best 10-year warranty in the area';
+        if (a.history === 'warranty')     return 'Williams offers the strongest warranty coverage in the area - 10 years parts &amp; labor';
+        if (a.history === 'recurring')    return 'Ideal for recurring issues - owner Derek Williams personally handles every job';
+        if (a.history === 'bad_exp')      return 'Flat-rate pricing and owner involvement make Williams a trustworthy alternative after a bad experience';
+        if (a.priority === 'warranty')    return 'Best warranty in the area - 10-year parts &amp; labor with transparent flat-rate pricing';
+        if (a.service === 'maintenance')  return 'Owner-operated service focused on building long-term relationships with homeowners';
+        return "Flat-rate pricing with the area's strongest warranty - no surprises, no upsells";
+      },
+      bolton: function() {
+        if (isEmergency)                        return 'BBB A+ rated with strong scheduling and 270+ verified reviews, available for urgent calls';
+        if (a.age === 'old')                    return "For systems 15+ years old, Bolton's installation expertise and 0% financing make replacement easier";
+        if (a.concern === 'efficiency')         return 'Strong reputation for high-efficiency system installs with 0% financing options';
+        if (a.service === 'installation')       return 'Specializes in full system installations - BBB A+ rated with 0% financing available';
+        if (a.priority === 'financing')         return 'Best choice when financing matters - 0% financing on new systems, BBB A+ rated';
+        if (a.property === 'new_construction')  return 'Experienced in new construction HVAC installs throughout Forney-area subdivisions';
+        return 'BBB A+ rated specialist in system installations with 0% financing and 270+ reviews';
+      },
+      infinity: function() {
+        if (isEmergency)           return 'Available 7am to 7pm, 7 days a week - highest scheduling availability in the area with 1,500+ reviews';
+        if (a.priority === 'speed')   return 'The largest local company with the most scheduling flexibility and 7-day coverage';
+        if (a.priority === 'reviews') return '1,500+ verified reviews across platforms - the most proven track record in Forney';
+        return '1,500+ reviews and 7-day availability make them a reliable choice for your needs';
+      },
+      schnorrbusch: function() {
+        if (isEmergency)                    return 'Owner-operated in Terrell with NATE-certified technicians, owner Nathan Schnorrbusch on every call';
+        if (a.service === 'maintenance')    return 'NATE-certified technicians with a formal maintenance plan - ideal for seasonal tune-ups and ongoing system care';
+        if (a.history === 'bad_exp')        return 'Owner Nathan Schnorrbusch personally leads service calls - the accountability you want after a bad contractor experience';
+        if (a.concern === 'duct_work')      return 'Ductless and mini-split specialist - one of the few local shops with dedicated ductless expertise';
+        if (a.priority === 'local')         return 'Family-owned in Terrell with the owner working as lead technician on every job';
+        if (a.concern === 'second_opinion') return 'NATE-certified with owner-led service - a trustworthy choice for an independent second opinion';
+        return 'NATE-certified, family-owned HVAC in Terrell where the owner serves as lead technician on every call';
+      },
+      absolute: function() {
+        if (isEmergency)                return "Confirmed 24/7 emergency service - Kaufman County's most-reviewed HVAC company with 608 Google reviews";
+        if (a.priority === 'reviews')   return "4.9-star rating across 608 Google reviews - the most reviewed and most trusted HVAC company in Kaufman County";
+        if (a.property === 'commercial') return 'Full commercial HVAC capability including rooftop units and industrial facilities, plus 17 years serving Kaufman County';
+        if (a.service === 'maintenance') return 'Membership-based maintenance program with priority scheduling, semi-annual tune-ups, and discounted repair rates';
+        return "Kaufman County's most-reviewed HVAC company - 4.9&#9733; across 608 Google reviews with confirmed 24/7 emergency availability";
+      },
+      accurate: function() {
+        if (isEmergency)                    return "Confirmed 24/7 emergency service from Kaufman County's most decorated HVAC company - 29 straight years winning Best HVAC";
+        if (a.service === 'maintenance')    return "NATE-certified with 33 years of service - the go-to for homeowners who want a proven maintenance relationship";
+        if (a.history === 'bad_exp')        return "29 consecutive Readers' Choice awards and NATE-certified diagnostics - the trusted alternative when a previous contractor let you down";
+        if (a.concern === 'second_opinion') return "Known for solving problems previous contractors missed - NATE-certified diagnostics backed by 33 years of experience";
+        if (a.history === 'recurring')      return "Kaufman County's most decorated HVAC company is built for long-term relationships - 29 straight Readers' Choice wins back it up";
+        return "Kaufman County's most trusted HVAC company - 29 straight Readers' Choice awards, NATE-certified, and available 24/7";
+      },
+      coolcasa: function() {
+        if (isEmergency)                        return 'Perfect 5.0-star rating from 639 reviews, 24/7 availability in the Rockwall/Royse City area';
+        if (a.priority === 'reviews')           return 'A perfect 5.0-star rating across 639 Google reviews built entirely on word-of-mouth - the most consistently rated HVAC contractor in the area';
+        if (a.service === 'maintenance')        return 'The Cool Club membership keeps your system in top shape year-round with priority scheduling from a perfect-rated team';
+        if (a.property === 'new_construction')  return 'Dedicated new construction HVAC with custom systems and competitive pricing - 5.0 stars from 639 verified customers';
+        return "A perfect 5.0-star rating from 639 Google reviews - Cool Casa's word-of-mouth reputation makes them one of the most trusted contractors in the Rockwall/Royse City area";
+      },
+      copeland: function() {
+        if (isEmergency)                              return "Same-day emergency availability from Forney's only Carrier Factory Authorized Dealer with 24/7 coverage";
+        if (a.service === 'installation' || a.age === 'old') return "Forney's only Carrier Factory Authorized Dealer - the right choice for a full system replacement with flexible financing";
+        if (a.priority === 'financing')               return 'The most flexible financing in the network - zero down, deferred payment, no annual fees - backed by Carrier Factory Authorization';
+        if (a.history === 'bad_exp')                  return 'Carrier Factory Authorized with Nextdoor Faves recognition - a trusted local alternative after a bad contractor experience';
+        return "Forney's only Carrier Factory Authorized Dealer with 24/7 availability, flexible financing, and full HVAC, electrical, and plumbing services";
+      },
+      mhc: function() {
+        if (isEmergency)                        return '3rd-generation family business since 1976, NATE-certified across Trane, Carrier and York in Rockwall';
+        if (a.property === 'new_construction')  return '50 years of HVAC engineering applied to new construction - multi-brand certified across Trane, Carrier, and York';
+        if (a.property === 'commercial')        return 'Full commercial HVAC from a 3rd-generation Rockwall firm with 50 years of experience - certified across Trane, Carrier, and York';
+        if (a.concern === 'efficiency')         return 'Commercial-grade load calculations and multi-brand certification make MHC the right choice when system sizing and efficiency matter most';
+        return 'A Rockwall institution since 1976 - NATE-certified across Trane, Carrier, and York with 3rd-generation expertise in residential and commercial HVAC';
+      }
+    };
+
+    var reason = map[id] ? map[id]() : '';
+    var locNote = (LOC_NOTES[answers.location] || {})[id];
+    if (reason && locNote) return reason + ' &mdash; ' + locNote + '.';
+    if (!reason && locNote) return locNote.charAt(0).toUpperCase() + locNote.slice(1) + '.';
+    return reason;
+  }
+
+  // step: 0 = location, 1-8 = QUESTIONS[0-7]
+  var step = 0;
+  var answers = {};
+
+  function render() {
+    var q = step === TOTAL_STEPS - 1 ? LOCATION : QUESTIONS[step];
+    document.getElementById('fhp-qstep').textContent = 'Step ' + (step + 1) + ' of ' + TOTAL_STEPS;
+    document.getElementById('fhp-qtitle').textContent = q.title;
+    var container = document.getElementById('fhp-opts');
+    container.innerHTML = '';
+    var qId = q.id;
+    q.options.forEach(function(opt) {
+      var btn = document.createElement('button');
+      btn.className = 'fhp-option' + (answers[qId] === opt.value ? ' fhp-sel' : '');
+      btn.innerHTML = '<span class="fhp-opt-label">' + opt.label + '</span>' +
+                      (opt.sub ? '<span class="fhp-opt-sub">' + opt.sub + '</span>' : '');
+      btn.onclick = function() { pick(qId, opt.value, btn); };
+      container.appendChild(btn);
+    });
+    var back = document.getElementById('fhp-back');
+    if (step === 0) back.classList.add('fhp-hide');
+    else back.classList.remove('fhp-hide');
+    document.getElementById('fhp-fill').style.width = ((step / TOTAL_STEPS) * 100) + '%';
+    var qs = document.getElementById('fhp-qscreen');
+    qs.classList.remove('fhp-fade');
+    void qs.offsetWidth;
+    qs.classList.add('fhp-fade');
+  }
+
+  function pick(qId, value, btn) {
+    answers[qId] = value;
+    document.querySelectorAll('#fhp-mini .fhp-option').forEach(function(b) { b.classList.remove('fhp-sel'); });
+    btn.classList.add('fhp-sel');
+    setTimeout(advance, 420);
+  }
+
+  function advance() {
+    step++;
+    if (step < TOTAL_STEPS) {
+      render();
+    } else {
+      showResults();
+    }
+  }
+
+  function goBack() {
+    if (step > 0) { step--; render(); }
+  }
+
+  function showResults() {
+    var matches = getMatches();
+    var emergency = answers.service === 'emergency' || answers.urgency === 'today';
+    document.getElementById('fhp-qscreen').classList.add('fhp-hide');
+    var titleEl = document.querySelector('#fhp-mini .fhp-title');
+    var subEl = document.querySelector('#fhp-mini .fhp-sub');
+    if (titleEl) titleEl.classList.add('fhp-hide');
+    if (subEl) subEl.classList.add('fhp-hide');
+    document.getElementById('fhp-fill').style.width = '100%';
+    var rs = document.getElementById('fhp-rscreen');
+    rs.classList.remove('fhp-hide', 'fhp-fade');
+    void rs.offsetWidth;
+    rs.classList.add('fhp-fade');
+    document.getElementById('fhp-rtitle').textContent = emergency ? 'Emergency Recommendations' : (matches.length > 1 ? 'Your Top Matches' : 'Your Best Match');
+    document.getElementById('fhp-rsub').textContent = emergency ? 'Call directly for the fastest emergency response' : "Based on your answers, here's who we recommend";
+    var container = document.getElementById('fhp-results');
+    container.innerHTML = '';
+    var shown = matches.slice(0, 2);
+    var more = matches.slice(2);
+    shown.forEach(function(c, i) {
+      if (i === 1) {
+        var lbl = document.createElement('p');
+        lbl.className = 'fhp-second-label';
+        lbl.textContent = 'Also a great fit';
+        container.appendChild(lbl);
+      }
+      container.appendChild(buildCard(c, i === 0));
+    });
+    if (more.length > 0) {
+      var moreBtn = document.createElement('button');
+      moreBtn.className = 'fhp-see-more';
+      moreBtn.innerHTML = 'See ' + more.length + ' more options &darr;';
+      moreBtn.onclick = function() {
+        moreBtn.style.display = 'none';
+        more.forEach(function(c) {
+          var lbl2 = document.createElement('p');
+          lbl2.className = 'fhp-second-label';
+          lbl2.textContent = 'Additional match';
+          container.appendChild(lbl2);
+          container.appendChild(buildCard(c, false));
+        });
+      };
+      container.appendChild(moreBtn);
+    }
+    track('mini_results_viewed', { primary: matches[0].id, second: (matches[1]||{}).id||'none' });
+    scrollToTool();
+  }
+
+  function buildCard(c, primary) {
+    var card = document.createElement('div');
+    card.className = 'fhp-card fhp-fade';
+    var isDesktop = window.innerWidth > 900 && !('ontouchstart' in window) && navigator.maxTouchPoints === 0;
+    var callBtn = isDesktop
+      ? '<button class="fhp-btn-call" onclick="(function(b,h,p,id){fhpReveal(b,h,p,id);})(this,\''+c.tel+'\',\''+c.phone+'\',\''+c.id+'\')">See Phone Number</button>'
+      : '<a href="'+c.tel+'" target="_blank" class="fhp-btn-call" onclick="fhpTrackCall(\''+c.id+'\')">&#9990; '+c.phone+'</a>';
+    var googleChip = '<span class="fhp-chip"><span class="fhp-g-icon">G</span> '+c.rating.toFixed(1)+'&#9733; ('+c.reviews+' Google reviews)</span>';
+    var chips = googleChip + (c.chips||[]).map(function(ch){ return '<span class="fhp-chip">'+ch+'</span>'; }).join('');
+    card.innerHTML =
+      '<div class="fhp-card-head">' +
+        '<div class="fhp-card-check">&#10003;</div>' +
+        '<div class="fhp-card-head-right">' +
+          '<div class="fhp-card-status">' +
+            '<span class="fhp-status-label">Active TDLR License</span>' +
+            '<span class="fhp-status-badge">&#10003; Vetted Network Contractor</span>' +
+          '</div>' +
+          '<div class="fhp-c-name">'+c.name+'</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="fhp-chips">'+chips+'</div>' +
+      '<div class="fhp-c-reason">'+getReason(c.id)+'</div>' +
+      '<div class="fhp-card-actions">' +
+        '<div class="fhp-action-call">' +
+          '<div class="fhp-action-label">&#8595; Click to call</div>' +
+          callBtn +
+        '</div>' +
+        '<div class="fhp-action-call">' +
+          '<div class="fhp-action-label">&#8599; Get a free quote</div>' +
+          '<button class="fhp-btn-quote" onclick="fhpOpenModal(\''+c.id+'\')">Free Quote &rarr;</button>' +
+        '</div>' +
+      '</div>';
+    return card;
+  }
+
+  window.fhpReveal = function(btn, href, phone, id) {
+    fhpTrackCall(id);
+    btn.outerHTML = '<a href="'+href+'" class="fhp-btn-call">'+phone+'</a>';
+  };
+  window.fhpTrackCall = function(id) { track('mini_call_clicked', { contractor: id }); };
+
+  window.fhpOpenModal = function(contractorId) {
+    document.getElementById('fhp-form-service').value = answers.service || '';
+    document.getElementById('fhp-form-urgency').value = answers.urgency || '';
+    document.getElementById('fhp-form-location').value = answers.location || '';
+    document.getElementById('fhp-form-contractor').value = contractorId || '';
+    document.getElementById('fhp-modal-overlay').classList.remove('fhp-hide');
+    document.body.style.overflow = 'hidden';
+    track('quote_form_opened', { contractor: contractorId });
+  };
+  window.fhpCloseModal = function() {
+    document.getElementById('fhp-modal-overlay').classList.add('fhp-hide');
+    document.body.style.overflow = '';
+  };
+
+  var quoteForm = document.getElementById('fhp-quote-form');
+  if (quoteForm) {
+    quoteForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var form = this;
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(function(r) {
+        if (r.ok) {
+          form.innerHTML =
+            '<div class="fhp-form-success">' +
+              '<div style="font-size:43px;color:#172620;margin-bottom:10px;">&#10003;</div>' +
+              '<div style="font-family:Lora,Georgia,serif;font-size:20px;font-weight:600;color:#172620;margin-bottom:6px;">Quote Request Sent!</div>' +
+              '<div style="font-size:16px;color:#4B5563;line-height:1.5;">We\'ll match you with a vetted local contractor and have them reach out within 1 hour.</div>' +
+            '</div>';
+          track('lead_submitted', { source: 'mini_tool' });
+        }
+      });
+    });
+  }
+
+  document.getElementById('fhp-back').onclick = goBack;
+
+  function scrollToTool() {
+    var el = document.getElementById('fhp-tool-card');
+    if (!el) return;
+    var top = el.getBoundingClientRect().top + window.pageYOffset - 24;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+  }
+
+  function track(event, params) {
+    if (typeof gtag !== 'undefined') gtag('event', event, params || {});
+  }
+
+  (function clearDurableOverlay() {
+    var el = document.getElementById('fhp-mini');
+    if (!el) return;
+    var section = el.closest('section');
+    if (!section) return;
+    section.querySelectorAll('.absolute.inset-0').forEach(function(node) {
+      node.style.display = 'none';
+    });
+  })();
+
+  render();
+  track('mini_tool_started');
+
+})();
+</script>
