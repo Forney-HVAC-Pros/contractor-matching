@@ -6,7 +6,7 @@
   #fhp-mini {
     font-family: 'Inter', sans-serif;
     color: #111827;
-    padding: 28px 5% 44px;
+    padding: 64px 5% 44px;
     min-height: 100vh;
     width: 100%;
     display: flex;
@@ -531,7 +531,7 @@
 <div id="fhp-mini">
 
   <div class="fhp-title" style="text-align:center;margin-bottom:10px;">Get Matched With a Trusted Forney HVAC Contractor &mdash; Free</div>
-  <div class="fhp-sub">We're not a contractor. We're a free matching service. Answer a few questions and get an instant recommendation for the right vetted local pro.<br>No obligation, no marketing emails or texts.</div>
+  <div class="fhp-sub">We're a free matching service. Answer a few questions and get an instant recommendation for the right vetted local pro.<br>No obligation, no marketing emails or texts.</div>
 
   <div id="fhp-tool-card">
     <div class="fhp-bar-track"><div class="fhp-bar-fill" id="fhp-fill" style="width:0%"></div></div>
@@ -555,14 +555,20 @@
     </div>
   </div>
 
-  <div class="fhp-trust">
-    <span class="fhp-t-item">&#10003; TDLR Licensed</span>
-    <span class="fhp-t-item">4.8&ndash;5.0&#9733; Google</span>
-    <span class="fhp-t-item">BBB A+</span>
-    <span class="fhp-t-item">Nextdoor Favorites</span>
-    <span class="fhp-t-item">$0 Always Free</span>
-    <span class="fhp-t-item">No Obligation</span>
-    <span class="fhp-t-item"><a href="https://share.google/F7nO0JD1Rq79KeTcT" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">5.0&#9733; Forney HVAC Pros on Google</a></span>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+    <div style="font-size:10px;color:rgba(255,255,255,0.9);letter-spacing:0.08em;text-transform:uppercase;text-shadow:0 1px 3px rgba(0,0,0,0.8);">Contractor Standards</div>
+    <div class="fhp-trust">
+      <span class="fhp-t-item">&#10003; TDLR Licensed</span>
+      <span class="fhp-t-item">4.8&ndash;5.0&#9733; Google</span>
+      <span class="fhp-t-item">BBB A+</span>
+      <span class="fhp-t-item">Nextdoor Favorites</span>
+    </div>
+    <div style="font-size:10px;color:rgba(255,255,255,0.9);letter-spacing:0.08em;text-transform:uppercase;text-shadow:0 1px 3px rgba(0,0,0,0.8);margin-top:2px;">Our Standards</div>
+    <div class="fhp-trust">
+      <span class="fhp-t-item">$0 Always Free</span>
+      <span class="fhp-t-item">No Obligation</span>
+      <span class="fhp-t-item"><a href="https://share.google/F7nO0JD1Rq79KeTcT" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">5.0&#9733; Forney HVAC Pros on Google</a></span>
+    </div>
   </div>
 
 </div>
@@ -932,6 +938,8 @@
     var subEl = document.querySelector('#fhp-mini .fhp-sub');
     if (titleEl) titleEl.classList.add('fhp-hide');
     if (subEl) subEl.classList.add('fhp-hide');
+    var miniEl = document.getElementById('fhp-mini');
+    if (miniEl) { miniEl.style.minHeight = 'auto'; miniEl.style.paddingTop = '32px'; miniEl.style.paddingBottom = '32px'; }
     document.getElementById('fhp-fill').style.width = '100%';
     var rs = document.getElementById('fhp-rscreen');
     rs.classList.remove('fhp-hide', 'fhp-fade');

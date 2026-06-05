@@ -1365,6 +1365,7 @@ function showResults() {
 
   selectedContractor = matches[0];
   track('results_viewed', { primary_match: matches[0].id, second_match: matches[1]?.id || 'none', location: answers.location || 'unknown' });
+  document.body.style.minHeight = 'auto';
   scrollUp();
 }
 
