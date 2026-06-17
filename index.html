@@ -10,7 +10,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Find Your HVAC Contractor | Forney HVAC Pros">
-  <meta property="og:description" content="Find a trusted HVAC contractor or technician in Forney, TX. Answer 8 questions, get matched in 90 seconds. Free, no obligation.">
+  <meta property="og:description" content="Find a trusted HVAC contractor or technician in Forney, TX. Answer 4 questions, get matched in 60 seconds. Free, no obligation.">
   <meta property="og:url" content="https://forneyhvacpros.com/find-contractor">
   <meta property="og:site_name" content="Forney HVAC Pros">
 
@@ -20,7 +20,7 @@
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "Forney HVAC Contractor Matching Tool",
-    "description": "Free tool that matches Forney, TX homeowners with a trusted local HVAC contractor or technician for their specific situation. Answer 8 questions, get matched in 90 seconds.",
+    "description": "Free tool that matches Forney, TX homeowners with a trusted local HVAC contractor or technician for their specific situation. Answer 4 questions, get matched in 60 seconds.",
     "url": "https://forneyhvacpros.com/find-contractor",
     "applicationCategory": "UtilityApplication",
     "operatingSystem": "Any",
@@ -956,29 +956,6 @@ const QUESTIONS = [
     ]
   },
   {
-    id: 'age',
-    question: 'How old is your current HVAC system?',
-    subtitle: 'Helps us recommend repair vs. replacement options',
-    options: [
-      { value: 'new',     icon: '', label: 'Under 5 years',   sublabel: 'Relatively new system',              scores: { williams:2, jandr:1, infinity:1, bolton:0, absolute:1, schnorrbusch:1, accurate:1, coolcasa:1, copeland:1, mhc:2 } },
-      { value: 'mid',     icon: '', label: '5-10 years',      sublabel: 'Approaching mid-life',               scores: { williams:1, jandr:1, infinity:1, bolton:1, absolute:1, schnorrbusch:1, accurate:1, coolcasa:1, copeland:1, mhc:1 } },
-      { value: 'older',   icon: '', label: '10-15 years',     sublabel: 'Getting older - repair or replace?', scores: { bolton:2, williams:2, jandr:1, infinity:1, absolute:1, schnorrbusch:2, accurate:2, coolcasa:1, copeland:2, mhc:2 } },
-      { value: 'old',     icon: '', label: '15+ years',       sublabel: 'Likely needs replacement',           scores: { bolton:4, williams:1, jandr:1, infinity:1, absolute:2, schnorrbusch:1, accurate:2, coolcasa:1, copeland:3, mhc:2 } },
-      { value: 'unknown', icon: '', label: "I'm not sure",    sublabel: 'Need a pro to assess it',            scores: { jandr:1, williams:1, infinity:1, bolton:1, absolute:1, schnorrbusch:1, accurate:2, coolcasa:1, copeland:1, mhc:2 } }
-    ]
-  },
-  {
-    id: 'history',
-    question: 'Has this issue happened before?',
-    subtitle: 'Helps us find the right fit for your situation',
-    options: [
-      { value: 'new_issue',    icon: '', label: 'Brand new issue',                sublabel: 'First time this has come up',         scores: { infinity:1, jandr:1, williams:1, bolton:1, absolute:1, schnorrbusch:1, accurate:1, coolcasa:1, copeland:1, mhc:1 } },
-      { value: 'recurring',    icon: '', label: 'This keeps happening',           sublabel: 'Recurring or ongoing problem',        scores: { williams:3, jandr:2, bolton:1, infinity:0, absolute:2, schnorrbusch:2, accurate:3, coolcasa:2, copeland:1, mhc:2 } },
-      { value: 'bad_exp',      icon: '', label: 'Had a bad experience elsewhere', sublabel: 'Looking for a more trustworthy option', scores: { jandr:3, williams:3, bolton:1, infinity:0, schnorrbusch:2, absolute:1, accurate:3, coolcasa:2, copeland:1, mhc:2 } },
-      { value: 'warranty',     icon: '', label: 'May still be under warranty',   sublabel: 'System or work is under warranty',    scores: { williams:4, jandr:1, bolton:1, infinity:0, schnorrbusch:1, absolute:0, accurate:1, coolcasa:1, copeland:2, mhc:1 } }
-    ]
-  },
-  {
     id: 'priority',
     question: 'What matters most to you?',
     subtitle: 'Choose your top priority for this job',
@@ -988,18 +965,6 @@ const QUESTIONS = [
       { value: 'financing', icon: '', label: 'Financing Options',         sublabel: '0% financing if I need it',          scores: { bolton:4, williams:1, jandr:0, infinity:0, schnorrbusch:1, absolute:1, accurate:1, coolcasa:1, copeland:4, mhc:1 } },
       { value: 'local',     icon: '', label: 'Established Local Company', sublabel: 'Deep roots in the Forney area',      scores: { jandr:4, williams:2, bolton:1, infinity:0, schnorrbusch:3, absolute:2, accurate:4, coolcasa:2, copeland:3, mhc:3 } },
       { value: 'reviews',   icon: '', label: 'Most Proven Track Record',  sublabel: 'Highest volume of verified reviews', scores: { infinity:3, bolton:2, williams:1, jandr:1, absolute:4, schnorrbusch:1, accurate:3, coolcasa:4, copeland:2, mhc:1 } }
-    ]
-  },
-  {
-    id: 'budget',
-    question: "What's your approximate budget?",
-    subtitle: 'A rough idea helps us find the right fit',
-    options: [
-      { value: 'small',   icon: '', label: 'Under $500',      sublabel: 'Service call or minor repair',       scores: { jandr:2, williams:2, infinity:1, bolton:0, absolute:1, schnorrbusch:1, accurate:2, coolcasa:2, copeland:1, mhc:1 } },
-      { value: 'medium',  icon: '', label: '$500 - $2,000',   sublabel: 'Major repair or part replacement',   scores: { williams:2, jandr:1, infinity:1, bolton:1, absolute:1, schnorrbusch:2, accurate:2, coolcasa:2, copeland:2, mhc:2 } },
-      { value: 'large',   icon: '', label: '$2,000 - $5,000', sublabel: 'Partial replacement or large job',   scores: { bolton:2, williams:2, jandr:1, infinity:1, absolute:2, schnorrbusch:2, accurate:2, coolcasa:2, copeland:2, mhc:3 } },
-      { value: 'xlarge',  icon: '', label: '$5,000+',         sublabel: 'Full system replacement',            scores: { bolton:4, williams:1, jandr:1, infinity:1, absolute:2, schnorrbusch:1, accurate:2, coolcasa:1, copeland:3, mhc:3 } },
-      { value: 'unknown', icon: '', label: "Not sure yet",    sublabel: 'I need a quote first',               scores: { williams:1, jandr:1, infinity:1, bolton:1, absolute:1, schnorrbusch:1, accurate:2, coolcasa:1, copeland:2, mhc:1 } }
     ]
   },
   {
@@ -1013,18 +978,6 @@ const QUESTIONS = [
       { value: 'commercial',       icon: '', label: 'Commercial or Rental', sublabel: 'Business or investment property',     scores: { bolton:3, infinity:2, jandr:1, williams:1, absolute:4, schnorrbusch:2, accurate:3, coolcasa:1, copeland:3, mhc:4 } }
     ]
   },
-  {
-    id: 'concern',
-    question: 'Any special concerns?',
-    subtitle: 'Select the one that applies most - or choose "None"',
-    options: [
-      { value: 'air_quality',    icon: '', label: 'Indoor Air Quality',    sublabel: 'Dust, allergies, humidity, filtration',  scores: { infinity:2, williams:2, bolton:1, jandr:1, absolute:2, schnorrbusch:1, accurate:3, coolcasa:2, copeland:2, mhc:1 } },
-      { value: 'efficiency',     icon: '', label: 'Energy Efficiency',     sublabel: 'Lower bills, upgrade to high-SEER unit', scores: { bolton:3, williams:2, infinity:1, jandr:0, absolute:2, schnorrbusch:1, accurate:2, coolcasa:2, copeland:2, mhc:3 } },
-      { value: 'duct_work',      icon: '', label: 'Duct Work / Airflow',   sublabel: 'Uneven temps, duct issues',              scores: { bolton:2, infinity:2, williams:1, jandr:1, absolute:1, schnorrbusch:3, accurate:3, coolcasa:1, copeland:2, mhc:3 } },
-      { value: 'second_opinion', icon: '', label: 'Second Opinion',        sublabel: 'Want to verify a quote or diagnosis',    scores: { jandr:3, williams:3, infinity:0, bolton:0, schnorrbusch:2, absolute:1, accurate:3, coolcasa:2, copeland:1, mhc:2 } },
-      { value: 'none',           icon: '', label: 'No special concerns',   sublabel: 'Just need the job done right',           scores: { jandr:1, williams:1, infinity:1, bolton:1, absolute:1, schnorrbusch:1, accurate:1, coolcasa:1, copeland:1, mhc:1 } }
-    ]
-  }
 ];
 
 // ============================================================
