@@ -814,19 +814,19 @@ const CONTRACTORS = {
     phone: '(972) 465-9788',
     phoneHref: 'tel:9724659788',
     rating: 4.8,
-    reviewCount: '1,500+',
+    reviewCount: '1,400+',
     since: '2016',
     badge: 'Nextdoor Favorite',
     strengths: [
-      'Available 7am-7pm, 7 days a week',
-      '1,500+ verified reviews',
+      'Available 24/7 emergency service',
+      '1,400+ verified reviews',
       'Nextdoor Neighborhood Favorite (2021 & 2023)',
       'Fastest response availability in the area'
     ]
   },
   schnorrbusch: {
     id: 'schnorrbusch',
-    name: 'Schnorrbusch Heating & Air Conditioning',
+    name: 'Grizzly Heating & Air (formerly Schnorrbusch)',
     website: 'https://schnorrbuschac.com',
     phone: '(469) 314-8001',
     phoneHref: 'tel:4693148001',
@@ -853,7 +853,7 @@ const CONTRACTORS = {
     badge: "Kaufman County's Most Reviewed",
     strengths: [
       '24/7 confirmed emergency service availability',
-      '4.9&#9733; across 608 Google reviews',
+      '4.9&#9733; across 620 Google reviews',
       'Membership maintenance plans with priority scheduling',
       'Full commercial HVAC capability'
     ]
@@ -884,9 +884,9 @@ const CONTRACTORS = {
     rating: 5.0,
     reviewCount: '639',
     since: '2018',
-    badge: 'Perfect-Rated — 639 Reviews',
+    badge: 'Perfect-Rated — 570 Reviews',
     strengths: [
-      'Perfect 5.0&#9733; rating across 639 Google reviews',
+      'Perfect 5.0&#9733; rating across 570 Google reviews',
       'Built entirely on word-of-mouth referrals',
       'Cool Club membership maintenance plan',
       'New construction HVAC specialist'
@@ -1043,13 +1043,13 @@ function getMatchReason(contractorId) {
       new_construction: 'Experienced in new construction HVAC installs throughout Forney-area subdivisions',
       efficiency: 'Strong reputation for high-efficiency system installs with 0% financing options',
       old_system: 'For systems 15+ years old, Bolton\'s installation expertise and financing make replacement easier',
-      default: 'BBB A+ rated specialist in system installations with 0% financing and 270+ reviews'
+      default: 'BBB A+ rated specialist in system installations with 0% financing and 320+ reviews'
     },
     infinity: {
-      today: 'Available 7am-7pm, 7 days a week - highest availability in the area for fast service',
+      today: 'Available 24/7 emergency service - highest availability in the area for fast service',
       speed: 'The largest local company with the most scheduling flexibility and 7-day coverage',
-      reviews: '1,500+ verified reviews across platforms - the most proven track record in Forney',
-      default: '1,500+ reviews and 7-day availability make them a reliable choice for your needs'
+      reviews: '1,400+ verified reviews across platforms - one of the most proven track records in Forney',
+      default: '1,400+ reviews and 7-day availability make them a reliable choice for your needs'
     },
     schnorrbusch: {
       maintenance: 'NATE-certified technicians with a formal maintenance plan - ideal for seasonal tune-ups and ongoing system care',
@@ -1060,11 +1060,11 @@ function getMatchReason(contractorId) {
       default: 'NATE-certified, family-owned HVAC shop in Terrell where the owner serves as lead technician on every call'
     },
     absolute: {
-      emergency: 'Confirmed 24/7 emergency service - Kaufman County\'s most-reviewed HVAC company with 608 Google reviews',
-      reviews: '4.9-star rating across 608 Google reviews - the most reviewed and most trusted HVAC company in Kaufman County',
+      emergency: 'Confirmed 24/7 emergency service - Kaufman County\'s most-reviewed HVAC company with 620 Google reviews',
+      reviews: '4.9-star rating across 620 Google reviews - one of the most reviewed and most trusted HVAC companies in Kaufman County',
       commercial: 'Full commercial HVAC capability including rooftop units and industrial facilities, plus 17 years serving Kaufman County',
       maintenance: 'Membership-based maintenance program with priority scheduling, semi-annual tune-ups, and discounted repair rates',
-      default: 'Kaufman County\'s most-reviewed HVAC company - 4.9&#9733; across 608 Google reviews with confirmed 24/7 emergency availability'
+      default: 'Kaufman County\'s most-reviewed HVAC company - 4.9&#9733; across 620 Google reviews with confirmed 24/7 emergency availability'
     },
     accurate: {
       emergency: 'Confirmed 24/7 emergency service from Kaufman County\'s most decorated HVAC company - 29 straight years winning Best HVAC',
@@ -1075,10 +1075,10 @@ function getMatchReason(contractorId) {
       default: 'Kaufman County\'s most trusted HVAC company - 29 straight Readers\' Choice awards, NATE-certified, and available 24/7'
     },
     coolcasa: {
-      reviews: 'A perfect 5.0-star rating across 639 Google reviews built entirely on word-of-mouth - the most consistently reviewed HVAC contractor in the area',
+      reviews: 'A perfect 5.0-star rating across 570 Google reviews built entirely on word-of-mouth - one of the most consistently reviewed HVAC contractors in the area',
       maintenance: 'The Cool Club membership keeps your system in top shape year-round with priority scheduling from a perfect-rated service team',
-      new_construction: 'Dedicated new construction HVAC with custom systems and competitive pricing - 5.0 stars from 639 verified customers',
-      default: 'A perfect 5.0-star rating from 639 Google reviews - Cool Casa\'s word-of-mouth reputation makes them one of the most trusted HVAC contractors in the Rockwall/Royse City area'
+      new_construction: 'Dedicated new construction HVAC with custom systems and competitive pricing - 5.0 stars from 570 verified customers',
+      default: 'A perfect 5.0-star rating from 570 Google reviews - Cool Casa\'s word-of-mouth reputation makes them one of the most trusted HVAC contractors in the Rockwall/Royse City area'
     },
     copeland: {
       installation: 'Forney\'s only Carrier Factory Authorized Dealer - the right choice for a full system replacement with flexible financing and same-day availability',
@@ -1512,16 +1512,16 @@ function track(event, params = {}) {
     <p>Forney HVAC Pros is a free contractor matching service. We match Forney-area homeowners with the right local HVAC contractor or technician based on their specific situation - no cost, no obligation.</p>
     <h2>Our Vetted Contractor Network</h2>
     <ul>
-      <li><strong>J&amp;R Plumbing, Heating and Air</strong> - 5.0 stars (25+ reviews) - (214) 391-1600 - Serving Forney since 1965. Chamber of Commerce Award 2025. Minority, woman &amp; veteran-owned.</li>
-      <li><strong>Williams Services AC &amp; Heating</strong> - 4.9 stars (75 reviews) - (214) 676-5909 - Veteran-owned. 10-year parts &amp; labor warranty. Flat-rate pricing. Owner on every job.</li>
-      <li><strong>Bolton Heating &amp; Air</strong> - 4.9 stars (270+ reviews) - (214) 909-7615 - BBB A+ rated. 0% financing on new systems. Specializes in full system installations and new construction.</li>
-      <li><strong>Infinity Texas Air</strong> - 4.8 stars (1,500+ reviews) - (972) 465-9788 - Available 7am-7pm, 7 days a week. Nextdoor Neighborhood Favorite 2021 and 2023.</li>
-      <li><strong>Schnorrbusch Heating &amp; Air Conditioning</strong> - 4.7 stars (185 reviews) - (469) 314-8001 - NATE-certified. Owner-operated in Terrell, TX. Ductless/mini-split specialist. Formal maintenance plans.</li>
-      <li><strong>Absolute Air Air Conditioning &amp; Heating</strong> - 4.9 stars (608 reviews) - (972) 932-5373 - 24/7 emergency service. Kaufman County&#39;s most-reviewed HVAC company. Membership maintenance plans. Full commercial capability.</li>
-      <li><strong>Accurate Home Services</strong> - 4.9 stars (454 reviews) - (469) 966-4147 - NATE-certified. 24/7 emergency service. Kaufman Herald Readers&#39; Choice Best HVAC 29 consecutive years. Full quad-trade: HVAC, electrical, plumbing &amp; IAQ.</li>
-      <li><strong>Cool Casa Heating &amp; Air Conditioning</strong> - 5.0 stars (639 reviews) - (469) 974-7321 - Perfect-rated, word-of-mouth only. Cool Club maintenance membership. New construction specialist. Royse City/Rockwall area.</li>
-      <li><strong>Copeland Home Services</strong> - 4.9 stars (500+ reviews) - (469) 720-4440 - Forney&#39;s only Carrier Factory Authorized Dealer. 24/7 emergency. Zero-down financing. Full HVAC, electrical, plumbing &amp; pool services.</li>
-      <li><strong>MHC Air Services</strong> - 4.7 stars (79 reviews) - (972) 279-3400 - 3rd-generation family business since 1976. NATE-certified across Trane, Carrier &amp; York. Commercial-grade new construction. Rockwall area.</li>
+      <li><strong>J&amp;R Plumbing, Heating and Air</strong> - 5.0 stars (73 reviews) - (214) 391-1600 - Serving Forney since 1965. Chamber of Commerce Award 2025. Minority, woman &amp; veteran-owned.</li>
+      <li><strong>Williams Services AC &amp; Heating</strong> - 4.9 stars (72 reviews) - (214) 676-5909 - Veteran-owned. 10-year parts &amp; labor warranty. Flat-rate pricing. Owner on every job.</li>
+      <li><strong>Bolton Heating &amp; Air</strong> - 4.9 stars (320+ reviews) - (214) 909-7615 - BBB A+ rated. 0% financing on new systems. Specializes in full system installations and new construction.</li>
+      <li><strong>Infinity Texas Air</strong> - 4.8 stars (1,400+ reviews) - (972) 465-9788 - Available 24/7 emergency service. Nextdoor Neighborhood Favorite 2021 and 2023.</li>
+      <li><strong>Grizzly Heating &amp; Air (formerly Schnorrbusch)</strong> - 4.7 stars (193 reviews) - (469) 314-8001 - NATE-certified. Owner-operated in Terrell, TX. Ductless/mini-split specialist. Formal maintenance plans.</li>
+      <li><strong>Absolute Air Air Conditioning &amp; Heating</strong> - 4.9 stars (620 reviews) - (972) 932-5373 - 24/7 emergency service. one of Kaufman County&#39;s most-reviewed HVAC companies. Membership maintenance plans. Full commercial capability.</li>
+      <li><strong>Accurate Home Services</strong> - 4.9 stars (705 reviews) - (469) 966-4147 - NATE-certified. 24/7 emergency service. Kaufman Herald Readers&#39; Choice Best HVAC 29 consecutive years. Full quad-trade: HVAC, electrical, plumbing &amp; IAQ.</li>
+      <li><strong>Cool Casa Heating &amp; Air Conditioning</strong> - 5.0 stars (570 reviews) - (469) 974-7321 - Perfect-rated, word-of-mouth only. Cool Club maintenance membership. New construction specialist. Royse City/Rockwall area.</li>
+      <li><strong>Copeland Home Services</strong> - 4.9 stars (2,700+ reviews) - (469) 720-4440 - Forney&#39;s only Carrier Factory Authorized Dealer. 24/7 emergency. Zero-down financing. Full HVAC, electrical, plumbing &amp; pool services.</li>
+      <li><strong>MHC Air Services</strong> - 4.7 stars (99 reviews) - (972) 279-3400 - 3rd-generation family business since 1976. NATE-certified across Trane, Carrier &amp; York. Commercial-grade new construction. Rockwall area.</li>
     </ul>
     <p>All contractors are TDLR-licensed, minimum 4.7-star Google rating, and locally based in Forney/Kaufman County.</p>
     <p><strong>Contact Forney HVAC Pros:</strong> (469) 898-3774 | contact@forneyhvacpros.com | <a href="https://forneyhvacpros.com">forneyhvacpros.com</a></p>
