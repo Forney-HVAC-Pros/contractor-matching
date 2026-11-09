@@ -52,13 +52,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Google Analytics 4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9LSH07TDFN"></script>
+  <!-- Google Analytics 4 (P0 DRAFT: load GA4 ONLY when opened directly, not when embedded.
+       When embedded on forneyhvacpros.com, events go to the parent page via postMessage
+       so GA4 keeps the visitor's original session/source. -->
   <script>
+    window.FHP_FRAMED = (function () { try { return window.self !== window.top; } catch (e) { return true; } })();
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-9LSH07TDFN');
+    if (!window.FHP_FRAMED) {
+      var fhpGa = document.createElement('script');
+      fhpGa.async = true;
+      fhpGa.src = 'https://www.googletagmanager.com/gtag/js?id=G-9LSH07TDFN';
+      document.head.appendChild(fhpGa);
+      gtag('js', new Date());
+      gtag('config', 'G-9LSH07TDFN');
+    }
   </script>
 
   <style>
@@ -1330,7 +1338,7 @@ function buildContractorCard(c, isPrimary) {
   const callBtn = c.phone
     ? isDesktop
       ? `<button class="btn btn-call" onclick="revealPhone(this,'${c.phoneHref}','${c.phone}','${c.id}')">See Phone Number</button>`
-      : `<a href="${c.phoneHref}" class="btn btn-call" target="_blank" rel="noopener" onclick="trackCallLead('${c.id}')">Call Now</a>`
+      : `<a href="${c.phoneHref}" class="btn btn-call" target="_blank" rel="noopener" onclick="trackContractorCall('${c.id}','call_now')">Call Now</a>`
     : '';
 
   card.innerHTML = `
@@ -1360,13 +1368,14 @@ function buildContractorCard(c, isPrimary) {
 // UI - REVEAL PHONE (desktop)
 // ============================================================
 function revealPhone(btn, href, phone, contractorId) {
-  trackCallLead(contractorId);
-  btn.outerHTML = `<a href="${href}" class="btn btn-call" target="_blank" rel="noopener">${phone}</a>`;
+  // P0 Fix 1: a reveal is NOT a lead and NOT a call.
+  track('contractor_phone_revealed', { contractor: contractorId, location: answers.location || 'unknown' });
+  btn.outerHTML = `<a href="${href}" class="btn btn-call" target="_blank" rel="noopener" onclick="trackContractorCall('${contractorId}','revealed_number')">${phone}</a>`;
 }
 
-function trackCallLead(contractorId) {
-  track('call_clicked', { contractor: contractorId });
-  track('lead_submitted', { method: 'call', contractor: contractorId });
+// P0 Fix 1: replaces trackCallLead(). No lead_submitted here any more.
+function trackContractorCall(contractorId, placement) {
+  track('contractor_call_clicked', { contractor: contractorId, placement: placement, location: answers.location || 'unknown' });
 }
 
 function renderStars(rating) {
@@ -1419,13 +1428,16 @@ document.getElementById('lead-form').addEventListener('submit', async function(e
   btn.disabled = true;
 
   try {
+    const fd = new FormData(this);
     const res = await fetch(CONFIG.formspreeEndpoint, {
       method: 'POST',
-      body: new FormData(this),
+      body: fd,
       headers: { 'Accept': 'application/json' }
     });
     if (res.ok) {
-      track('lead_submitted', { method: 'form', contractor: selectedContractor.id, service: answers.service, urgency: answers.urgency, location: answers.location || 'unknown' });
+      const leadParams = { method: 'form', contractor: selectedContractor.id, service: answers.service, urgency: answers.urgency, location: answers.location || 'unknown' };
+      track('lead_submitted', leadParams);   // legacy name, kept for continuity (not a key event)
+      sendLead(leadParams, fd);              // P0 Fix 3: the one generate_lead for this submit
       showSuccess();
     } else { throw new Error('failed'); }
   } catch {
@@ -1474,11 +1486,55 @@ function scrollUp() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
 function sendHeight() {
   const h = document.documentElement.scrollHeight;
-  window.parent.postMessage({ iframeHeight: h }, '*');
+  window.parent.postMessage({ iframeHeight: h }, '*');   // height only, no data; parent checks origin
+}
+
+// P0 Fix 2: when embedded, send events to the forneyhvacpros.com parent page
+// (only these origins can receive them); when opened directly, use own gtag.
+const FHP_PARENT_ORIGINS = ['https://forneyhvacpros.com', 'https://www.forneyhvacpros.com'];
+const FHP_TOOL = 'contractor_matching';
+
+function postToParent(msg) {
+  FHP_PARENT_ORIGINS.forEach(o => { try { window.parent.postMessage(msg, o); } catch (e) {} });
 }
 
 function track(event, params = {}) {
-  if (typeof gtag !== 'undefined') gtag('event', event, params);
+  if (window.FHP_FRAMED) {
+    postToParent({ type: 'fhp-event', v: 1, tool: FHP_TOOL, event: event, params: params });
+  } else if (typeof gtag !== 'undefined') {
+    gtag('event', event, params);
+  }
+}
+
+// P0 Fix 3 + 4: hash email/phone in the browser (Enhanced Conversions),
+// then send ONE generate_lead. Raw email/phone never leave this iframe.
+async function sha256Hex(v) {
+  if (!v || !window.crypto || !crypto.subtle) return '';
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(v));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+function normPhone(p) {
+  let d = String(p || '').replace(/\D/g, '');
+  if (d.length === 10) d = '1' + d;
+  return (d.length === 11 && d[0] === '1') ? '+' + d : '';
+}
+async function sendLead(params, fd) {
+  const leadId = 'mt-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
+  const userData = {};
+  try {
+    const email = String(fd.get('Email') || '').trim().toLowerCase();
+    const phone = normPhone(fd.get('Phone'));
+    if (email) {
+      userData.sha256_email_address = await sha256Hex(email);
+      if (phone) userData.sha256_phone_number = await sha256Hex(phone);
+    }
+  } catch (e) {}
+  const leadParams = Object.assign({}, params, { source: 'matching_tool' });
+  if (window.FHP_FRAMED) {
+    postToParent({ type: 'fhp-event', v: 1, tool: FHP_TOOL, event: 'generate_lead', lead_id: leadId, params: leadParams, user_data: userData });
+  } else if (typeof gtag !== 'undefined') {
+    gtag('event', 'generate_lead', leadParams);   // standalone visit: GA4 only, no Ads tag here
+  }
 }
 
 // -- Init --
