@@ -1465,7 +1465,7 @@ function showForm(contractorId) {
   selectedContractor = c;
   document.getElementById('form-contractor-name').textContent = c.name;
   const urgentPrefix = isUrgentNeed() ? 'URGENT — need help tonight: ' : '';
-  document.getElementById('form-subject').value = `${urgentPrefix}New HVAC Lead &rarr; ${c.name}`;
+  document.getElementById('form-subject').value = `${urgentPrefix}New HVAC Lead – ${c.name}`;
   document.getElementById('hidden-contractor').value = c.name;
   document.getElementById('hidden-service').value = getLabel('service');
   document.getElementById('hidden-urgency').value = getLabel('urgency');
