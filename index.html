@@ -118,6 +118,28 @@
       text-align: right;
     }
 
+    /* Urgent / need-help-tonight path: call or text Forney HVAC Pros */
+    .urgent-banner {
+      display: none;
+      background: #FEF3C7;
+      border: 1px solid #F59E0B;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 16px 32px 0;
+      text-align: center;
+      color: var(--dark);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .urgent-banner.is-visible { display: block; }
+    .urgent-banner a {
+      color: var(--orange);
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .urgent-banner a:hover { text-decoration: underline; }
+
     /* -- Two-column content layout -- */
     .content {
       padding: 24px 32px 0;
@@ -435,10 +457,12 @@
       .sidebar { display: none; }
       .mobile-summary { display: block; }
       .progress-wrap { padding: 12px 24px 10px; }
+      .urgent-banner { margin: 16px 24px 0; }
     }
 
     @media (max-width: 480px) {
       .progress-wrap { padding: 12px 18px 10px; }
+      .urgent-banner { margin: 16px 16px 0; }
       .content { padding: 18px 16px 0; }
       .card { padding: 22px 18px; }
       .header h1 { font-size: 21px; }
@@ -456,6 +480,13 @@
       <div class="progress-fill" id="progress-fill" style="width:0%"></div>
     </div>
     <div class="progress-label" id="progress-label">Question 1 of 8</div>
+  </div>
+
+  <div class="urgent-banner" id="urgent-banner" role="status">
+    For fastest help, call or text
+    <a href="tel:+14692000065" onclick="trackBusinessPhone('call','urgent_banner')">(469) 200-0065</a>
+    &middot;
+    <a href="sms:+14692000065" onclick="trackBusinessPhone('text','urgent_banner')">Text us</a>
   </div>
 
   <!-- Mobile info strip - compact version of sidebar cards, visible only &le;900px -->
@@ -957,10 +988,10 @@ const QUESTIONS = [
     question: 'How soon do you need service?',
     subtitle: 'Helps us match you with contractors who have availability',
     options: [
-      { value: 'today',    icon: '', label: 'Today',           sublabel: 'I need someone right away',         scores: { jandr:3, infinity:3, williams:1, bolton:0, absolute:3, schnorrbusch:0, accurate:3, coolcasa:0, copeland:3, mhc:2 } },
-      { value: 'days',     icon: '', label: 'Within 2 days',   sublabel: 'Urgent, but not a full emergency',  scores: { infinity:2, jandr:2, williams:1, bolton:1, absolute:2, schnorrbusch:1, accurate:2, coolcasa:2, copeland:2, mhc:2 } },
+      { value: 'today',    icon: '', label: 'Urgent — need help tonight (no heat / no AC)', sublabel: 'No heat or no AC and I need help as soon as possible',         scores: { jandr:3, infinity:3, williams:1, bolton:0, absolute:3, schnorrbusch:0, accurate:3, coolcasa:0, copeland:3, mhc:2 } },
+      { value: 'days',     icon: '', label: 'In the next few days', sublabel: 'Urgent, but not a full emergency',  scores: { infinity:2, jandr:2, williams:1, bolton:1, absolute:2, schnorrbusch:1, accurate:2, coolcasa:2, copeland:2, mhc:2 } },
       { value: 'week',     icon: '', label: 'This week',       sublabel: 'Soon, but I have some flexibility', scores: { williams:2, infinity:1, jandr:1, bolton:1, absolute:1, schnorrbusch:2, accurate:1, coolcasa:2, copeland:1, mhc:2 } },
-      { value: 'planning', icon: '', label: 'Planning ahead',  sublabel: 'Getting quotes for future work',    scores: { bolton:3, williams:2, jandr:1, infinity:0, absolute:1, schnorrbusch:2, accurate:1, coolcasa:2, copeland:2, mhc:3 } }
+      { value: 'planning', icon: '', label: 'Just planning / quotes', sublabel: 'Getting quotes for future work',    scores: { bolton:3, williams:2, jandr:1, infinity:0, absolute:1, schnorrbusch:2, accurate:1, coolcasa:2, copeland:2, mhc:3 } }
     ]
   },
   {
@@ -996,6 +1027,28 @@ let onLocationStep = false;
 let locationKnown = false;
 let answers = {};
 let selectedContractor = null;
+let urgencyFromUrl = false;
+
+// URL aliases for ?urgency= — stored value stays 'today' so matching
+// and existing GA4 params stay consistent. 'tonight' is the public alias.
+const URGENCY_PARAM_MAP = {
+  tonight: 'today', today: 'today', emergency: 'today', urgent: 'today',
+  days: 'days', week: 'week',
+  planning: 'planning', quotes: 'planning'
+};
+
+function isUrgentNeed() {
+  return answers.service === 'emergency' || answers.urgency === 'today';
+}
+
+function updateUrgentBanner() {
+  const el = document.getElementById('urgent-banner');
+  if (el) el.classList.toggle('is-visible', isUrgentNeed());
+}
+
+function trackBusinessPhone(method, placement) {
+  track('phone_clicked', { method: method, placement: placement, page_path: window.location.pathname || '/' });
+}
 
 // ============================================================
 // MATCHING LOGIC
@@ -1258,6 +1311,7 @@ function selectOption(questionId, value, btnEl) {
   document.querySelectorAll('.option').forEach(b => b.classList.remove('selected'));
   btnEl.classList.add('selected');
   document.getElementById('next-btn').disabled = false;
+  updateUrgentBanner();
   track('question_answered', { question: questionId, answer: value, location: answers.location || 'unknown' });
   setTimeout(nextStep, 420);
 }
@@ -1271,9 +1325,22 @@ function updateProgress(index) {
   document.getElementById('progress-label').textContent = 'Question ' + Math.max(1, current) + ' of ' + total;
 }
 
+function shouldSkipUrgencyQuestion() {
+  const q = QUESTIONS[currentStep];
+  return !!(q && q.id === 'urgency' && urgencyFromUrl && answers.urgency);
+}
+
 function nextStep() {
   if (currentStep < QUESTIONS.length - 1) {
     currentStep++;
+    // Deep-link ?urgency=tonight already set the answer; skip that step
+    // going forward (Back still shows it so the homeowner can change it).
+    if (shouldSkipUrgencyQuestion() && currentStep < QUESTIONS.length - 1) {
+      currentStep++;
+    } else if (shouldSkipUrgencyQuestion()) {
+      showResults();
+      return;
+    }
     renderQuestion(currentStep);
     scrollUp();
   } else {
@@ -1325,6 +1392,7 @@ function showResults() {
   });
 
   selectedContractor = matches[0];
+  updateUrgentBanner();
   track('results_viewed', { primary_match: matches[0].id, second_match: matches[1]?.id || 'none', location: answers.location || 'unknown' });
   document.body.style.minHeight = 'auto';
   scrollUp();
@@ -1396,7 +1464,8 @@ function showForm(contractorId) {
   const c = CONTRACTORS[contractorId];
   selectedContractor = c;
   document.getElementById('form-contractor-name').textContent = c.name;
-  document.getElementById('form-subject').value = `New HVAC Lead &rarr; ${c.name}`;
+  const urgentPrefix = isUrgentNeed() ? 'URGENT — need help tonight: ' : '';
+  document.getElementById('form-subject').value = `${urgentPrefix}New HVAC Lead &rarr; ${c.name}`;
   document.getElementById('hidden-contractor').value = c.name;
   document.getElementById('hidden-service').value = getLabel('service');
   document.getElementById('hidden-urgency').value = getLabel('urgency');
@@ -1408,6 +1477,7 @@ function showForm(contractorId) {
   document.getElementById('hidden-concern').value = getLabel('concern');
   document.getElementById('hidden-location').value = answers.location || 'unknown';
   showScreen('form-screen');
+  updateUrgentBanner();
   track('quote_form_opened', { contractor: contractorId, location: answers.location || 'unknown' });
   scrollUp();
 }
@@ -1461,6 +1531,7 @@ function showSuccess() {
     document.getElementById('success-contractor-block').style.display = 'none';
   }
   showScreen('success-screen');
+  updateUrgentBanner();
   scrollUp();
 }
 
@@ -1548,6 +1619,11 @@ async function sendLead(params, fd) {
     terrell: 'terrell_kaufman',    kaufman: 'terrell_kaufman',
     crandall: 'crandall'
   };
+  const urgencyRaw = (params.get('urgency') || '').toLowerCase().trim();
+  if (URGENCY_PARAM_MAP[urgencyRaw]) {
+    answers.urgency = URGENCY_PARAM_MAP[urgencyRaw];
+    urgencyFromUrl = true;
+  }
   if (cityMap[city]) {
     answers.location = cityMap[city];
     locationKnown = true;
@@ -1556,6 +1632,7 @@ async function sendLead(params, fd) {
     locationKnown = false;
     renderLocationStep();
   }
+  updateUrgentBanner();
   track('tool_started', { city: answers.location || 'unknown' });
   window.addEventListener('load', sendHeight);
 })();

@@ -146,6 +146,26 @@
       margin-bottom: 18px;
     }
 
+    .urgent-banner {
+      display: none;
+      background: #FEF3C7;
+      border: 1px solid #F59E0B;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin: 0 0 14px;
+      text-align: center;
+      color: var(--dark);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .urgent-banner.is-visible { display: block; }
+    .urgent-banner a {
+      color: var(--orange);
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
     /* Contractor result card */
     .c-card {
       border: 1.5px solid var(--border);
@@ -303,6 +323,13 @@
       <div class="tool-sub">Answer 3 quick questions and we'll match you with the right local pro, free. No obligation, no marketing calls.</div>
     </div>
 
+    <div class="urgent-banner" id="urgent-banner" role="status">
+      For fastest help, call or text
+      <a href="tel:+14692000065" onclick="trackBusinessPhone('call','mini_urgent_banner')">(469) 200-0065</a>
+      &middot;
+      <a href="sms:+14692000065" onclick="trackBusinessPhone('text','mini_urgent_banner')">Text us</a>
+    </div>
+
     <!-- Progress bar -->
     <div class="progress-track" id="progress-track">
       <div class="progress-fill" id="progress-fill" style="width:33%"></div>
@@ -351,11 +378,11 @@ var QUESTIONS = [
     id: 'urgency',
     title: 'How soon do you need service?',
     options: [
-      { value: 'emergency', label: 'Today,I need help now',    sublabel: 'Emergency or same-day service needed',
+      { value: 'emergency', label: 'Urgent — need help tonight (no heat / no AC)', sublabel: 'No heat or no AC and I need help as soon as possible',
         scores: { jandr:5, infinity:4, copeland:3, absolute:3, accurate:3, williams:1, bolton:0, schnorrbusch:0, coolcasa:0, mhc:1 } },
-      { value: 'days',      label: 'Within the next few days',         sublabel: 'Urgent but not an emergency',
+      { value: 'days',      label: 'In the next few days',         sublabel: 'Urgent but not an emergency',
         scores: { infinity:2, jandr:2, copeland:2, absolute:2, accurate:2, williams:1, bolton:1, schnorrbusch:1, coolcasa:1, mhc:1 } },
-      { value: 'planning',  label: 'Planning ahead / Getting quotes',  sublabel: 'No immediate rush',
+      { value: 'planning',  label: 'Just planning / quotes',  sublabel: 'No immediate rush',
         scores: { bolton:3, mhc:3, williams:2, schnorrbusch:2, coolcasa:2, copeland:2, accurate:1, jandr:1, absolute:1, infinity:0 } }
     ]
   },
@@ -494,6 +521,33 @@ var REASONS = {
 // ============================================================
 var step = 0;
 var answers = {};
+var urgencyFromUrl = false;
+
+var URGENCY_PARAM_MAP = {
+  tonight: 'emergency', today: 'emergency', emergency: 'emergency', urgent: 'emergency',
+  days: 'days',
+  planning: 'planning', quotes: 'planning'
+};
+
+function isUrgentNeed() {
+  return answers.urgency === 'emergency';
+}
+
+function updateUrgentBanner() {
+  var el = document.getElementById('urgent-banner');
+  if (el) el.classList.toggle('is-visible', isUrgentNeed());
+}
+
+function trackBusinessPhone(method, placement) {
+  track('phone_clicked', { method: method, placement: placement, page_path: window.location.pathname || '/' });
+}
+
+function fullToolUrl() {
+  var base = 'https://forneyhvacpros.com/find-contractor';
+  if (answers.urgency === 'emergency') return base + '?urgency=tonight';
+  if (answers.urgency === 'days' || answers.urgency === 'planning') return base + '?urgency=' + answers.urgency;
+  return base;
+}
 
 // ============================================================
 // MATCHING LOGIC
@@ -565,6 +619,7 @@ function selectOption(qId, value, btnEl) {
   answers[qId] = value;
   document.querySelectorAll('.option').forEach(function(b) { b.classList.remove('selected'); });
   btnEl.classList.add('selected');
+  updateUrgentBanner();
   track('mini_question_answered', { question: qId, answer: value });
   setTimeout(advance, 420);
 }
@@ -626,6 +681,9 @@ function showResults() {
     container.appendChild(buildCard(c, i === 0));
   });
 
+  var fullLink = document.querySelector('#results-screen .full-link');
+  if (fullLink) fullLink.href = fullToolUrl();
+  updateUrgentBanner();
   track('mini_results_viewed', { primary: matches[0].id, second: (matches[1] || {}).id || 'none' });
   sendHeight();
   scrollUp();
@@ -653,7 +711,7 @@ function buildCard(c, isPrimary) {
     '<div class="c-reason">' + getReason(c.id) + '</div>' +
     '<div class="c-actions">' +
       callBtn +
-      '<a href="https://forneyhvacpros.com/find-contractor" class="btn-quote" target="_blank" rel="noopener">' +
+      '<a href="' + fullToolUrl() + '" class="btn-quote" target="_blank" rel="noopener">' +
         'Get Free Quote' +
       '</a>' +
     '</div>';
@@ -693,7 +751,16 @@ function track(event, params) {
 // INIT
 // ============================================================
 (function() {
+  var params = new URLSearchParams(window.location.search);
+  var urgencyRaw = (params.get('urgency') || '').toLowerCase().trim();
+  if (URGENCY_PARAM_MAP[urgencyRaw]) {
+    answers.urgency = URGENCY_PARAM_MAP[urgencyRaw];
+    urgencyFromUrl = true;
+    // Urgency is question 0 in the mini tool; start on the next question.
+    if (step === 0) step = 1;
+  }
   renderQuestion();
+  updateUrgentBanner();
   track('mini_tool_started');
   window.addEventListener('load', sendHeight);
   window.addEventListener('resize', sendHeight);
