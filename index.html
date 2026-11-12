@@ -591,6 +591,16 @@
           <input type="hidden" name="Property Type" id="hidden-property">
           <input type="hidden" name="Special Concern" id="hidden-concern">
           <input type="hidden" name="Location" id="hidden-location">
+          <input type="hidden" name="gclid" id="hidden-gclid">
+          <input type="hidden" name="gbraid" id="hidden-gbraid">
+          <input type="hidden" name="wbraid" id="hidden-wbraid">
+          <input type="hidden" name="utm_source" id="hidden-utm_source">
+          <input type="hidden" name="utm_medium" id="hidden-utm_medium">
+          <input type="hidden" name="utm_campaign" id="hidden-utm_campaign">
+          <input type="hidden" name="utm_term" id="hidden-utm_term">
+          <input type="hidden" name="utm_content" id="hidden-utm_content">
+          <input type="hidden" name="landing_page" id="hidden-landing_page">
+          <input type="hidden" name="attr_ts" id="hidden-attr_ts">
 
           <div class="form-group">
             <label for="field-name">Your Name *</label>
@@ -1476,6 +1486,7 @@ function showForm(contractorId) {
   document.getElementById('hidden-property').value = getLabel('property');
   document.getElementById('hidden-concern').value = getLabel('concern');
   document.getElementById('hidden-location').value = answers.location || 'unknown';
+  fillAttrFields();
   showScreen('form-screen');
   updateUrgentBanner();
   track('quote_form_opened', { contractor: contractorId, location: answers.location || 'unknown' });
@@ -1498,6 +1509,7 @@ document.getElementById('lead-form').addEventListener('submit', async function(e
   btn.disabled = true;
 
   try {
+    fillAttrFields();
     const fd = new FormData(this);
     const res = await fetch(CONFIG.formspreeEndpoint, {
       method: 'POST',
@@ -1564,6 +1576,53 @@ function sendHeight() {
 // (only these origins can receive them); when opened directly, use own gtag.
 const FHP_PARENT_ORIGINS = ['https://forneyhvacpros.com', 'https://www.forneyhvacpros.com'];
 const FHP_TOOL = 'contractor_matching';
+const FHP_ATTR_KEYS = ['gclid','gbraid','wbraid','utm_source','utm_medium','utm_campaign','utm_term','utm_content','landing_page','attr_ts'];
+let attribution = {};
+
+function cleanAttrVal(v) {
+  v = String(v == null ? '' : v).trim().replace(/[\0-\x1F\x7F]/g, '');
+  if (!v) return '';
+  if (v.length > 200) v = v.slice(0, 200);
+  if (/[<>"'`]/.test(v)) return '';
+  return v;
+}
+
+function readAttrFromSearch(search) {
+  const params = new URLSearchParams(search || window.location.search);
+  const out = {};
+  FHP_ATTR_KEYS.forEach(k => {
+    const v = cleanAttrVal(params.get(k));
+    if (v) out[k] = v;
+  });
+  if (!out.landing_page) {
+    const land = String(window.location.pathname || '/') + String(window.location.search || '');
+    if (Object.keys(out).length) out.landing_page = land.slice(0, 300);
+  }
+  return out;
+}
+
+function applyAttribution(src) {
+  if (!src || typeof src !== 'object') return;
+  FHP_ATTR_KEYS.forEach(k => {
+    const v = cleanAttrVal(src[k]);
+    if (v) attribution[k] = v;
+  });
+}
+
+function fillAttrFields() {
+  FHP_ATTR_KEYS.forEach(k => {
+    const el = document.getElementById('hidden-' + k);
+    if (el) el.value = attribution[k] || '';
+  });
+}
+
+window.addEventListener('message', function (e) {
+  if (FHP_PARENT_ORIGINS.indexOf(e.origin) === -1) return;
+  const d = e.data;
+  if (!d || typeof d !== 'object' || d.type !== 'fhp-attr' || !d.attr) return;
+  applyAttribution(d.attr);
+  fillAttrFields();
+});
 
 function postToParent(msg) {
   FHP_PARENT_ORIGINS.forEach(o => { try { window.parent.postMessage(msg, o); } catch (e) {} });
@@ -1633,6 +1692,9 @@ async function sendLead(params, fd) {
     renderLocationStep();
   }
   updateUrgentBanner();
+  applyAttribution(readAttrFromSearch());
+  fillAttrFields();
+  postToParent({ type: 'fhp-attr-request', v: 1 });
   track('tool_started', { city: answers.location || 'unknown' });
   window.addEventListener('load', sendHeight);
 })();

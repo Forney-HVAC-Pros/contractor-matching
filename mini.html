@@ -542,12 +542,62 @@ function trackBusinessPhone(method, placement) {
   track('phone_clicked', { method: method, placement: placement, page_path: window.location.pathname || '/' });
 }
 
+var FHP_PARENT_ORIGINS = ['https://forneyhvacpros.com', 'https://www.forneyhvacpros.com'];
+var FHP_ATTR_KEYS = ['gclid','gbraid','wbraid','utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
+var attribution = {};
+
+function cleanAttrVal(v) {
+  v = String(v == null ? '' : v).trim().replace(/[\0-\x1F\x7F]/g, '');
+  if (!v) return '';
+  if (v.length > 200) v = v.slice(0, 200);
+  if (/[<>"'`]/.test(v)) return '';
+  return v;
+}
+
+function applyAttribution(src) {
+  if (!src || typeof src !== 'object') return;
+  FHP_ATTR_KEYS.forEach(function (k) {
+    var v = cleanAttrVal(src[k]);
+    if (v) attribution[k] = v;
+  });
+}
+
+function readAttrFromSearch(search) {
+  var params = new URLSearchParams(search || window.location.search);
+  var out = {};
+  FHP_ATTR_KEYS.forEach(function (k) {
+    var v = cleanAttrVal(params.get(k));
+    if (v) out[k] = v;
+  });
+  return out;
+}
+
 function fullToolUrl() {
   var base = 'https://forneyhvacpros.com/find-contractor';
-  if (answers.urgency === 'emergency') return base + '?urgency=tonight';
-  if (answers.urgency === 'days' || answers.urgency === 'planning') return base + '?urgency=' + answers.urgency;
+  var u;
+  try { u = new URL(base); } catch (e) { u = null; }
+  if (answers.urgency === 'emergency') {
+    if (u) u.searchParams.set('urgency', 'tonight');
+    else base += '?urgency=tonight';
+  } else if (answers.urgency === 'days' || answers.urgency === 'planning') {
+    if (u) u.searchParams.set('urgency', answers.urgency);
+    else base += '?urgency=' + answers.urgency;
+  }
+  if (u) {
+    FHP_ATTR_KEYS.forEach(function (k) {
+      if (attribution[k] && !u.searchParams.get(k)) u.searchParams.set(k, attribution[k]);
+    });
+    return u.toString();
+  }
   return base;
 }
+
+window.addEventListener('message', function (e) {
+  if (FHP_PARENT_ORIGINS.indexOf(e.origin) === -1) return;
+  var d = e.data;
+  if (!d || typeof d !== 'object' || d.type !== 'fhp-attr' || !d.attr) return;
+  applyAttribution(d.attr);
+});
 
 // ============================================================
 // MATCHING LOGIC
@@ -759,6 +809,7 @@ function track(event, params) {
     // Urgency is question 0 in the mini tool; start on the next question.
     if (step === 0) step = 1;
   }
+  applyAttribution(readAttrFromSearch());
   renderQuestion();
   updateUrgentBanner();
   track('mini_tool_started');
