@@ -478,6 +478,23 @@
     background: #ffffff;
   }
   #fhp-modal-overlay .fhp-form-input:focus { outline: none; border-color: #172620; }
+  #fhp-modal-overlay .fhp-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 4px 0 12px;
+    font-size: 14px;
+    color: #111827;
+    line-height: 1.45;
+  }
+  #fhp-modal-overlay .fhp-check input {
+    margin-top: 3px;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    accent-color: #172620;
+  }
+  #fhp-modal-overlay .fhp-check a { color: #1061FE; }
   #fhp-modal-overlay .fhp-form-submit {
     width: 100%;
     padding: 11px;
@@ -618,6 +635,8 @@
       <input type="hidden" name="urgency" id="fhp-form-urgency">
       <input type="hidden" name="location" id="fhp-form-location">
       <input type="hidden" name="matched_contractor" id="fhp-form-contractor">
+      <input type="hidden" name="also_need_plumber" id="fhp-hidden-plumber" value="no">
+      <label class="fhp-check"><input type="checkbox" id="fhp-also-plumber" value="yes"><span>I also need a plumber (we'll pass your request to <a href="https://forneyplumbingpros.com" target="_blank" rel="noopener">Forney Plumbing Pros</a>).</span></label>
       <button type="submit" class="fhp-form-submit">Request Free Quote &rarr;</button>
     </form>
   </div>
@@ -1037,9 +1056,17 @@
 
   var quoteForm = document.getElementById('fhp-quote-form');
   if (quoteForm) {
+    var plumberBox = document.getElementById('fhp-also-plumber');
+    var plumberHidden = document.getElementById('fhp-hidden-plumber');
+    if (plumberBox && plumberHidden) {
+      plumberBox.addEventListener('change', function () {
+        plumberHidden.value = plumberBox.checked ? 'yes' : 'no';
+      });
+    }
     quoteForm.addEventListener('submit', function(e) {
       e.preventDefault();
       var form = this;
+      if (plumberBox && plumberHidden) plumberHidden.value = plumberBox.checked ? 'yes' : 'no';
       fetch(form.action, {
         method: 'POST',
         body: new FormData(form),
@@ -1052,7 +1079,7 @@
               '<div style="font-family:Lora,Georgia,serif;font-size:20px;font-weight:600;color:#172620;margin-bottom:6px;">Quote Request Sent!</div>' +
               '<div style="font-size:16px;color:#4B5563;line-height:1.5;">We\'ll match you with a vetted local contractor and have them reach out within 1 hour.</div>' +
             '</div>';
-          track('lead_submitted', { source: 'mini_tool' });
+          track('lead_submitted', { source: 'mini_tool', also_need_plumber: (plumberBox && plumberBox.checked) ? 'yes' : 'no' });
         }
       });
     });
